@@ -156,7 +156,6 @@
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\profile.css" />
     <Content Include="Content\css\home.css" />
-    <Content Include="Content\css\home.min.css" />
     <Content Include="Content\img\portfolio-1.jpg" />
     <Content Include="Content\js\authentication.js" />
     <Content Include="Content\js\profile.js" />
