@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.ServiceModel.Web;
 using System.Text;
 
 namespace WCF
@@ -12,7 +11,6 @@ namespace WCF
     [ServiceContract]
     public interface IService1
     {
-
         [OperationContract]
         string GetData(int value);
 
@@ -22,8 +20,8 @@ namespace WCF
         // TODO: Adicione suas operações de serviço aqui
     }
 
-
     // Use um contrato de dados como ilustrado no exemplo abaixo para adicionar tipos compostos a operações de serviço.
+    // Você pode adicionar arquivos XSD ao projeto. Depois de criar o projeto, use os tipos de dados definidos nele diretamente, com o namespace "WCF.ContractType".
     [DataContract]
     public class CompositeType
     {

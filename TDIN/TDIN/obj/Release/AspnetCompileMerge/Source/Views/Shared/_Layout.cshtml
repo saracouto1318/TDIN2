@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    @{
+        if (@ViewBag.Type == "Profile")
+        {
+            @Styles.Render("~/bundles/Profile")
+        }
+        else if (@ViewBag.Type == "TroubleTicket")
+        {
+            @Styles.Render("~/bundles/TroubleTicket")
+        }
+        else { }
+    }
+
+    <footer class="footer text-center">
+        <div class="container">
+            <p class="text-muted small mb-0">Copyright &copy; Your Website 2018</p>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

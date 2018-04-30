@@ -26,6 +26,32 @@ namespace TDIN
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/footer").Include(
+                       "~/Content/css/home.css",
+                       "~/Content/css/authentication.css",
+                       "~/Content/vendor/bootstrap/css/bootstrap.min.css",
+                       "~/Content/vendor/font-awesome/css/font-awesome.min.css",
+                       "~/Content/vendor/simple-line-icons/css/simple-line-icons.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/Home").Include(
+                       "~/Content/css/home.css",
+                       "~/Content/css/authentication.css",
+                       "~/Content/vendor/bootstrap/css/bootstrap.min.css",
+                       "~/Content/vendor/font-awesome/css/font-awesome.min.css",
+                       "~/Content/vendor/simple-line-icons/css/simple-line-icons.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/Profile").Include(
+                       "~/Content/css/profile.css",
+                       "~/Content/vendor/bootstrap/css/bootstrap.min.css",
+                       "~/Content/vendor/font-awesome/css/font-awesome.min.css",
+                       "~/Content/vendor/simple-line-icons/css/simple-line-icons.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/TroubleTicket").Include(
+                       "~/Content/css/profile.css",
+                       "~/Content/vendor/bootstrap/css/bootstrap.min.css",
+                       "~/Content/vendor/font-awesome/css/font-awesome.min.css",
+                       "~/Content/vendor/simple-line-icons/css/simple-line-icons.css"));
         }
     }
 }
