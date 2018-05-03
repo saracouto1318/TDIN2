@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GUI
+namespace DepartmentGUI
 {
     public partial class DepartmentPage : MaterialForm
     {

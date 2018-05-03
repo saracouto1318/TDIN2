@@ -50,12 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\DepartmentPage.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\DepartmentPage.Designer.cs">
-      <DependentUpon>DepartmentPage.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\MainPage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,12 +70,6 @@
     <Compile Include="Forms\RedirectPage.Designer.cs">
       <DependentUpon>RedirectPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ResponseTicket.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ResponseTicket.Designer.cs">
-      <DependentUpon>ResponseTicket.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\SolvePage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,9 +88,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\DepartmentPage.resx">
-      <DependentUpon>DepartmentPage.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainPage.resx">
       <DependentUpon>MainPage.cs</DependentUpon>
     </EmbeddedResource>
@@ -111,9 +96,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RedirectPage.resx">
       <DependentUpon>RedirectPage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ResponseTicket.resx">
-      <DependentUpon>ResponseTicket.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SolvePage.resx">
       <DependentUpon>SolvePage.cs</DependentUpon>

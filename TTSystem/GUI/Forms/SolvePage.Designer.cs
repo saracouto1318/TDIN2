@@ -1,4 +1,4 @@
-﻿namespace GUI
+﻿namespace SolverGUI
 {
     partial class SolvePage
     {

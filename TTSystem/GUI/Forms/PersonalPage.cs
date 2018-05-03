@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
 
-namespace GUI
+namespace SolverGUI
 {
     public partial class PersonalPage : MaterialForm
     {

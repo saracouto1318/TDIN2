@@ -1,4 +1,4 @@
-﻿namespace GUI
+﻿namespace DepartmentGUI
 {
     partial class ResponseTicket
     {
