@@ -28,7 +28,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "TTSite", "http://localhost:
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{D08C9C1A-FC49-4C74-B701-2600F8A933ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolverGUI", "GUI\SolverGUI.csproj", "{D08C9C1A-FC49-4C74-B701-2600F8A933ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
