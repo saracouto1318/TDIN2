@@ -5,17 +5,17 @@ using System.Web;
 
 namespace TTService
 {
-    public enum Status
+    public enum TicketStatus
     {
-        unassigned, assigned, closed
+        UNASSINGNED, ASSIGNED, CLOSED
     }
     public class Ticket
     {
         public string ID { get; set; }
-        public User owner { get; set; }
-        public string title { get; set; }
-        public string description { get; set; }
-        public Status status { get; set; }
-        public DateTime date { get; set; }
+        public User Author { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public TicketStatus Status { get; set; }
+        public DateTime Date { get; set; }
     }
 }

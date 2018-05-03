@@ -34,9 +34,9 @@ public partial class ProfilePage : System.Web.UI.Page
         string email = String.Format("{0}", Request.Form["loginEmail"]);
         string password = String.Format("{0}", Request.Form["loginPassword"]);
 
-        user.name = name;
-        user.email = email;
-        user.password = password;
+        user.Name = name;
+        user.Email = email;
+        user.Password = password;
 
         proxy.UpdateUser(user);
     }
@@ -46,11 +46,13 @@ public partial class ProfilePage : System.Web.UI.Page
         string title = String.Format("{0}", Request.Form["title"]);
         string description = String.Format("{0}", Request.Form["description"]);
 
-        TTService.Ticket ticket = new TTService.Ticket();
-        ticket.title = title;
-        ticket.description = description;
-        ticket.owner = user;
-        ticket.status = TTService.Status.unassigned;
+        TTService.Ticket ticket = new TTService.Ticket
+        {
+            Title = title,
+            Description = description,
+            Author = user,
+            Status = TTService.TicketStatus.UNASSINGNED
+        };
 
         proxy.AddTicket(ticket);
     }

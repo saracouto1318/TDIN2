@@ -25,10 +25,12 @@ public partial class _Default : Page {
         string email = String.Format("{0}", Request.Form["emailRegister"]);
         string password = String.Format("{0}", Request.Form["passwordRegister"]);
 
-        TTService.User user = new TTService.User();
-        user.name = name;
-        user.email = email;
-        user.password = password;
+        TTService.User user = new TTService.User
+        {
+            Name = name,
+            Email = email,
+            Password = password
+        };
 
         if (proxy.AddUser(user) != 0)
             Response.Redirect("ProfilePage.aspx");
