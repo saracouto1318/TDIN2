@@ -6,7 +6,9 @@ using System.Data.SqlClient;
 
 namespace TTService {
   public class TTServ : ITTServ {
-    
+
+        private Database.Database _db = Database.Database.Initialize();
+
         public int AddTicket(User author, Ticket ticket)
         {
             throw new NotImplementedException();

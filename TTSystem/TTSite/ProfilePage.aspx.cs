@@ -51,7 +51,7 @@ public partial class ProfilePage : System.Web.UI.Page
             Title = title,
             Description = description,
             Author = user,
-            Status = TTService.TicketStatus.UNASSINGNED
+            Status = TTService.TicketStatus.UNASSIGNED
         };
 
         proxy.AddTicket(ticket);
