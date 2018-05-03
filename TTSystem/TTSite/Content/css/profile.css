@@ -1,0 +1,363 @@
+html,
+body {
+    overflow-x: hidden;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-color: #eee;
+}
+
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    /* This line and the next line are not necessary unless you need IE6 support */
+    height: 100%;
+    margin: 0 auto -50px;
+    margin-top: 80px;
+    /* the bottom margin is the negative value of the footer's height */
+}
+
+.navbar-custom {
+    background-color: #222222;
+    border-color: transparent;
+}
+
+    .navbar-custom .navbar-brand, .navbar-custom.n .navbar-brand {
+        color: #fed136;
+        font-family: "Kaushan Script", "Helvetica Neue", Helvetica, Arial, cursive;
+    }
+
+        .navbar-custom .navbar-brand:hover,
+        .navbar-custom .navbar-brand:focus,
+        .navbar-custom .navbar-brand:active,
+        .navbar-custom .navbar-brand.active {
+            color: #fec503;
+        }
+
+    .navbar-custom .navbar-collapse {
+        border-color: rgba(255, 255, 255, 0.02);
+    }
+
+    .navbar-custom .navbar-toggle {
+        background-color: #fed136;
+        border-color: #fed136;
+        font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-transform: uppercase;
+        color: white;
+        font-size: 12px;
+    }
+
+        .navbar-custom .navbar-toggle:hover,
+        .navbar-custom .navbar-toggle:focus {
+            background-color: #fed136;
+        }
+
+    .navbar-custom .nav li a {
+        font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-transform: uppercase;
+        font-weight: 400;
+        letter-spacing: 1px;
+        color: white;
+    }
+
+    .navbar-custom .nav .drop {
+        font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-transform: uppercase;
+        font-weight: 400;
+        letter-spacing: 1px;
+        color: #fed136;
+    }
+
+    .navbar-custom .nav li a:hover,
+    .navbar-custom .nav li a:focus {
+        color: #fed136;
+        outline: none;
+    }
+
+    .navbar-custom .navbar-nav > .active > .drop {
+        border-radius: 0;
+        color: white;
+        background-color: #fed136;
+    }
+
+    .navbar-custom .navbar-nav > .active > a {
+        border-radius: 0;
+        color: white;
+        background-color: #fed136;
+    }
+
+        .navbar-custom .navbar-nav > .active > a:hover,
+        .navbar-custom .navbar-nav > .active > a:focus {
+            color: white;
+            background-color: #fec503;
+        }
+
+@media (min-width: 768px) {
+    .navbar-custom {
+        background-color: transparent;
+        padding: 25px 0;
+        -webkit-transition: padding 0.3s;
+        -moz-transition: padding 0.3s;
+        transition: padding 0.3s;
+        border: none;
+    }
+
+        .navbar-custom.n {
+            background-color: #222222;
+            padding: 2.5px 0;
+            -webkit-transition: padding 0.3s;
+            -moz-transition: padding 0.3s;
+            transition: padding 0.3s;
+            border: none;
+        }
+
+        .navbar-custom .navbar-brand {
+            font-size: 2em;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+
+        .navbar-custom .navbar-nav > .active > a {
+            border-radius: 3px;
+        }
+}
+
+@media (min-width: 768px) {
+    .navbar-custom.affix {
+        background-color: #222222;
+        padding: 10px 0;
+    }
+
+        .navbar-custom.affix .navbar-brand {
+            font-size: 1.5em;
+        }
+}
+
+
+.form-control.search.text {
+    min-width: 250px;
+    max-width: 400px;
+    color: white;
+    background-color: #4d4d4d;
+    border: 3px solid #4d4d4d;
+    box-shadow: inset 0 1px 2px rgba(27,31,35,0.075);
+}
+
+.dropdown-notifications {
+    height: 40px;
+    width: 40px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#notification li {
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #fed136;
+}
+
+.profile {
+    margin: 60px 0;
+    margin-top: 20px;
+  }
+  
+  /* Profile sidebar */
+  .profile-sidebar {
+      -moz-border-radius: 10px;
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+    padding: 20px 0 10px 0;
+    background: #fff;
+  }
+  
+  
+  .profile-usertitle {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .profile-usertitle-name {
+    color: #5a7391;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 7px;
+  }
+  
+  .profile-content h2{
+      font-size: 25px;
+      color: #5a7391;
+    font-weight: 600;
+    margin-bottom: 7px;
+  }
+  
+  .profile-content h3{
+      font-size: 20px;
+      color: #5a7391;
+    font-weight: 600;
+    margin: 20px;
+    text-align: center;
+    
+  }
+  
+  .profile-usertitle-email {
+    color: #5b9bd1;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  
+  .profile-userbuttons {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .profile-userbuttons .btn {
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .profile-userbuttons .btn:last-child {
+    margin-right: 0px;
+  }
+      
+  .profile-usermenu {
+    margin-top: 30px;
+  }
+  
+  .profile-usermenu ul li {
+    border-bottom: 1px solid #f0f4f7;
+  }
+  
+  .profile-usermenu ul li:last-child {
+    border-bottom: none;
+  }
+  
+  .profile-usermenu ul li a {
+    color: #93a3b5;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .profile-usermenu ul li a i {
+    margin-right: 8px;
+    font-size: 14px;
+  }
+  
+  .profile-usermenu ul li a:hover {
+    background-color: #fafcfd;
+    color: #5b9bd1;
+     font-weight: bold;
+  }
+  
+  .profile-usermenu ul li.active {
+    border-bottom: none;
+  }
+  
+  .profile-usermenu ul li.active a {
+    color: #5b9bd1;
+    background-color: #f6f9fb;
+    border-left: 2px solid #5b9bd1;
+    margin-left: -2px;
+     font-weight: bold;
+  }
+  
+  .profile-usermenu ul li.banned a {
+    color: red;
+    background-color: #f6f9fb;
+    border-left: 2px solid #5b9bd1;
+    margin-left: -2px;
+  }
+  
+  /* Profile Content */
+  .profile-content {
+      -moz-border-radius: 10px;
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+    padding: 20px;
+    background: #fff;
+    min-height: 460px;
+  }
+  
+  .profile-and-comment div {
+      padding-bottom: 20px;
+  }
+  
+  .card-container.card {
+      padding: 40px 40px;
+  }
+  
+  .card {
+      background-color: #fff;
+      /* just in case there no content*/
+      padding: 20px 25px 30px;
+      position: relative;
+      margin: 0 auto;
+      margin-top: 20px;
+      /* shadows and rounded borders */
+      -moz-border-radius: 10px;
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+      -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  #edit, #my, #new{
+      color: white;
+      margin-bottom: 20px;
+  }
+  #edit{
+      margin: 0 auto;
+      width: 110px;
+    display: block;
+  }
+
+  h3{
+      text-align: center;
+  }
+  .input-group{
+      margin: 0 auto;
+      width: 400px;
+  }
+
+  #editForm, #createTicket{
+      margin: 0 auto;
+      width: 100px;
+      display: block;
+      font-weight: bold;
+      margin-bottom: 10px;
+  }
+
+  #openTicket, #closeTicket, #allTicket{
+      margin: 10px;
+      width: 100px;
+  }
+
+  .profileDiv{
+    position: relative;
+    height: 300px;
+  }
+
+.footer,
+.push {
+    height: 50px;
+    /* .push must be the same height as .footer */
+}
+
+.footer {
+    background-color: black;
+    color: white;
+    padding: 15px 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+    bottom: 0;
+}
+
+    .footer span.copyright {
+        line-height: 40px;
+        font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
