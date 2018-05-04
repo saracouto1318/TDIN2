@@ -35,13 +35,13 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.materialRaisedButton1 = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.materialRaisedButton2 = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.loginBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.registerBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.passwordRegister = new System.Windows.Forms.TextBox();
+            this.emailRegister = new System.Windows.Forms.TextBox();
+            this.nameRegister = new System.Windows.Forms.TextBox();
+            this.passwordLogin = new System.Windows.Forms.TextBox();
+            this.emailLogin = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -121,82 +121,82 @@
             this.label7.TabIndex = 11;
             this.label7.Text = "Name";
             // 
-            // materialRaisedButton1
+            // loginBtn
             // 
-            this.materialRaisedButton1.Depth = 0;
-            this.materialRaisedButton1.Location = new System.Drawing.Point(122, 375);
-            this.materialRaisedButton1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRaisedButton1.Name = "materialRaisedButton1";
-            this.materialRaisedButton1.Primary = true;
-            this.materialRaisedButton1.Size = new System.Drawing.Size(121, 40);
-            this.materialRaisedButton1.TabIndex = 16;
-            this.materialRaisedButton1.Text = "Login";
-            this.materialRaisedButton1.UseVisualStyleBackColor = true;
+            this.loginBtn.Depth = 0;
+            this.loginBtn.Location = new System.Drawing.Point(122, 375);
+            this.loginBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.loginBtn.Name = "loginBtn";
+            this.loginBtn.Primary = true;
+            this.loginBtn.Size = new System.Drawing.Size(121, 40);
+            this.loginBtn.TabIndex = 16;
+            this.loginBtn.Text = "Login";
+            this.loginBtn.UseVisualStyleBackColor = true;
             // 
-            // materialRaisedButton2
+            // registerBtn
             // 
-            this.materialRaisedButton2.Depth = 0;
-            this.materialRaisedButton2.Location = new System.Drawing.Point(546, 375);
-            this.materialRaisedButton2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRaisedButton2.Name = "materialRaisedButton2";
-            this.materialRaisedButton2.Primary = true;
-            this.materialRaisedButton2.Size = new System.Drawing.Size(121, 40);
-            this.materialRaisedButton2.TabIndex = 17;
-            this.materialRaisedButton2.Text = "Register";
-            this.materialRaisedButton2.UseVisualStyleBackColor = true;
+            this.registerBtn.Depth = 0;
+            this.registerBtn.Location = new System.Drawing.Point(546, 375);
+            this.registerBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.registerBtn.Name = "registerBtn";
+            this.registerBtn.Primary = true;
+            this.registerBtn.Size = new System.Drawing.Size(121, 40);
+            this.registerBtn.TabIndex = 17;
+            this.registerBtn.Text = "Register";
+            this.registerBtn.UseVisualStyleBackColor = true;
             // 
-            // textBox5
+            // passwordRegister
             // 
-            this.textBox5.Location = new System.Drawing.Point(614, 304);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(134, 20);
-            this.textBox5.TabIndex = 6;
+            this.passwordRegister.Location = new System.Drawing.Point(614, 304);
+            this.passwordRegister.Name = "passwordRegister";
+            this.passwordRegister.Size = new System.Drawing.Size(134, 20);
+            this.passwordRegister.TabIndex = 6;
             // 
-            // textBox4
+            // emailRegister
             // 
-            this.textBox4.Location = new System.Drawing.Point(614, 256);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(134, 20);
-            this.textBox4.TabIndex = 5;
+            this.emailRegister.Location = new System.Drawing.Point(614, 256);
+            this.emailRegister.Name = "emailRegister";
+            this.emailRegister.Size = new System.Drawing.Size(134, 20);
+            this.emailRegister.TabIndex = 5;
             // 
-            // textBox3
+            // nameRegister
             // 
-            this.textBox3.Location = new System.Drawing.Point(614, 205);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(134, 20);
-            this.textBox3.TabIndex = 4;
+            this.nameRegister.Location = new System.Drawing.Point(614, 205);
+            this.nameRegister.Name = "nameRegister";
+            this.nameRegister.Size = new System.Drawing.Size(134, 20);
+            this.nameRegister.TabIndex = 4;
             // 
-            // textBox2
+            // passwordLogin
             // 
-            this.textBox2.Location = new System.Drawing.Point(172, 256);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(134, 20);
-            this.textBox2.TabIndex = 3;
+            this.passwordLogin.Location = new System.Drawing.Point(172, 256);
+            this.passwordLogin.Name = "passwordLogin";
+            this.passwordLogin.Size = new System.Drawing.Size(134, 20);
+            this.passwordLogin.TabIndex = 3;
             // 
-            // textBox1
+            // emailLogin
             // 
-            this.textBox1.Location = new System.Drawing.Point(172, 205);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(134, 20);
-            this.textBox1.TabIndex = 2;
+            this.emailLogin.Location = new System.Drawing.Point(172, 205);
+            this.emailLogin.Name = "emailLogin";
+            this.emailLogin.Size = new System.Drawing.Size(134, 20);
+            this.emailLogin.TabIndex = 2;
             // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.materialRaisedButton2);
-            this.Controls.Add(this.materialRaisedButton1);
+            this.Controls.Add(this.registerBtn);
+            this.Controls.Add(this.loginBtn);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.passwordRegister);
+            this.Controls.Add(this.emailRegister);
+            this.Controls.Add(this.nameRegister);
+            this.Controls.Add(this.passwordLogin);
+            this.Controls.Add(this.emailLogin);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "MainPage";
@@ -215,12 +215,12 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton1;
-        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton2;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private MaterialSkin.Controls.MaterialRaisedButton loginBtn;
+        private MaterialSkin.Controls.MaterialRaisedButton registerBtn;
+        private System.Windows.Forms.TextBox passwordRegister;
+        private System.Windows.Forms.TextBox emailRegister;
+        private System.Windows.Forms.TextBox nameRegister;
+        private System.Windows.Forms.TextBox passwordLogin;
+        private System.Windows.Forms.TextBox emailLogin;
     }
 }

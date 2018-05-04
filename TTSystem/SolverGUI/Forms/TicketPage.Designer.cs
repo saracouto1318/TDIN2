@@ -31,14 +31,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+            this.title = new MaterialSkin.Controls.MaterialLabel();
             this.label1 = new System.Windows.Forms.Label();
-            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialRaisedButton1 = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.materialRaisedButton2 = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.materialRaisedButton3 = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.materialRaisedButton4 = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.date = new MaterialSkin.Controls.MaterialLabel();
+            this.description = new MaterialSkin.Controls.MaterialLabel();
+            this.solveBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.redirectBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.logoutBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.profileBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.SuspendLayout();
             // 
             // label2
@@ -74,19 +74,19 @@
             this.label6.TabIndex = 14;
             this.label6.Text = "Date";
             // 
-            // materialLabel1
+            // title
             // 
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(112, 156);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(35, 19);
-            this.materialLabel1.TabIndex = 18;
-            this.materialLabel1.Text = "title";
+            this.title.AutoSize = true;
+            this.title.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.title.Depth = 0;
+            this.title.Font = new System.Drawing.Font("Roboto", 11F);
+            this.title.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.title.Location = new System.Drawing.Point(112, 156);
+            this.title.MouseState = MaterialSkin.MouseState.HOVER;
+            this.title.Name = "title";
+            this.title.Size = new System.Drawing.Size(35, 19);
+            this.title.TabIndex = 18;
+            this.title.Text = "title";
             // 
             // label1
             // 
@@ -99,95 +99,95 @@
             this.label1.TabIndex = 19;
             this.label1.Text = "Ticket ID";
             // 
-            // materialLabel2
+            // date
             // 
-            this.materialLabel2.AutoSize = true;
-            this.materialLabel2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(112, 199);
-            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(38, 19);
-            this.materialLabel2.TabIndex = 20;
-            this.materialLabel2.Text = "date";
+            this.date.AutoSize = true;
+            this.date.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.date.Depth = 0;
+            this.date.Font = new System.Drawing.Font("Roboto", 11F);
+            this.date.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.date.Location = new System.Drawing.Point(112, 199);
+            this.date.MouseState = MaterialSkin.MouseState.HOVER;
+            this.date.Name = "date";
+            this.date.Size = new System.Drawing.Size(38, 19);
+            this.date.TabIndex = 20;
+            this.date.Text = "date";
             // 
-            // materialLabel3
+            // description
             // 
-            this.materialLabel3.AutoSize = true;
-            this.materialLabel3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.materialLabel3.Depth = 0;
-            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel3.Location = new System.Drawing.Point(40, 302);
-            this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel3.Name = "materialLabel3";
-            this.materialLabel3.Size = new System.Drawing.Size(84, 19);
-            this.materialLabel3.TabIndex = 21;
-            this.materialLabel3.Text = "description";
+            this.description.AutoSize = true;
+            this.description.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.description.Depth = 0;
+            this.description.Font = new System.Drawing.Font("Roboto", 11F);
+            this.description.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.description.Location = new System.Drawing.Point(40, 302);
+            this.description.MouseState = MaterialSkin.MouseState.HOVER;
+            this.description.Name = "description";
+            this.description.Size = new System.Drawing.Size(84, 19);
+            this.description.TabIndex = 21;
+            this.description.Text = "description";
             // 
-            // materialRaisedButton1
+            // solveBtn
             // 
-            this.materialRaisedButton1.Depth = 0;
-            this.materialRaisedButton1.Location = new System.Drawing.Point(254, 387);
-            this.materialRaisedButton1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRaisedButton1.Name = "materialRaisedButton1";
-            this.materialRaisedButton1.Primary = true;
-            this.materialRaisedButton1.Size = new System.Drawing.Size(121, 40);
-            this.materialRaisedButton1.TabIndex = 22;
-            this.materialRaisedButton1.Text = "Solve";
-            this.materialRaisedButton1.UseVisualStyleBackColor = true;
+            this.solveBtn.Depth = 0;
+            this.solveBtn.Location = new System.Drawing.Point(254, 387);
+            this.solveBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.solveBtn.Name = "solveBtn";
+            this.solveBtn.Primary = true;
+            this.solveBtn.Size = new System.Drawing.Size(121, 40);
+            this.solveBtn.TabIndex = 22;
+            this.solveBtn.Text = "Solve";
+            this.solveBtn.UseVisualStyleBackColor = true;
             // 
-            // materialRaisedButton2
+            // redirectBtn
             // 
-            this.materialRaisedButton2.Depth = 0;
-            this.materialRaisedButton2.Location = new System.Drawing.Point(444, 387);
-            this.materialRaisedButton2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRaisedButton2.Name = "materialRaisedButton2";
-            this.materialRaisedButton2.Primary = true;
-            this.materialRaisedButton2.Size = new System.Drawing.Size(121, 40);
-            this.materialRaisedButton2.TabIndex = 23;
-            this.materialRaisedButton2.Text = "Redirect";
-            this.materialRaisedButton2.UseVisualStyleBackColor = true;
+            this.redirectBtn.Depth = 0;
+            this.redirectBtn.Location = new System.Drawing.Point(444, 387);
+            this.redirectBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.redirectBtn.Name = "redirectBtn";
+            this.redirectBtn.Primary = true;
+            this.redirectBtn.Size = new System.Drawing.Size(121, 40);
+            this.redirectBtn.TabIndex = 23;
+            this.redirectBtn.Text = "Redirect";
+            this.redirectBtn.UseVisualStyleBackColor = true;
             // 
-            // materialRaisedButton3
+            // logoutBtn
             // 
-            this.materialRaisedButton3.Depth = 0;
-            this.materialRaisedButton3.Location = new System.Drawing.Point(653, 101);
-            this.materialRaisedButton3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRaisedButton3.Name = "materialRaisedButton3";
-            this.materialRaisedButton3.Primary = true;
-            this.materialRaisedButton3.Size = new System.Drawing.Size(121, 28);
-            this.materialRaisedButton3.TabIndex = 24;
-            this.materialRaisedButton3.Text = "Logout";
-            this.materialRaisedButton3.UseVisualStyleBackColor = true;
+            this.logoutBtn.Depth = 0;
+            this.logoutBtn.Location = new System.Drawing.Point(653, 101);
+            this.logoutBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.logoutBtn.Name = "logoutBtn";
+            this.logoutBtn.Primary = true;
+            this.logoutBtn.Size = new System.Drawing.Size(121, 28);
+            this.logoutBtn.TabIndex = 24;
+            this.logoutBtn.Text = "Logout";
+            this.logoutBtn.UseVisualStyleBackColor = true;
             // 
-            // materialRaisedButton4
+            // profileBtn
             // 
-            this.materialRaisedButton4.Depth = 0;
-            this.materialRaisedButton4.Location = new System.Drawing.Point(509, 101);
-            this.materialRaisedButton4.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRaisedButton4.Name = "materialRaisedButton4";
-            this.materialRaisedButton4.Primary = true;
-            this.materialRaisedButton4.Size = new System.Drawing.Size(121, 28);
-            this.materialRaisedButton4.TabIndex = 25;
-            this.materialRaisedButton4.Text = "Profile";
-            this.materialRaisedButton4.UseVisualStyleBackColor = true;
+            this.profileBtn.Depth = 0;
+            this.profileBtn.Location = new System.Drawing.Point(509, 101);
+            this.profileBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.profileBtn.Name = "profileBtn";
+            this.profileBtn.Primary = true;
+            this.profileBtn.Size = new System.Drawing.Size(121, 28);
+            this.profileBtn.TabIndex = 25;
+            this.profileBtn.Text = "Profile";
+            this.profileBtn.UseVisualStyleBackColor = true;
             // 
             // TicketPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.materialRaisedButton4);
-            this.Controls.Add(this.materialRaisedButton3);
-            this.Controls.Add(this.materialRaisedButton2);
-            this.Controls.Add(this.materialRaisedButton1);
-            this.Controls.Add(this.materialLabel3);
-            this.Controls.Add(this.materialLabel2);
+            this.Controls.Add(this.profileBtn);
+            this.Controls.Add(this.logoutBtn);
+            this.Controls.Add(this.redirectBtn);
+            this.Controls.Add(this.solveBtn);
+            this.Controls.Add(this.description);
+            this.Controls.Add(this.date);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.materialLabel1);
+            this.Controls.Add(this.title);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -202,13 +202,13 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label6;
-        private MaterialSkin.Controls.MaterialLabel materialLabel1;
+        private MaterialSkin.Controls.MaterialLabel title;
         private System.Windows.Forms.Label label1;
-        private MaterialSkin.Controls.MaterialLabel materialLabel2;
-        private MaterialSkin.Controls.MaterialLabel materialLabel3;
-        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton1;
-        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton2;
-        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton3;
-        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton4;
+        private MaterialSkin.Controls.MaterialLabel date;
+        private MaterialSkin.Controls.MaterialLabel description;
+        private MaterialSkin.Controls.MaterialRaisedButton solveBtn;
+        private MaterialSkin.Controls.MaterialRaisedButton redirectBtn;
+        private MaterialSkin.Controls.MaterialRaisedButton logoutBtn;
+        private MaterialSkin.Controls.MaterialRaisedButton profileBtn;
     }
 }

@@ -29,8 +29,14 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "TTSite", "http://localhost:
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepartmentGUI", "DepartmentGUI\DepartmentGUI.csproj", "{365961C1-ADEB-4C69-BA11-E87C0C4EF089}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C1FD1CB8-4DE0-44C3-A391-A7F350A1D5E3} = {C1FD1CB8-4DE0-44C3-A391-A7F350A1D5E3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolverGUI", "SolverGUI\SolverGUI.csproj", "{D08C9C1A-FC49-4C74-B701-2600F8A933ED}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C1FD1CB8-4DE0-44C3-A391-A7F350A1D5E3} = {C1FD1CB8-4DE0-44C3-A391-A7F350A1D5E3}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -29,60 +29,60 @@
         private void InitializeComponent()
         {
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.materialRaisedButton4 = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.materialRaisedButton3 = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.materialRaisedButton1 = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.message = new System.Windows.Forms.RichTextBox();
+            this.profileBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.logoutBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.ticketBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+            this.title = new MaterialSkin.Controls.MaterialLabel();
             this.label2 = new System.Windows.Forms.Label();
-            this.materialRaisedButton2 = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.redirectBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.SuspendLayout();
             // 
-            // richTextBox1
+            // message
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(84, 226);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(624, 162);
-            this.richTextBox1.TabIndex = 14;
-            this.richTextBox1.Text = "";
+            this.message.Location = new System.Drawing.Point(84, 226);
+            this.message.Name = "message";
+            this.message.Size = new System.Drawing.Size(624, 162);
+            this.message.TabIndex = 14;
+            this.message.Text = "";
             // 
-            // materialRaisedButton4
+            // profileBtn
             // 
-            this.materialRaisedButton4.Depth = 0;
-            this.materialRaisedButton4.Location = new System.Drawing.Point(498, 95);
-            this.materialRaisedButton4.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRaisedButton4.Name = "materialRaisedButton4";
-            this.materialRaisedButton4.Primary = true;
-            this.materialRaisedButton4.Size = new System.Drawing.Size(121, 28);
-            this.materialRaisedButton4.TabIndex = 32;
-            this.materialRaisedButton4.Text = "Profile";
-            this.materialRaisedButton4.UseVisualStyleBackColor = true;
+            this.profileBtn.Depth = 0;
+            this.profileBtn.Location = new System.Drawing.Point(498, 95);
+            this.profileBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.profileBtn.Name = "profileBtn";
+            this.profileBtn.Primary = true;
+            this.profileBtn.Size = new System.Drawing.Size(121, 28);
+            this.profileBtn.TabIndex = 32;
+            this.profileBtn.Text = "Profile";
+            this.profileBtn.UseVisualStyleBackColor = true;
             // 
-            // materialRaisedButton3
+            // logoutBtn
             // 
-            this.materialRaisedButton3.Depth = 0;
-            this.materialRaisedButton3.Location = new System.Drawing.Point(642, 95);
-            this.materialRaisedButton3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRaisedButton3.Name = "materialRaisedButton3";
-            this.materialRaisedButton3.Primary = true;
-            this.materialRaisedButton3.Size = new System.Drawing.Size(121, 28);
-            this.materialRaisedButton3.TabIndex = 31;
-            this.materialRaisedButton3.Text = "Logout";
-            this.materialRaisedButton3.UseVisualStyleBackColor = true;
+            this.logoutBtn.Depth = 0;
+            this.logoutBtn.Location = new System.Drawing.Point(642, 95);
+            this.logoutBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.logoutBtn.Name = "logoutBtn";
+            this.logoutBtn.Primary = true;
+            this.logoutBtn.Size = new System.Drawing.Size(121, 28);
+            this.logoutBtn.TabIndex = 31;
+            this.logoutBtn.Text = "Logout";
+            this.logoutBtn.UseVisualStyleBackColor = true;
             // 
-            // materialRaisedButton1
+            // ticketBtn
             // 
-            this.materialRaisedButton1.Depth = 0;
-            this.materialRaisedButton1.Location = new System.Drawing.Point(350, 95);
-            this.materialRaisedButton1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRaisedButton1.Name = "materialRaisedButton1";
-            this.materialRaisedButton1.Primary = true;
-            this.materialRaisedButton1.Size = new System.Drawing.Size(121, 28);
-            this.materialRaisedButton1.TabIndex = 34;
-            this.materialRaisedButton1.Text = "Ticket Page";
-            this.materialRaisedButton1.UseVisualStyleBackColor = true;
+            this.ticketBtn.Depth = 0;
+            this.ticketBtn.Location = new System.Drawing.Point(350, 95);
+            this.ticketBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.ticketBtn.Name = "ticketBtn";
+            this.ticketBtn.Primary = true;
+            this.ticketBtn.Size = new System.Drawing.Size(121, 28);
+            this.ticketBtn.TabIndex = 34;
+            this.ticketBtn.Text = "Ticket Page";
+            this.ticketBtn.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -106,19 +106,19 @@
             this.label3.TabIndex = 37;
             this.label3.Text = "Message";
             // 
-            // materialLabel1
+            // title
             // 
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(102, 144);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(35, 19);
-            this.materialLabel1.TabIndex = 36;
-            this.materialLabel1.Text = "title";
+            this.title.AutoSize = true;
+            this.title.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.title.Depth = 0;
+            this.title.Font = new System.Drawing.Font("Roboto", 11F);
+            this.title.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.title.Location = new System.Drawing.Point(102, 144);
+            this.title.MouseState = MaterialSkin.MouseState.HOVER;
+            this.title.Name = "title";
+            this.title.Size = new System.Drawing.Size(35, 19);
+            this.title.TabIndex = 36;
+            this.title.Text = "title";
             // 
             // label2
             // 
@@ -131,32 +131,32 @@
             this.label2.TabIndex = 35;
             this.label2.Text = "Title";
             // 
-            // materialRaisedButton2
+            // redirectBtn
             // 
-            this.materialRaisedButton2.Depth = 0;
-            this.materialRaisedButton2.Location = new System.Drawing.Point(339, 405);
-            this.materialRaisedButton2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRaisedButton2.Name = "materialRaisedButton2";
-            this.materialRaisedButton2.Primary = true;
-            this.materialRaisedButton2.Size = new System.Drawing.Size(121, 40);
-            this.materialRaisedButton2.TabIndex = 38;
-            this.materialRaisedButton2.Text = "Redirect";
-            this.materialRaisedButton2.UseVisualStyleBackColor = true;
+            this.redirectBtn.Depth = 0;
+            this.redirectBtn.Location = new System.Drawing.Point(350, 406);
+            this.redirectBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.redirectBtn.Name = "redirectBtn";
+            this.redirectBtn.Primary = true;
+            this.redirectBtn.Size = new System.Drawing.Size(121, 40);
+            this.redirectBtn.TabIndex = 38;
+            this.redirectBtn.Text = "Redirect";
+            this.redirectBtn.UseVisualStyleBackColor = true;
             // 
             // RedirectPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 467);
-            this.Controls.Add(this.materialRaisedButton2);
+            this.Controls.Add(this.redirectBtn);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.materialLabel1);
+            this.Controls.Add(this.title);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.materialRaisedButton1);
+            this.Controls.Add(this.ticketBtn);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.materialRaisedButton4);
-            this.Controls.Add(this.materialRaisedButton3);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.profileBtn);
+            this.Controls.Add(this.logoutBtn);
+            this.Controls.Add(this.message);
             this.Name = "RedirectPage";
             this.Text = "Redirect Page";
             this.ResumeLayout(false);
@@ -166,14 +166,14 @@
 
         #endregion
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
-        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton4;
-        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton3;
-        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton1;
+        private System.Windows.Forms.RichTextBox message;
+        private MaterialSkin.Controls.MaterialRaisedButton profileBtn;
+        private MaterialSkin.Controls.MaterialRaisedButton logoutBtn;
+        private MaterialSkin.Controls.MaterialRaisedButton ticketBtn;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private MaterialSkin.Controls.MaterialLabel materialLabel1;
+        private MaterialSkin.Controls.MaterialLabel title;
         private System.Windows.Forms.Label label2;
-        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton2;
+        private MaterialSkin.Controls.MaterialRaisedButton redirectBtn;
     }
 }

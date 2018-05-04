@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabControl = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialRaisedButton2 = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.name = new MaterialSkin.Controls.MaterialLabel();
+            this.email = new MaterialSkin.Controls.MaterialLabel();
+            this.logoutBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,15 +48,15 @@
             this.tabPage2.Text = "My Trouble Tickets";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // tabPage1
+            // tabControl
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 27);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(704, 246);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Trouble Tickets";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabControl.Location = new System.Drawing.Point(4, 27);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.Padding = new System.Windows.Forms.Padding(3);
+            this.tabControl.Size = new System.Drawing.Size(704, 246);
+            this.tabControl.TabIndex = 0;
+            this.tabControl.Text = "Trouble Tickets";
+            this.tabControl.UseVisualStyleBackColor = true;
             // 
             // tabPage3
             // 
@@ -70,7 +70,7 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabControl);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -80,54 +80,54 @@
             this.tabControl1.Size = new System.Drawing.Size(712, 277);
             this.tabControl1.TabIndex = 7;
             // 
-            // materialLabel1
+            // name
             // 
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(14, 80);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(46, 19);
-            this.materialLabel1.TabIndex = 8;
-            this.materialLabel1.Text = "name";
+            this.name.AutoSize = true;
+            this.name.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.name.Depth = 0;
+            this.name.Font = new System.Drawing.Font("Roboto", 11F);
+            this.name.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.name.Location = new System.Drawing.Point(49, 80);
+            this.name.MouseState = MaterialSkin.MouseState.HOVER;
+            this.name.Name = "name";
+            this.name.Size = new System.Drawing.Size(46, 19);
+            this.name.TabIndex = 8;
+            this.name.Text = "name";
             // 
-            // materialLabel2
+            // email
             // 
-            this.materialLabel2.AutoSize = true;
-            this.materialLabel2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(14, 115);
-            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(46, 19);
-            this.materialLabel2.TabIndex = 9;
-            this.materialLabel2.Text = "email";
+            this.email.AutoSize = true;
+            this.email.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.email.Depth = 0;
+            this.email.Font = new System.Drawing.Font("Roboto", 11F);
+            this.email.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.email.Location = new System.Drawing.Point(49, 115);
+            this.email.MouseState = MaterialSkin.MouseState.HOVER;
+            this.email.Name = "email";
+            this.email.Size = new System.Drawing.Size(46, 19);
+            this.email.TabIndex = 9;
+            this.email.Text = "email";
             // 
-            // materialRaisedButton2
+            // logoutBtn
             // 
-            this.materialRaisedButton2.Depth = 0;
-            this.materialRaisedButton2.Location = new System.Drawing.Point(654, 94);
-            this.materialRaisedButton2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRaisedButton2.Name = "materialRaisedButton2";
-            this.materialRaisedButton2.Primary = true;
-            this.materialRaisedButton2.Size = new System.Drawing.Size(121, 28);
-            this.materialRaisedButton2.TabIndex = 18;
-            this.materialRaisedButton2.Text = "Logout";
-            this.materialRaisedButton2.UseVisualStyleBackColor = true;
+            this.logoutBtn.Depth = 0;
+            this.logoutBtn.Location = new System.Drawing.Point(654, 94);
+            this.logoutBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.logoutBtn.Name = "logoutBtn";
+            this.logoutBtn.Primary = true;
+            this.logoutBtn.Size = new System.Drawing.Size(121, 28);
+            this.logoutBtn.TabIndex = 18;
+            this.logoutBtn.Text = "Logout";
+            this.logoutBtn.UseVisualStyleBackColor = true;
             // 
             // PersonalPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.materialRaisedButton2);
-            this.Controls.Add(this.materialLabel2);
-            this.Controls.Add(this.materialLabel1);
+            this.Controls.Add(this.logoutBtn);
+            this.Controls.Add(this.email);
+            this.Controls.Add(this.name);
             this.Controls.Add(this.tabControl1);
             this.Name = "PersonalPage";
             this.Text = "Personal Page";
@@ -140,10 +140,10 @@
         #endregion
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabControl;
         private System.Windows.Forms.TabControl tabControl1;
-        private MaterialSkin.Controls.MaterialLabel materialLabel1;
-        private MaterialSkin.Controls.MaterialLabel materialLabel2;
-        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton2;
+        private MaterialSkin.Controls.MaterialLabel name;
+        private MaterialSkin.Controls.MaterialLabel email;
+        private MaterialSkin.Controls.MaterialRaisedButton logoutBtn;
     }
 }

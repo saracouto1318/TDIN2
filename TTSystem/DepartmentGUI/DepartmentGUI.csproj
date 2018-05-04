@@ -37,6 +37,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,11 +50,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connected Services\TTSvc\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CheckDepartment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CheckDepartment.Designer.cs">
+      <DependentUpon>CheckDepartment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\DepartmentPage.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\DepartmentPage.Designer.cs">
       <DependentUpon>DepartmentPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TicketQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TicketQuestion.Designer.cs">
+      <DependentUpon>TicketQuestion.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ResponseTicket.cs">
       <SubType>Form</SubType>
@@ -62,8 +81,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\CheckDepartment.resx">
+      <DependentUpon>CheckDepartment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\DepartmentPage.resx">
       <DependentUpon>DepartmentPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TicketQuestion.resx">
+      <DependentUpon>TicketQuestion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ResponseTicket.resx">
       <DependentUpon>ResponseTicket.cs</DependentUpon>
@@ -77,6 +102,25 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Connected Services\TTSvc\DepartmentGUI.TTSvc.SecondaryQuestion.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\TTSvc\DepartmentGUI.TTSvc.Ticket.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\TTSvc\DepartmentGUI.TTSvc.User.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\TTSvc\Service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\TTSvc\Service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\TTSvc\Service2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\TTSvc\TTServ.wsdl" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -90,6 +134,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\TTSvc\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\TTSvc\Service.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\TTSvc\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\TTSvc\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\TTSvc\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

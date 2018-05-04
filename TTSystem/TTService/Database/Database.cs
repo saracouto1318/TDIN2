@@ -419,7 +419,223 @@ namespace Database
 
         #endregion
 
+        #region Solver
+
+        public bool CheckSolver(string email)
+        {
+            SQLiteCommand command = new SQLiteCommand(_conn);
+            SQLiteDataReader reader = null;
+
+            command.CommandText = "SELECT idSolver FROM Solver WHERE idSolver IN (SELECT idUser FROM User WHERE email = @email)";
+            command.Parameters.Add(new SQLiteParameter("@email", email));
+
+            try
+            {
+                reader = command.ExecuteReader();
+
+                bool exists = reader.Read();
+                reader.Close();
+                return exists;
+            }
+            catch (SQLiteException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+
+                if (reader != null)
+                    reader.Close();
+
+                return false;
+            }
+        }
+        public int SelectLastUser()
+        {
+            int ID = 0;
+
+            SQLiteCommand command = new SQLiteCommand(_conn);
+            SQLiteDataReader reader = null;
+            User userInfo = new User();
+
+            command.CommandText = "SELECT idUser FROM User ORDER BY idUser DESC LIMIT 1";
+
+            try
+            {
+                reader = command.ExecuteReader();
+
+                if (reader.Read())
+                    ID = reader.GetInt32(0);
+
+                reader.Close();
+                return ID;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+
+                if (reader != null)
+                    reader.Close();
+
+                return ID;
+            }
+        }
+
+        public bool InsertSolver()
+        {
+            int id = SelectLastUser();
+            if (id != 0)
+            {
+                SQLiteCommand command = new SQLiteCommand(_conn);
+
+                try
+                {
+                    command.CommandText = "INSERT INTO Solver(idSolver) VALUES (@idSolver)";
+                    command.Parameters.Add(new SQLiteParameter("@idSolver", id));
+
+                    int rowCount = command.ExecuteNonQuery();
+
+                    // If number of affected rows is lower than 1 return false
+                    return rowCount >= 1;
+                }
+                catch (SQLiteException e)
+                {
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine(e.StackTrace);
+
+                    return false;
+                }
+            }
+
+            return false;
+        }
+
+        public List<Ticket> GetTicketsSolver(User solver)
+        {
+            List<Ticket> tickets = new List<Ticket>();
+            SQLiteCommand command = new SQLiteCommand(_conn);
+            SQLiteDataReader reader = null;
+
+            command.CommandText = "SELECT * FROM Ticket WHERE idSolver=@idSolver";
+            command.Parameters.Add(new SQLiteParameter("@idSolver", solver.ID));
+
+            try
+            {
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Ticket ticket = new Ticket();
+                    ticket.ID = reader.GetInt32(0);
+                    ticket.Date = reader.GetDateTime(5);
+                    ticket.Description = SafeGetString(reader, 4);
+                    ticket.Author = solver;
+                    ticket.Title = SafeGetString(reader, 3);
+
+                    string status = SafeGetString(reader, 6);
+
+                    switch (status)
+                    {
+                        case "assigned":
+                            ticket.Status = TicketStatus.ASSIGNED;
+                            break;
+                        case "close":
+                            ticket.Status = TicketStatus.CLOSED;
+                            break;
+                    }
+
+                    tickets.Add(ticket);
+                }
+
+                reader.Close();
+            }
+            catch (SQLiteException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+
+                if (reader != null)
+                    reader.Close();
+            }
+
+            return tickets;
+        }
+
+        public List<Ticket> GetUserTicketsPerTypeSolver(User solver, TicketStatus status)
+        {
+            List<Ticket> tickets = new List<Ticket>();
+            SQLiteCommand command = new SQLiteCommand(_conn);
+            SQLiteDataReader reader = null;
+
+            command.CommandText = "SELECT * FROM Ticket WHERE idSolver = @solver AND status = @status";
+            command.Parameters.Add(new SQLiteParameter("@solver", solver.ID));
+
+            if (status == TicketStatus.ASSIGNED)
+                command.Parameters.Add(new SQLiteParameter("@status", "assigned"));
+            else if (status == TicketStatus.CLOSED)
+                command.Parameters.Add(new SQLiteParameter("@status", "closed"));
+
+            try
+            {
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Ticket ticket = new Ticket();
+                    ticket.ID = reader.GetInt32(0);
+                    ticket.Date = reader.GetDateTime(5);
+                    ticket.Description = SafeGetString(reader, 4);
+                    ticket.Title = SafeGetString(reader, 3);
+                    ticket.Author = solver;
+                    ticket.Status = status;
+
+                    tickets.Add(ticket);
+                }
+
+                reader.Close();
+            }
+            catch (SQLiteException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+
+                if (reader != null)
+                    reader.Close();
+            }
+
+            return tickets;
+        }
+
+        #endregion
+
         #region Department
+
+        public bool CheckDepartment(string name)
+        {
+            SQLiteCommand command = new SQLiteCommand(_conn);
+            SQLiteDataReader reader = null;
+
+            command.CommandText = "SELECT * FROM Department WHERE name=@name";
+            command.Parameters.Add(new SQLiteParameter("@name", name));
+
+            try
+            {
+                reader = command.ExecuteReader();
+
+                bool exists = reader.Read();
+                reader.Close();
+                return exists;
+            }
+            catch (SQLiteException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+
+                if (reader != null)
+                    reader.Close();
+
+                return false;
+            }
+        }
 
         public bool InsertDepartment(string name)
         {
@@ -443,7 +659,6 @@ namespace Database
                 return false;
             }
         }
-
 
         #endregion
 

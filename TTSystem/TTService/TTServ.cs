@@ -9,6 +9,7 @@ namespace TTService {
 
         private Database.Database _db = Database.Database.Initialize();
 
+        #region WebApp
         public int AddTicket(User author, Ticket ticket)
         {
             throw new NotImplementedException();
@@ -53,5 +54,74 @@ namespace TTService {
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+
+        #region SolverGUI
+        public int AddSolver(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CheckSolver(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetSolver(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Ticket> GetTicketsSolver(int solver)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Ticket> GetTicketsByTypeSolver(int solver, string type)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AnswerTicket(Ticket ticket, int solver, string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RedirectTicket(Ticket ticket, int solver, string redirectMessage)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region DepartmentGUI
+
+        public int AddDepartment(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CheckDepartment(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetDepartment(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SecondaryQuestion> GetQuestions(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AnswerQuestion(string name, Ticket ticket, string responseMessage)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
