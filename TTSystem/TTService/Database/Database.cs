@@ -832,13 +832,16 @@ namespace Database
             }
         }
 
-        public bool AnswerSecondaryQuestion(int idQuestion, int idDepartment, string response)
+        public bool AnswerSecondaryQuestion(SecondaryQuestion question, int idDepartment, string response)
         {
+            question.Department = idDepartment;
+            question.Response = response;
+
             SQLiteCommand command = new SQLiteCommand(_conn);
             command.CommandText = "UPDATE Ticket SET idDepartment=@id, response=@response WHERE idQuestion=@question";
             command.Parameters.Add(new SQLiteParameter("@id", idDepartment));
             command.Parameters.Add(new SQLiteParameter("@response", response));
-            command.Parameters.Add(new SQLiteParameter("@question", idQuestion));
+            command.Parameters.Add(new SQLiteParameter("@question", question.ID));
 
             try
             {
@@ -852,6 +855,82 @@ namespace Database
 
                 return false;
             }
+        }
+
+        public List<SecondaryQuestion> GetSecondaryQuestions()
+        {
+            List<SecondaryQuestion> questions = new List<SecondaryQuestion>();
+            SQLiteCommand command = new SQLiteCommand(_conn);
+            SQLiteDataReader reader = null;
+
+            command.CommandText = "SELECT * FROM SecondaryQuestions WHERE idDepartment IS NULL AND response IS NULL";
+
+            try
+            {
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    SecondaryQuestion question = new SecondaryQuestion();
+                    question.ID = reader.GetInt32(0);
+                    question.Date = reader.GetDateTime(6);
+                    question.SenderID = reader.GetInt32(2);
+                    question.TicketID = reader.GetInt32(1);
+                    question.Question = SafeGetString(reader, 4);
+
+                    questions.Add(question);
+                }
+
+                reader.Close();
+            }
+            catch (SQLiteException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+
+                if (reader != null)
+                    reader.Close();
+            }
+
+            return questions;
+        }
+
+        public SecondaryQuestion GetSecondaryQuestion(int questionID)
+        {
+            SecondaryQuestion question = new SecondaryQuestion();
+            SQLiteCommand command = new SQLiteCommand(_conn);
+            SQLiteDataReader reader = null;
+
+            command.CommandText = "SELECT * FROM SecondaryQuestions WHERE idQuestion=@ID";
+            command.Parameters.Add(new SQLiteParameter("@ID", questionID));
+
+            try
+            {
+                reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    question.ID = questionID;
+                    question.TicketID = reader.GetInt32(1);
+                    question.SenderID = reader.GetInt32(2);
+                    question.Department = reader.GetInt32(3);
+                    question.Question = SafeGetString(reader, 4);
+                    question.Response = SafeGetString(reader, 5);
+                    question.Date = reader.GetDateTime(6);
+                }
+
+                reader.Close();
+            }
+            catch (SQLiteException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+
+                if (reader != null)
+                    reader.Close();
+            }
+
+            return question;
         }
 
         #endregion

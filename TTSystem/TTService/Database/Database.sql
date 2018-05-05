@@ -39,7 +39,7 @@ CREATE TABLE SecondaryQuestions(
     idSender INTEGER NOT NULL,
     idDepartment INTEGER,
     question VARCHAR(1000000) NOT NULL,
-	response VARCHAR(1000000) NOT NULL,
+	response VARCHAR(1000000),
     dateTime DATETIME NOT NULL,
     FOREIGN KEY (idTicket) REFERENCES Ticket(idTicket)
         ON DELETE SET NULL

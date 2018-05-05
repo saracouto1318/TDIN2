@@ -30,42 +30,46 @@
         {
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label1 = new MaterialSkin.Controls.MaterialLabel();
             this.departmentName = new System.Windows.Forms.Label();
             this.logoutBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.tabControl.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
             // 
             this.tabControl.Controls.Add(this.tabPage1);
-            this.tabControl.Controls.Add(this.tabPage2);
             this.tabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl.Location = new System.Drawing.Point(45, 148);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(712, 277);
+            this.tabControl.Size = new System.Drawing.Size(601, 277);
             this.tabControl.TabIndex = 12;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Location = new System.Drawing.Point(4, 27);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(704, 246);
+            this.tabPage1.Size = new System.Drawing.Size(593, 246);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Trouble Tickets";
+            this.tabPage1.Text = "Questions";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // label1
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 27);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(704, 246);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Closed Trouble Tickets";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.Depth = 0;
+            this.label1.Font = new System.Drawing.Font("Roboto", 11F);
+            this.label1.ForeColor = System.Drawing.Color.Red;
+            this.label1.Location = new System.Drawing.Point(216, 114);
+            this.label1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(171, 19);
+            this.label1.TabIndex = 37;
+            this.label1.Text = "No questions registered";
             // 
             // departmentName
             // 
@@ -101,6 +105,8 @@
             this.Name = "DepartmentPage";
             this.Text = "Department";
             this.tabControl.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -109,8 +115,8 @@
         #endregion
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label departmentName;
         private MaterialSkin.Controls.MaterialRaisedButton logoutBtn;
+        private MaterialSkin.Controls.MaterialLabel label1;
     }
 }
