@@ -16,7 +16,10 @@ namespace SolverGUI
     public partial class TicketPage : MaterialForm
     {
         public TTServClient proxy;
-        public TicketPage()
+
+        public User user;
+        public int ticketID;
+        public TicketPage(int ticketID)
         {
             proxy = new TTServClient();
             InitializeComponent();

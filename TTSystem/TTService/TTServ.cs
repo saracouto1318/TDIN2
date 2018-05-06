@@ -22,6 +22,12 @@ namespace TTService {
         {
             return _db.GetUser(id);
         }
+
+        public User GetUserByEmail(string email)
+        {
+            return _db.GetUserByEmail(email);
+        }
+
         public bool UpdateUser(string name, string email, string password, int idUser)
         {
             return _db.UpdateUserInfo(name, email, password, idUser);
@@ -42,16 +48,16 @@ namespace TTService {
         {
             return _db.GetTicket(user, id);
         }
-        public bool LoginApp(int idUser)
+        public bool Login(int idUser)
         {
             string userSession = System.Guid.NewGuid().ToString();
-            _db.DeleteSessionApp(idUser);
-            return _db.InsertSessionApp(idUser, userSession);
+            _db.DeleteSession(idUser);
+            return _db.InsertSession(idUser, userSession);
         }
         
-        public void LogoutApp(int idUser)
+        public void Logout(int idUser)
         {
-            _db.DeleteSessionApp(idUser);
+            _db.DeleteSession(idUser);
         }
 
         public User GetUserLogged(string session)
@@ -77,6 +83,11 @@ namespace TTService {
         {
             return _db.GetUser(id);
         }
+
+        public List<Ticket> GetTicketsUnassigned()
+        {
+            return _db.GetTicketsUnassigned();
+        }
         public List<Ticket> GetTicketsSolver(User solver)
         {
             return _db.GetTicketsSolver(solver);
@@ -98,17 +109,6 @@ namespace TTService {
         public bool RedirectTicket(int ticket, int solver, string redirectMessage)
         {
             return _db.InsertSecondaryQuestion(ticket, solver, redirectMessage);
-        }
-        public bool LoginSolver(int idUser)
-        {
-            string userSession = System.Guid.NewGuid().ToString();
-            _db.DeleteSessionApp(idUser);
-            return _db.InsertSessionSolver(idUser, userSession);
-        }
-
-        public void LogoutSolver(int idUser)
-        {
-            _db.DeleteSessionSolver(idUser);
         }
         #endregion
 

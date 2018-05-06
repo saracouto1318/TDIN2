@@ -70,18 +70,10 @@ CREATE TABLE Email(
         ON UPDATE CASCADE
 );
 
-CREATE TABLE SessionApp(
+CREATE TABLE Session(
     sessionID int NOT NULL PRIMARY KEY,
     userID varchar(50) NOT NULL,
     FOREIGN KEY (idUser) REFERENCES User(idUser)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
-
-CREATE TABLE SessionSolver(
-    sessionID int NOT NULL PRIMARY KEY AUTOINCREMENT,
-    userID varchar(50) NOT NULL,
-    FOREIGN KEY (idUser) REFERENCES Solver(idSolver)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );

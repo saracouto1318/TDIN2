@@ -34,8 +34,11 @@ namespace SolverGUI
 
             if (proxy.CheckSolver(email, password))
             {
+                User user = proxy.GetUserByEmail(email);
+                proxy.Login(user.ID);
                 Hide();
-                Program.Forms.PersonalPage.Show();
+                new PersonalPage(user.ID).ShowDialog();
+                Show();
             }
             else
                 labelLogin.Visible = true;
@@ -48,12 +51,15 @@ namespace SolverGUI
             string email = emailRegister.Text;
             string password = passwordRegister.Text;
 
-            if (proxy.CheckSolver(email, password))
+            if (!proxy.AddSolver(name, email, password))
                 labelRegister.Visible = true;
             else
             {
+                User user = proxy.GetUserByEmail(email);
+                proxy.Login(user.ID);
                 Hide();
-                Program.Forms.PersonalPage.Show();
+                new PersonalPage(user.ID).ShowDialog();
+                Show();
             }
         }
     }

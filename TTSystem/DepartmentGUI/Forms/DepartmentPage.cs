@@ -18,13 +18,13 @@ namespace DepartmentGUI
         public TTServClient proxy;
         private TableLayoutPanel panel = new TableLayoutPanel();
         public string name;
-        public DepartmentPage()
+        public DepartmentPage(string name)
         {
             proxy = new TTServClient();
 
             InitializeComponent();
 
-            this.name = Program.Forms.name;
+            this.name = name;
             departmentName.Text = this.name;
 
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -89,7 +89,8 @@ namespace DepartmentGUI
                 labelTmp.Click += (object sender, EventArgs e) =>
                 {
                     Hide();
-                    Program.Forms.TicketQuestion.Show();
+                    new TicketQuestion(question.ID, this.name).ShowDialog();
+                    Show();
                 };
 
                 labelTmp = new Label()
@@ -103,7 +104,8 @@ namespace DepartmentGUI
                 labelTmp.Click += (object sender, EventArgs e) =>
                 {
                     Hide();
-                    Program.Forms.TicketQuestion.Show();
+                    new TicketQuestion(question.ID, this.name).ShowDialog();
+                    Show();
                 };
 
                 labelTmp = new Label()
@@ -117,7 +119,8 @@ namespace DepartmentGUI
                 labelTmp.Click += (object sender, EventArgs e) =>
                 {
                     Hide();
-                    Program.Forms.TicketQuestion.Show();
+                    new TicketQuestion(question.ID, this.name).ShowDialog();
+                    Show();
                 };
 
                 index++;
@@ -132,7 +135,7 @@ namespace DepartmentGUI
                 BackColor = SystemColors.ButtonHighlight,
                 BackgroundImageLayout = ImageLayout.Center,
                 CellBorderStyle = TableLayoutPanelCellBorderStyle.Single,
-                ColumnCount = 1
+                ColumnCount = 3
             };
 
             panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));

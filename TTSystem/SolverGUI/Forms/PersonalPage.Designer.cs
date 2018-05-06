@@ -63,13 +63,14 @@
             this.label2.AutoSize = true;
             this.label2.Depth = 0;
             this.label2.Font = new System.Drawing.Font("Roboto", 11F);
-            this.label2.ForeColor = System.Drawing.Color.Red;
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label2.Location = new System.Drawing.Point(160, 117);
             this.label2.MouseState = MaterialSkin.MouseState.HOVER;
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(291, 19);
             this.label2.TabIndex = 36;
             this.label2.Text = "You don\'t have any trouble ticket assigned";
+            this.label2.Visible = false;
             // 
             // tabControl
             // 
@@ -87,13 +88,14 @@
             this.label1.AutoSize = true;
             this.label1.Depth = 0;
             this.label1.Font = new System.Drawing.Font("Roboto", 11F);
-            this.label1.ForeColor = System.Drawing.Color.Red;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label1.Location = new System.Drawing.Point(203, 108);
             this.label1.MouseState = MaterialSkin.MouseState.HOVER;
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(201, 19);
             this.label1.TabIndex = 0;
             this.label1.Text = "No trouble tickets registered";
+            this.label1.Visible = false;
             // 
             // tabPage3
             // 
@@ -111,13 +113,14 @@
             this.label3.AutoSize = true;
             this.label3.Depth = 0;
             this.label3.Font = new System.Drawing.Font("Roboto", 11F);
-            this.label3.ForeColor = System.Drawing.Color.Red;
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label3.Location = new System.Drawing.Point(163, 108);
             this.label3.MouseState = MaterialSkin.MouseState.HOVER;
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(291, 19);
             this.label3.TabIndex = 37;
             this.label3.Text = "You don\'t have any trouble ticket assigned";
+            this.label3.Visible = false;
             // 
             // tabControl1
             // 
@@ -170,6 +173,7 @@
             this.logoutBtn.TabIndex = 18;
             this.logoutBtn.Text = "Logout";
             this.logoutBtn.UseVisualStyleBackColor = true;
+            this.logoutBtn.Click += new System.EventHandler(this.LogoutBtn_Click);
             // 
             // closeBtn
             // 
@@ -182,7 +186,7 @@
             this.closeBtn.TabIndex = 34;
             this.closeBtn.Text = "Tickets Close";
             this.closeBtn.UseVisualStyleBackColor = true;
-            this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
+            this.closeBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
             // openBtn
             // 
@@ -195,7 +199,7 @@
             this.openBtn.TabIndex = 33;
             this.openBtn.Text = "Tickets Open";
             this.openBtn.UseVisualStyleBackColor = true;
-            this.openBtn.Click += new System.EventHandler(this.openBtn_Click);
+            this.openBtn.Click += new System.EventHandler(this.OpenBtn_Click);
             // 
             // myTicketsBtn
             // 
@@ -208,7 +212,7 @@
             this.myTicketsBtn.TabIndex = 35;
             this.myTicketsBtn.Text = "My Tickets";
             this.myTicketsBtn.UseVisualStyleBackColor = true;
-            this.myTicketsBtn.Click += new System.EventHandler(this.myTicketsBtn_Click);
+            this.myTicketsBtn.Click += new System.EventHandler(this.MyTicketsBtn_Click);
             // 
             // PersonalPage
             // 

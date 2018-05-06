@@ -19,14 +19,14 @@ namespace DepartmentGUI
         public string name;
         public int idQuestion;
         public SecondaryQuestion secQuestion;
-        public ResponseTicket(int idQuestion)
+        public ResponseTicket(int idQuestion, string name)
         {
             proxy = new TTServClient();
 
             InitializeComponent();
 
             this.idQuestion = idQuestion;
-            this.name = Program.Forms.name;
+            this.name = name;
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
@@ -47,7 +47,15 @@ namespace DepartmentGUI
             string response = message.Text;
             proxy.AnswerQuestion(this.secQuestion, this.name, response);
             Hide();
-            Program.Forms.DepartmentPage.Show();
+            new DepartmentPage(this.name).ShowDialog();
+            Show();
+        }
+
+        private void DepartmentBtn_Click(object sender, EventArgs e)
+        {
+            Hide();
+            new DepartmentPage(this.name).ShowDialog();
+            Show();
         }
     }
 }

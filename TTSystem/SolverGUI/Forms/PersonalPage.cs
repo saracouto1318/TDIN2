@@ -17,44 +17,92 @@ namespace SolverGUI
     {
         public TTServClient proxy;
         private TableLayoutPanel panel = new TableLayoutPanel();
-        public PersonalPage()
+        public int idUser;
+        public User user;
+        public PersonalPage(int idUser)
         {
             proxy = new TTServClient();
+
             InitializeComponent();
+
+            this.user = new User();
+            this.idUser = idUser;
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+
+            GetUserInfo();
         }
 
-        private void openBtn_Click(object sender, EventArgs e)
+        public void GetUserInfo()
+        {
+            this.user = proxy.GetUser(idUser);
+            name.Text = this.user.Name;
+            email.Text = this.user.Email;
+        }
+
+        private void OpenBtn_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedTab = tabControl;
+            if (!CheckExist(TicketStatus.UNASSIGNED))
+                label1.Visible = true;
+            else
+            {
+                label1.Visible = false;
+                CreateTable(TicketStatus.UNASSIGNED);
+            }
         }
 
-        private void myTicketsBtn_Click(object sender, EventArgs e)
+        private void MyTicketsBtn_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedTab = tabPage2;
+            if (!CheckExist(TicketStatus.ASSIGNED))
+                label1.Visible = true;
+            else
+            {
+                label1.Visible = false;
+                CreateTable(TicketStatus.ASSIGNED);
+            }
         }
 
-        private void closeBtn_Click(object sender, EventArgs e)
+        private void CloseBtn_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedTab = tabPage3;
+            if (!CheckExist(TicketStatus.CLOSED))
+                label1.Visible = true;
+            else
+            {
+                label1.Visible = false;
+                CreateTable(TicketStatus.CLOSED);
+            }
         }
 
-        private bool CheckExist(string type)
+        private bool CheckExist(TicketStatus status)
         {
-            /**
-             * Verifica se existem tickets daquele tipo*/
+            if (status == TicketStatus.UNASSIGNED)
+                if (proxy.GetTicketsUnassigned().Length > 0)
+                    return true;
+            else
+                if (proxy.GetTicketsByTypeSolver(this.user, status).Length > 0)
+                    return true;
             return false;
         }
 
-        private void CreateTable(string type)
+        private void CreateTable(TicketStatus status)
         {
+            Ticket[] tickets;
+
+            if (status == TicketStatus.UNASSIGNED)
+                tickets = proxy.GetTicketsUnassigned();
+            else
+                tickets = proxy.GetTicketsByTypeSolver(this.user, status);
+
+
             panel.Visible = true;
-            
-            panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, 5));
+            float value = 100 / (tickets.Length + 1);
+            panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, value));
 
             CreatePanel();
             panel.Controls.Add(new Label()
@@ -80,106 +128,112 @@ namespace SolverGUI
             }, 1, 0);
             panel.Controls.Add(new Label()
             {
-                Text = "Date",
+                Text = "Status",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
             }, 2, 0);
-
-            /*
-            int index = 0;
-            foreach (Transaction t in transactions)
+            panel.Controls.Add(new Label()
             {
-                int quantity = t.quantity;
-                string buyer = t.buyer;
-                string seller = t.seller;
-                DateTime date = t.date;
-                float quotation = t.quotation;
+                Text = "Date",
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.Black,
+                Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
+            }, 3, 0);
+
+            int index = 0;
+            foreach (Ticket t in tickets)
+            {
 
                 panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, value));
-
                 Label labelTmp = new Label()
                 {
-                    Text = quantity.ToString(),
+                    Text = t.ID.ToString(),
                     TextAlign = ContentAlignment.MiddleCenter,
-                    ForeColor = (buyer == null || seller == null) ? Color.DarkGray : Color.DarkBlue,
                     Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
                 };
 
-                if (buyer == null || seller == null)
+                if (t.Status != TicketStatus.CLOSED)
                     labelTmp.Click += (object sender, EventArgs e) =>
                     {
-                        Program.context.ChangeForm(this, new EditOrder(t.ID, quantity, GetTransactionType(t)));
+                        Hide();
+                        new TicketPage(t.ID).ShowDialog();
+                        Show();
                     };
 
                 panel.Controls.Add(labelTmp, 0, index + 1);
 
                 labelTmp = new Label()
                 {
-                    Text = (quotation == -1f ? cQuote : quotation).ToString(),
+                    Text = t.Title,
                     TextAlign = ContentAlignment.MiddleCenter,
-                    ForeColor = (buyer == null || seller == null) ? Color.DarkGray : Color.DarkBlue,
                     Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
                 };
 
-                if (buyer == null || seller == null)
+                if (t.Status != TicketStatus.CLOSED)
                     labelTmp.Click += (object sender, EventArgs e) =>
                     {
-                        Program.context.ChangeForm(this, new EditOrder(t.ID, quantity, GetTransactionType(t)));
+                        Hide();
+                        new TicketPage(t.ID).ShowDialog();
+                        Show();
                     };
 
                 panel.Controls.Add(labelTmp, 1, index + 1);
 
                 labelTmp = new Label()
                 {
-                    Text = ((quotation == -1f ? cQuote : quotation) * quantity).ToString(),
+                    Text = t.Description,
                     TextAlign = ContentAlignment.MiddleCenter,
-                    ForeColor = (buyer == null || seller == null) ? Color.DarkGray : Color.DarkBlue,
                     Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
                 };
 
-                if (buyer == null || seller == null)
+                if (t.Status != TicketStatus.CLOSED)
                     labelTmp.Click += (object sender, EventArgs e) =>
                     {
-                        Program.context.ChangeForm(this, new EditOrder(t.ID, quantity, GetTransactionType(t)));
+                        Hide();
+                        new TicketPage(t.ID).ShowDialog();
+                        Show();
                     };
 
                 panel.Controls.Add(labelTmp, 2, index + 1);
 
                 labelTmp = new Label()
                 {
-                    Text = date.ToString(),
+                    Text = t.Status.ToString(),
                     TextAlign = ContentAlignment.MiddleCenter,
-                    ForeColor = (buyer == null || seller == null) ? Color.DarkGray : Color.DarkBlue,
+                    ForeColor = (t.Status != TicketStatus.CLOSED) ? Color.DarkGray : Color.DarkBlue,
                     Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
                 };
 
-                if (buyer == null || seller == null)
+                if (t.Status != TicketStatus.CLOSED)
                     labelTmp.Click += (object sender, EventArgs e) =>
                     {
-                        Program.context.ChangeForm(this, new EditOrder(t.ID, quantity, GetTransactionType(t)));
+                        Hide();
+                        new TicketPage(t.ID).ShowDialog();
+                        Show();
                     };
 
                 panel.Controls.Add(labelTmp, 3, index + 1);
 
                 labelTmp = new Label()
                 {
-                    Text = (buyer == null || seller == null) ? "Open" : "Closed",
+                    Text = t.Date.ToString(),
                     TextAlign = ContentAlignment.MiddleCenter,
-                    ForeColor = (buyer == null || seller == null) ? Color.DarkGray : Color.DarkBlue,
                     Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
                 };
 
-                if (buyer == null || seller == null)
+                if (t.Status != TicketStatus.CLOSED)
                     labelTmp.Click += (object sender, EventArgs e) =>
                     {
-                        Program.context.ChangeForm(this, new EditOrder(t.ID, quantity, GetTransactionType(t)));
+                        Hide();
+                        new TicketPage(t.ID).ShowDialog();
+                        Show();
                     };
 
                 panel.Controls.Add(labelTmp, 4, index + 1);
 
                 index++;
-            }*/
+            }
         }
 
         private void CreatePanel()
@@ -205,6 +259,14 @@ namespace SolverGUI
             panel.AutoSize = true;
 
             Controls.Add(panel);
+        }
+
+        private void LogoutBtn_Click(object sender, EventArgs e)
+        {
+            proxy.Logout(user.ID);
+            Hide();
+            new MainPage().ShowDialog();
+            Show();
         }
     }
 }

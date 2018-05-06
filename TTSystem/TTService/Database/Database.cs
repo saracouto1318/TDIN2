@@ -224,6 +224,45 @@ namespace Database
             }
         }
 
+        public User GetUserByEmail(string email)
+        {
+            SQLiteCommand command = new SQLiteCommand(_conn);
+            SQLiteDataReader reader = null;
+            User userInfo = new User();
+
+            command.CommandText = "SELECT * FROM User WHERE email = @email";
+            command.Parameters.Add(new SQLiteParameter("@email", email));
+
+            try
+            {
+                reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    userInfo.Name = SafeGetString(reader, 1);
+                    userInfo.ID = reader.GetInt32(0);
+                    userInfo.Email = SafeGetString(reader, 2);
+                    userInfo.Password = SafeGetString(reader, 3);
+                }
+
+                List<Ticket> tickets = GetUserTickets(userInfo);
+                userInfo.Tickets = tickets;
+
+                reader.Close();
+                return userInfo;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+
+                if (reader != null)
+                    reader.Close();
+
+                return userInfo;
+            }
+        }
+
         public List<Ticket> GetUserTickets(User user)
         {
             List<Ticket> tickets = new List<Ticket>();
@@ -443,6 +482,44 @@ namespace Database
             return false;
         }
 
+        public List<Ticket> GetTicketsUnassigned()
+        {
+            List<Ticket> tickets = new List<Ticket>();
+            SQLiteCommand command = new SQLiteCommand(_conn);
+            SQLiteDataReader reader = null;
+
+            command.CommandText = "SELECT * FROM Ticket WHERE idSolver IS NULL";
+
+            try
+            {
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Ticket ticket = new Ticket();
+                    ticket.ID = reader.GetInt32(0);
+                    ticket.Date = reader.GetDateTime(5);
+                    ticket.Description = SafeGetString(reader, 4);
+                    ticket.Author = null;
+                    ticket.Title = SafeGetString(reader, 3);
+                    ticket.Status = TicketStatus.UNASSIGNED;
+                    tickets.Add(ticket);
+                }
+
+                reader.Close();
+            }
+            catch (SQLiteException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+
+                if (reader != null)
+                    reader.Close();
+            }
+
+            return tickets;
+        }
+
         public List<Ticket> GetTicketsSolver(User solver)
         {
             List<Ticket> tickets = new List<Ticket>();
@@ -627,11 +704,11 @@ namespace Database
 
         #region Session
 
-        public bool InsertSessionApp(int idUser, string session)
+        public bool InsertSession(int idUser, string session)
         {
             SQLiteCommand command = new SQLiteCommand(_conn);
 
-            command.CommandText = "INSERT INTO SessionApp(sessionID, userID) VALUES (@session, @userID)";
+            command.CommandText = "INSERT INTO Session(sessionID, userID) VALUES (@session, @userID)";
             command.Parameters.Add(new SQLiteParameter("@session", session));
             command.Parameters.Add(new SQLiteParameter("@userID", idUser));
 
@@ -655,7 +732,7 @@ namespace Database
             SQLiteCommand command = new SQLiteCommand(_conn);
             SQLiteDataReader reader = null;
 
-            command.CommandText = "SELECT userID FROM SessionApp, SessionSolver WHERE SessionApp.sessionID = @session OR SessionSolver.sessionID = @session";
+            command.CommandText = "SELECT userID FROM Session WHERE sessionID = @session";
             command.Parameters.Add(new SQLiteParameter("@session", session));
 
             try
@@ -680,11 +757,11 @@ namespace Database
             return 0;
         }
 
-        public void DeleteSessionApp(int idUser)
+        public void DeleteSession(int idUser)
         {
             SQLiteCommand command = new SQLiteCommand(_conn);
 
-            command.CommandText = "DELETE FROM SessionApp WHERE idUser=@user";
+            command.CommandText = "DELETE FROM Session WHERE idUser=@user";
             command.Parameters.Add(new SQLiteParameter("@user", idUser));
 
             try
@@ -695,46 +772,7 @@ namespace Database
             {
             }
         }
-
-        public bool InsertSessionSolver(int idUser, string session)
-        {
-            SQLiteCommand command = new SQLiteCommand(_conn);
-
-            command.CommandText = "INSERT INTO SessionSolver(sessionID, userID) VALUES (@session, @userID)";
-            command.Parameters.Add(new SQLiteParameter("@session", session));
-            command.Parameters.Add(new SQLiteParameter("@userID", idUser));
-
-            try
-            {
-                int rowCount = command.ExecuteNonQuery();
-                // If number of affected rows is lower than 1 return false
-                return rowCount >= 1;
-            }
-            catch (SQLiteException e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.StackTrace);
-
-                return false;
-            }
-        }
-
-        public void DeleteSessionSolver(int idUser)
-        {
-            SQLiteCommand command = new SQLiteCommand(_conn);
-
-            command.CommandText = "DELETE FROM SessionSolver WHERE idUser=@user";
-            command.Parameters.Add(new SQLiteParameter("@user", idUser));
-
-            try
-            {
-                command.ExecuteNonQuery();
-            }
-            catch (SQLiteException)
-            {
-            }
-        }
-
+        
         #endregion
 
         #region Ticket

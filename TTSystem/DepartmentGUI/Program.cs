@@ -8,14 +8,12 @@ namespace DepartmentGUI
 {
     static class Program
     {
-        public static FormsManager Forms { get; private set; }
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Forms = new FormsManager();
-            Application.Run(Forms.CheckDepartment);
+            Application.Run(new CheckDepartment());
         }
     }
 }

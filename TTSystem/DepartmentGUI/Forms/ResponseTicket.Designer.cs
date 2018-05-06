@@ -32,6 +32,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.sendBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.ticketID = new System.Windows.Forms.Label();
+            this.departmentBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.SuspendLayout();
             // 
             // message
@@ -77,11 +78,25 @@
             this.ticketID.TabIndex = 35;
             this.ticketID.Text = "Ticket ID";
             // 
+            // departmentBtn
+            // 
+            this.departmentBtn.Depth = 0;
+            this.departmentBtn.Location = new System.Drawing.Point(590, 99);
+            this.departmentBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.departmentBtn.Name = "departmentBtn";
+            this.departmentBtn.Primary = true;
+            this.departmentBtn.Size = new System.Drawing.Size(121, 28);
+            this.departmentBtn.TabIndex = 44;
+            this.departmentBtn.Text = "Department";
+            this.departmentBtn.UseVisualStyleBackColor = true;
+            this.departmentBtn.Click += new System.EventHandler(this.DepartmentBtn_Click);
+            // 
             // ResponseTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.departmentBtn);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.sendBtn);
             this.Controls.Add(this.ticketID);
@@ -98,5 +113,6 @@
         private System.Windows.Forms.Label label3;
         private MaterialSkin.Controls.MaterialRaisedButton sendBtn;
         private System.Windows.Forms.Label ticketID;
+        private MaterialSkin.Controls.MaterialRaisedButton departmentBtn;
     }
 }

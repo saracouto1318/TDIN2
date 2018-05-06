@@ -25,6 +25,12 @@
   <wsdl:message name="ITTServ_GetUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetUserResponse" />
   </wsdl:message>
+  <wsdl:message name="ITTServ_GetUserByEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserByEmail" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetUserByEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserByEmailResponse" />
+  </wsdl:message>
   <wsdl:message name="ITTServ_UpdateUser_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateUser" />
   </wsdl:message>
@@ -55,17 +61,17 @@
   <wsdl:message name="ITTServ_GetTicket_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetTicketResponse" />
   </wsdl:message>
-  <wsdl:message name="ITTServ_LoginApp_InputMessage">
-    <wsdl:part name="parameters" element="tns:LoginApp" />
+  <wsdl:message name="ITTServ_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
   </wsdl:message>
-  <wsdl:message name="ITTServ_LoginApp_OutputMessage">
-    <wsdl:part name="parameters" element="tns:LoginAppResponse" />
+  <wsdl:message name="ITTServ_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
   </wsdl:message>
-  <wsdl:message name="ITTServ_LogoutApp_InputMessage">
-    <wsdl:part name="parameters" element="tns:LogoutApp" />
+  <wsdl:message name="ITTServ_Logout_InputMessage">
+    <wsdl:part name="parameters" element="tns:Logout" />
   </wsdl:message>
-  <wsdl:message name="ITTServ_LogoutApp_OutputMessage">
-    <wsdl:part name="parameters" element="tns:LogoutAppResponse" />
+  <wsdl:message name="ITTServ_Logout_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogoutResponse" />
   </wsdl:message>
   <wsdl:message name="ITTServ_GetUserLogged_InputMessage">
     <wsdl:part name="parameters" element="tns:GetUserLogged" />
@@ -90,6 +96,12 @@
   </wsdl:message>
   <wsdl:message name="ITTServ_GetSolver_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetSolverResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetTicketsUnassigned_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTicketsUnassigned" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetTicketsUnassigned_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTicketsUnassignedResponse" />
   </wsdl:message>
   <wsdl:message name="ITTServ_GetTicketsSolver_InputMessage">
     <wsdl:part name="parameters" element="tns:GetTicketsSolver" />
@@ -120,18 +132,6 @@
   </wsdl:message>
   <wsdl:message name="ITTServ_RedirectTicket_OutputMessage">
     <wsdl:part name="parameters" element="tns:RedirectTicketResponse" />
-  </wsdl:message>
-  <wsdl:message name="ITTServ_LoginSolver_InputMessage">
-    <wsdl:part name="parameters" element="tns:LoginSolver" />
-  </wsdl:message>
-  <wsdl:message name="ITTServ_LoginSolver_OutputMessage">
-    <wsdl:part name="parameters" element="tns:LoginSolverResponse" />
-  </wsdl:message>
-  <wsdl:message name="ITTServ_LogoutSolver_InputMessage">
-    <wsdl:part name="parameters" element="tns:LogoutSolver" />
-  </wsdl:message>
-  <wsdl:message name="ITTServ_LogoutSolver_OutputMessage">
-    <wsdl:part name="parameters" element="tns:LogoutSolverResponse" />
   </wsdl:message>
   <wsdl:message name="ITTServ_AddDepartment_InputMessage">
     <wsdl:part name="parameters" element="tns:AddDepartment" />
@@ -176,6 +176,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetUser" message="tns:ITTServ_GetUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetUserResponse" message="tns:ITTServ_GetUser_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetUserByEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetUserByEmail" message="tns:ITTServ_GetUserByEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetUserByEmailResponse" message="tns:ITTServ_GetUserByEmail_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="UpdateUser">
       <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/UpdateUser" message="tns:ITTServ_UpdateUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/UpdateUserResponse" message="tns:ITTServ_UpdateUser_OutputMessage" />
@@ -196,13 +200,13 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetTicket" message="tns:ITTServ_GetTicket_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetTicketResponse" message="tns:ITTServ_GetTicket_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="LoginApp">
-      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/LoginApp" message="tns:ITTServ_LoginApp_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/LoginAppResponse" message="tns:ITTServ_LoginApp_OutputMessage" />
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/Login" message="tns:ITTServ_Login_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/LoginResponse" message="tns:ITTServ_Login_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="LogoutApp">
-      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/LogoutApp" message="tns:ITTServ_LogoutApp_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/LogoutAppResponse" message="tns:ITTServ_LogoutApp_OutputMessage" />
+    <wsdl:operation name="Logout">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/Logout" message="tns:ITTServ_Logout_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/LogoutResponse" message="tns:ITTServ_Logout_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetUserLogged">
       <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetUserLogged" message="tns:ITTServ_GetUserLogged_InputMessage" />
@@ -219,6 +223,10 @@
     <wsdl:operation name="GetSolver">
       <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetSolver" message="tns:ITTServ_GetSolver_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetSolverResponse" message="tns:ITTServ_GetSolver_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTicketsUnassigned">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetTicketsUnassigned" message="tns:ITTServ_GetTicketsUnassigned_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetTicketsUnassignedResponse" message="tns:ITTServ_GetTicketsUnassigned_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetTicketsSolver">
       <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetTicketsSolver" message="tns:ITTServ_GetTicketsSolver_InputMessage" />
@@ -239,14 +247,6 @@
     <wsdl:operation name="RedirectTicket">
       <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/RedirectTicket" message="tns:ITTServ_RedirectTicket_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/RedirectTicketResponse" message="tns:ITTServ_RedirectTicket_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="LoginSolver">
-      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/LoginSolver" message="tns:ITTServ_LoginSolver_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/LoginSolverResponse" message="tns:ITTServ_LoginSolver_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="LogoutSolver">
-      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/LogoutSolver" message="tns:ITTServ_LogoutSolver_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/LogoutSolverResponse" message="tns:ITTServ_LogoutSolver_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AddDepartment">
       <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/AddDepartment" message="tns:ITTServ_AddDepartment_InputMessage" />
@@ -291,6 +291,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetUser">
       <soap:operation soapAction="http://tempuri.org/ITTServ/GetUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserByEmail">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/GetUserByEmail" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -343,8 +352,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="LoginApp">
-      <soap:operation soapAction="http://tempuri.org/ITTServ/LoginApp" style="document" />
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/Login" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -352,8 +361,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="LogoutApp">
-      <soap:operation soapAction="http://tempuri.org/ITTServ/LogoutApp" style="document" />
+    <wsdl:operation name="Logout">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/Logout" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -390,6 +399,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetSolver">
       <soap:operation soapAction="http://tempuri.org/ITTServ/GetSolver" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTicketsUnassigned">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/GetTicketsUnassigned" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -435,24 +453,6 @@
     </wsdl:operation>
     <wsdl:operation name="RedirectTicket">
       <soap:operation soapAction="http://tempuri.org/ITTServ/RedirectTicket" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="LoginSolver">
-      <soap:operation soapAction="http://tempuri.org/ITTServ/LoginSolver" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="LogoutSolver">
-      <soap:operation soapAction="http://tempuri.org/ITTServ/LogoutSolver" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

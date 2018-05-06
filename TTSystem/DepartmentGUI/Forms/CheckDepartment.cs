@@ -36,8 +36,8 @@ namespace DepartmentGUI
                 proxy.AddDepartment(department);
 
             Hide();
-            Program.Forms.name = department;
-            Program.Forms.DepartmentPage.Show();
+            new DepartmentPage(department).ShowDialog();
+            Show();
         }
     }
 }

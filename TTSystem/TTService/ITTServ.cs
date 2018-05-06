@@ -18,6 +18,9 @@ namespace TTService {
         User GetUser(int id);
 
         [OperationContract]
+        User GetUserByEmail(string email);
+
+        [OperationContract]
         bool UpdateUser(string name, string email, string password, int idUser);
 
         [OperationContract]
@@ -33,10 +36,10 @@ namespace TTService {
         Ticket GetTicket(User user, int id);
 
         [OperationContract]
-        bool LoginApp(int idUser);
+        bool Login(int idUser);
 
         [OperationContract]
-        void LogoutApp(int idUser);
+        void Logout(int idUser);
 
         [OperationContract]
         User GetUserLogged(string session);
@@ -54,6 +57,9 @@ namespace TTService {
         User GetSolver(int id);
 
         [OperationContract]
+        List<Ticket> GetTicketsUnassigned();
+
+        [OperationContract]
         List<Ticket> GetTicketsSolver(User solver);
 
         [OperationContract]
@@ -67,12 +73,6 @@ namespace TTService {
 
         [OperationContract]
         bool RedirectTicket(int ticket, int solver, string redirectMessage);
-
-        [OperationContract]
-        bool LoginSolver(int idUser);
-
-        [OperationContract]
-        void LogoutSolver(int idUser);
 
         #endregion
 
