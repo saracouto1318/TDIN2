@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GUI.TTSvc;
 using MaterialSkin;
 using MaterialSkin.Controls;
 
@@ -14,9 +15,11 @@ namespace SolverGUI
 {
     public partial class PersonalPage : MaterialForm
     {
+        public TTServClient proxy;
         private TableLayoutPanel panel = new TableLayoutPanel();
         public PersonalPage()
         {
+            proxy = new TTServClient();
             InitializeComponent();
 
             var materialSkinManager = MaterialSkinManager.Instance;

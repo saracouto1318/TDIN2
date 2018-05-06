@@ -407,16 +407,16 @@ namespace DepartmentGUI.TTSvc {
     public interface ITTServ {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AddUser", ReplyAction="http://tempuri.org/ITTServ/AddUserResponse")]
-        int AddUser(DepartmentGUI.TTSvc.User user);
+        bool AddUser(string name, string email, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AddUser", ReplyAction="http://tempuri.org/ITTServ/AddUserResponse")]
-        System.Threading.Tasks.Task<int> AddUserAsync(DepartmentGUI.TTSvc.User user);
+        System.Threading.Tasks.Task<bool> AddUserAsync(string name, string email, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/CheckUser", ReplyAction="http://tempuri.org/ITTServ/CheckUserResponse")]
-        bool CheckUser(string email);
+        bool CheckUser(string email, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/CheckUser", ReplyAction="http://tempuri.org/ITTServ/CheckUserResponse")]
-        System.Threading.Tasks.Task<bool> CheckUserAsync(string email);
+        System.Threading.Tasks.Task<bool> CheckUserAsync(string email, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetUser", ReplyAction="http://tempuri.org/ITTServ/GetUserResponse")]
         DepartmentGUI.TTSvc.User GetUser(int id);
@@ -425,46 +425,64 @@ namespace DepartmentGUI.TTSvc {
         System.Threading.Tasks.Task<DepartmentGUI.TTSvc.User> GetUserAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/UpdateUser", ReplyAction="http://tempuri.org/ITTServ/UpdateUserResponse")]
-        bool UpdateUser(DepartmentGUI.TTSvc.User user);
+        bool UpdateUser(string name, string email, string password, int idUser);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/UpdateUser", ReplyAction="http://tempuri.org/ITTServ/UpdateUserResponse")]
-        System.Threading.Tasks.Task<bool> UpdateUserAsync(DepartmentGUI.TTSvc.User user);
+        System.Threading.Tasks.Task<bool> UpdateUserAsync(string name, string email, string password, int idUser);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AddTicket", ReplyAction="http://tempuri.org/ITTServ/AddTicketResponse")]
-        int AddTicket(DepartmentGUI.TTSvc.Ticket ticket);
+        bool AddTicket(int idUser, string title, string description);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AddTicket", ReplyAction="http://tempuri.org/ITTServ/AddTicketResponse")]
-        System.Threading.Tasks.Task<int> AddTicketAsync(DepartmentGUI.TTSvc.Ticket ticket);
+        System.Threading.Tasks.Task<bool> AddTicketAsync(int idUser, string title, string description);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTickets", ReplyAction="http://tempuri.org/ITTServ/GetTicketsResponse")]
-        DepartmentGUI.TTSvc.Ticket[] GetTickets(int author);
+        DepartmentGUI.TTSvc.Ticket[] GetTickets(DepartmentGUI.TTSvc.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTickets", ReplyAction="http://tempuri.org/ITTServ/GetTicketsResponse")]
-        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsAsync(int author);
+        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsAsync(DepartmentGUI.TTSvc.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTicketsByType", ReplyAction="http://tempuri.org/ITTServ/GetTicketsByTypeResponse")]
-        DepartmentGUI.TTSvc.Ticket[] GetTicketsByType(int author, string type);
+        DepartmentGUI.TTSvc.Ticket[] GetTicketsByType(DepartmentGUI.TTSvc.User user, DepartmentGUI.TTSvc.TicketStatus status);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTicketsByType", ReplyAction="http://tempuri.org/ITTServ/GetTicketsByTypeResponse")]
-        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsByTypeAsync(int author, string type);
+        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsByTypeAsync(DepartmentGUI.TTSvc.User user, DepartmentGUI.TTSvc.TicketStatus status);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTicket", ReplyAction="http://tempuri.org/ITTServ/GetTicketResponse")]
-        DepartmentGUI.TTSvc.Ticket GetTicket(int id);
+        DepartmentGUI.TTSvc.Ticket GetTicket(DepartmentGUI.TTSvc.User user, int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTicket", ReplyAction="http://tempuri.org/ITTServ/GetTicketResponse")]
-        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket> GetTicketAsync(int id);
+        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket> GetTicketAsync(DepartmentGUI.TTSvc.User user, int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/LoginApp", ReplyAction="http://tempuri.org/ITTServ/LoginAppResponse")]
+        bool LoginApp(int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/LoginApp", ReplyAction="http://tempuri.org/ITTServ/LoginAppResponse")]
+        System.Threading.Tasks.Task<bool> LoginAppAsync(int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/LogoutApp", ReplyAction="http://tempuri.org/ITTServ/LogoutAppResponse")]
+        void LogoutApp(int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/LogoutApp", ReplyAction="http://tempuri.org/ITTServ/LogoutAppResponse")]
+        System.Threading.Tasks.Task LogoutAppAsync(int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetUserLogged", ReplyAction="http://tempuri.org/ITTServ/GetUserLoggedResponse")]
+        DepartmentGUI.TTSvc.User GetUserLogged(string session);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetUserLogged", ReplyAction="http://tempuri.org/ITTServ/GetUserLoggedResponse")]
+        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.User> GetUserLoggedAsync(string session);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AddSolver", ReplyAction="http://tempuri.org/ITTServ/AddSolverResponse")]
-        int AddSolver(DepartmentGUI.TTSvc.User user);
+        bool AddSolver(string name, string email, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AddSolver", ReplyAction="http://tempuri.org/ITTServ/AddSolverResponse")]
-        System.Threading.Tasks.Task<int> AddSolverAsync(DepartmentGUI.TTSvc.User user);
+        System.Threading.Tasks.Task<bool> AddSolverAsync(string name, string email, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/CheckSolver", ReplyAction="http://tempuri.org/ITTServ/CheckSolverResponse")]
-        bool CheckSolver(string email);
+        bool CheckSolver(string email, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/CheckSolver", ReplyAction="http://tempuri.org/ITTServ/CheckSolverResponse")]
-        System.Threading.Tasks.Task<bool> CheckSolverAsync(string email);
+        System.Threading.Tasks.Task<bool> CheckSolverAsync(string email, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetSolver", ReplyAction="http://tempuri.org/ITTServ/GetSolverResponse")]
         DepartmentGUI.TTSvc.User GetSolver(int id);
@@ -473,28 +491,52 @@ namespace DepartmentGUI.TTSvc {
         System.Threading.Tasks.Task<DepartmentGUI.TTSvc.User> GetSolverAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTicketsSolver", ReplyAction="http://tempuri.org/ITTServ/GetTicketsSolverResponse")]
-        DepartmentGUI.TTSvc.Ticket[] GetTicketsSolver(int solver);
+        DepartmentGUI.TTSvc.Ticket[] GetTicketsSolver(DepartmentGUI.TTSvc.User solver);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTicketsSolver", ReplyAction="http://tempuri.org/ITTServ/GetTicketsSolverResponse")]
-        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsSolverAsync(int solver);
+        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsSolverAsync(DepartmentGUI.TTSvc.User solver);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTicketsByTypeSolver", ReplyAction="http://tempuri.org/ITTServ/GetTicketsByTypeSolverResponse")]
-        DepartmentGUI.TTSvc.Ticket[] GetTicketsByTypeSolver(int solver, string type);
+        DepartmentGUI.TTSvc.Ticket[] GetTicketsByTypeSolver(DepartmentGUI.TTSvc.User solver, DepartmentGUI.TTSvc.TicketStatus status);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTicketsByTypeSolver", ReplyAction="http://tempuri.org/ITTServ/GetTicketsByTypeSolverResponse")]
-        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsByTypeSolverAsync(int solver, string type);
+        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsByTypeSolverAsync(DepartmentGUI.TTSvc.User solver, DepartmentGUI.TTSvc.TicketStatus status);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AssignTicket", ReplyAction="http://tempuri.org/ITTServ/AssignTicketResponse")]
+        bool AssignTicket(int idTicket, int idSolver);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AssignTicket", ReplyAction="http://tempuri.org/ITTServ/AssignTicketResponse")]
+        System.Threading.Tasks.Task<bool> AssignTicketAsync(int idTicket, int idSolver);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AnswerTicket", ReplyAction="http://tempuri.org/ITTServ/AnswerTicketResponse")]
-        bool AnswerTicket(DepartmentGUI.TTSvc.Ticket ticket, int solver, string email);
+        bool AnswerTicket(int solver, int senderTicket, int ticket, string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AnswerTicket", ReplyAction="http://tempuri.org/ITTServ/AnswerTicketResponse")]
-        System.Threading.Tasks.Task<bool> AnswerTicketAsync(DepartmentGUI.TTSvc.Ticket ticket, int solver, string email);
+        System.Threading.Tasks.Task<bool> AnswerTicketAsync(int solver, int senderTicket, int ticket, string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/RedirectTicket", ReplyAction="http://tempuri.org/ITTServ/RedirectTicketResponse")]
-        bool RedirectTicket(DepartmentGUI.TTSvc.Ticket ticket, int solver, string redirectMessage);
+        bool RedirectTicket(int ticket, int solver, string redirectMessage);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/RedirectTicket", ReplyAction="http://tempuri.org/ITTServ/RedirectTicketResponse")]
-        System.Threading.Tasks.Task<bool> RedirectTicketAsync(DepartmentGUI.TTSvc.Ticket ticket, int solver, string redirectMessage);
+        System.Threading.Tasks.Task<bool> RedirectTicketAsync(int ticket, int solver, string redirectMessage);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/LoginSolver", ReplyAction="http://tempuri.org/ITTServ/LoginSolverResponse")]
+        bool LoginSolver(int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/LoginSolver", ReplyAction="http://tempuri.org/ITTServ/LoginSolverResponse")]
+        System.Threading.Tasks.Task<bool> LoginSolverAsync(int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/LogoutSolver", ReplyAction="http://tempuri.org/ITTServ/LogoutSolverResponse")]
+        void LogoutSolver(int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/LogoutSolver", ReplyAction="http://tempuri.org/ITTServ/LogoutSolverResponse")]
+        System.Threading.Tasks.Task LogoutSolverAsync(int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AddDepartment", ReplyAction="http://tempuri.org/ITTServ/AddDepartmentResponse")]
+        bool AddDepartment(string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AddDepartment", ReplyAction="http://tempuri.org/ITTServ/AddDepartmentResponse")]
+        System.Threading.Tasks.Task<bool> AddDepartmentAsync(string name);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/CheckDepartment", ReplyAction="http://tempuri.org/ITTServ/CheckDepartmentResponse")]
         bool CheckDepartment(string name);
@@ -502,23 +544,23 @@ namespace DepartmentGUI.TTSvc {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/CheckDepartment", ReplyAction="http://tempuri.org/ITTServ/CheckDepartmentResponse")]
         System.Threading.Tasks.Task<bool> CheckDepartmentAsync(string name);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetDepartment", ReplyAction="http://tempuri.org/ITTServ/GetDepartmentResponse")]
-        DepartmentGUI.TTSvc.User GetDepartment(string name);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetDepartment", ReplyAction="http://tempuri.org/ITTServ/GetDepartmentResponse")]
-        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.User> GetDepartmentAsync(string name);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetQuestions", ReplyAction="http://tempuri.org/ITTServ/GetQuestionsResponse")]
+        DepartmentGUI.TTSvc.SecondaryQuestion[] GetQuestions();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetQuestions", ReplyAction="http://tempuri.org/ITTServ/GetQuestionsResponse")]
-        DepartmentGUI.TTSvc.SecondaryQuestion[] GetQuestions(string name);
+        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.SecondaryQuestion[]> GetQuestionsAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetQuestions", ReplyAction="http://tempuri.org/ITTServ/GetQuestionsResponse")]
-        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.SecondaryQuestion[]> GetQuestionsAsync(string name);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetQuestion", ReplyAction="http://tempuri.org/ITTServ/GetQuestionResponse")]
+        DepartmentGUI.TTSvc.SecondaryQuestion GetQuestion(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetQuestion", ReplyAction="http://tempuri.org/ITTServ/GetQuestionResponse")]
+        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.SecondaryQuestion> GetQuestionAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AnswerQuestion", ReplyAction="http://tempuri.org/ITTServ/AnswerQuestionResponse")]
-        bool AnswerQuestion(string name, DepartmentGUI.TTSvc.Ticket ticket, string responseMessage);
+        bool AnswerQuestion(DepartmentGUI.TTSvc.SecondaryQuestion question, string department, string responseMessage);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AnswerQuestion", ReplyAction="http://tempuri.org/ITTServ/AnswerQuestionResponse")]
-        System.Threading.Tasks.Task<bool> AnswerQuestionAsync(string name, DepartmentGUI.TTSvc.Ticket ticket, string responseMessage);
+        System.Threading.Tasks.Task<bool> AnswerQuestionAsync(DepartmentGUI.TTSvc.SecondaryQuestion question, string department, string responseMessage);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -548,20 +590,20 @@ namespace DepartmentGUI.TTSvc {
                 base(binding, remoteAddress) {
         }
         
-        public int AddUser(DepartmentGUI.TTSvc.User user) {
-            return base.Channel.AddUser(user);
+        public bool AddUser(string name, string email, string password) {
+            return base.Channel.AddUser(name, email, password);
         }
         
-        public System.Threading.Tasks.Task<int> AddUserAsync(DepartmentGUI.TTSvc.User user) {
-            return base.Channel.AddUserAsync(user);
+        public System.Threading.Tasks.Task<bool> AddUserAsync(string name, string email, string password) {
+            return base.Channel.AddUserAsync(name, email, password);
         }
         
-        public bool CheckUser(string email) {
-            return base.Channel.CheckUser(email);
+        public bool CheckUser(string email, string password) {
+            return base.Channel.CheckUser(email, password);
         }
         
-        public System.Threading.Tasks.Task<bool> CheckUserAsync(string email) {
-            return base.Channel.CheckUserAsync(email);
+        public System.Threading.Tasks.Task<bool> CheckUserAsync(string email, string password) {
+            return base.Channel.CheckUserAsync(email, password);
         }
         
         public DepartmentGUI.TTSvc.User GetUser(int id) {
@@ -572,60 +614,84 @@ namespace DepartmentGUI.TTSvc {
             return base.Channel.GetUserAsync(id);
         }
         
-        public bool UpdateUser(DepartmentGUI.TTSvc.User user) {
-            return base.Channel.UpdateUser(user);
+        public bool UpdateUser(string name, string email, string password, int idUser) {
+            return base.Channel.UpdateUser(name, email, password, idUser);
         }
         
-        public System.Threading.Tasks.Task<bool> UpdateUserAsync(DepartmentGUI.TTSvc.User user) {
-            return base.Channel.UpdateUserAsync(user);
+        public System.Threading.Tasks.Task<bool> UpdateUserAsync(string name, string email, string password, int idUser) {
+            return base.Channel.UpdateUserAsync(name, email, password, idUser);
         }
         
-        public int AddTicket(DepartmentGUI.TTSvc.Ticket ticket) {
-            return base.Channel.AddTicket(ticket);
+        public bool AddTicket(int idUser, string title, string description) {
+            return base.Channel.AddTicket(idUser, title, description);
         }
         
-        public System.Threading.Tasks.Task<int> AddTicketAsync(DepartmentGUI.TTSvc.Ticket ticket) {
-            return base.Channel.AddTicketAsync(ticket);
+        public System.Threading.Tasks.Task<bool> AddTicketAsync(int idUser, string title, string description) {
+            return base.Channel.AddTicketAsync(idUser, title, description);
         }
         
-        public DepartmentGUI.TTSvc.Ticket[] GetTickets(int author) {
-            return base.Channel.GetTickets(author);
+        public DepartmentGUI.TTSvc.Ticket[] GetTickets(DepartmentGUI.TTSvc.User user) {
+            return base.Channel.GetTickets(user);
         }
         
-        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsAsync(int author) {
-            return base.Channel.GetTicketsAsync(author);
+        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsAsync(DepartmentGUI.TTSvc.User user) {
+            return base.Channel.GetTicketsAsync(user);
         }
         
-        public DepartmentGUI.TTSvc.Ticket[] GetTicketsByType(int author, string type) {
-            return base.Channel.GetTicketsByType(author, type);
+        public DepartmentGUI.TTSvc.Ticket[] GetTicketsByType(DepartmentGUI.TTSvc.User user, DepartmentGUI.TTSvc.TicketStatus status) {
+            return base.Channel.GetTicketsByType(user, status);
         }
         
-        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsByTypeAsync(int author, string type) {
-            return base.Channel.GetTicketsByTypeAsync(author, type);
+        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsByTypeAsync(DepartmentGUI.TTSvc.User user, DepartmentGUI.TTSvc.TicketStatus status) {
+            return base.Channel.GetTicketsByTypeAsync(user, status);
         }
         
-        public DepartmentGUI.TTSvc.Ticket GetTicket(int id) {
-            return base.Channel.GetTicket(id);
+        public DepartmentGUI.TTSvc.Ticket GetTicket(DepartmentGUI.TTSvc.User user, int id) {
+            return base.Channel.GetTicket(user, id);
         }
         
-        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket> GetTicketAsync(int id) {
-            return base.Channel.GetTicketAsync(id);
+        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket> GetTicketAsync(DepartmentGUI.TTSvc.User user, int id) {
+            return base.Channel.GetTicketAsync(user, id);
         }
         
-        public int AddSolver(DepartmentGUI.TTSvc.User user) {
-            return base.Channel.AddSolver(user);
+        public bool LoginApp(int idUser) {
+            return base.Channel.LoginApp(idUser);
         }
         
-        public System.Threading.Tasks.Task<int> AddSolverAsync(DepartmentGUI.TTSvc.User user) {
-            return base.Channel.AddSolverAsync(user);
+        public System.Threading.Tasks.Task<bool> LoginAppAsync(int idUser) {
+            return base.Channel.LoginAppAsync(idUser);
         }
         
-        public bool CheckSolver(string email) {
-            return base.Channel.CheckSolver(email);
+        public void LogoutApp(int idUser) {
+            base.Channel.LogoutApp(idUser);
         }
         
-        public System.Threading.Tasks.Task<bool> CheckSolverAsync(string email) {
-            return base.Channel.CheckSolverAsync(email);
+        public System.Threading.Tasks.Task LogoutAppAsync(int idUser) {
+            return base.Channel.LogoutAppAsync(idUser);
+        }
+        
+        public DepartmentGUI.TTSvc.User GetUserLogged(string session) {
+            return base.Channel.GetUserLogged(session);
+        }
+        
+        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.User> GetUserLoggedAsync(string session) {
+            return base.Channel.GetUserLoggedAsync(session);
+        }
+        
+        public bool AddSolver(string name, string email, string password) {
+            return base.Channel.AddSolver(name, email, password);
+        }
+        
+        public System.Threading.Tasks.Task<bool> AddSolverAsync(string name, string email, string password) {
+            return base.Channel.AddSolverAsync(name, email, password);
+        }
+        
+        public bool CheckSolver(string email, string password) {
+            return base.Channel.CheckSolver(email, password);
+        }
+        
+        public System.Threading.Tasks.Task<bool> CheckSolverAsync(string email, string password) {
+            return base.Channel.CheckSolverAsync(email, password);
         }
         
         public DepartmentGUI.TTSvc.User GetSolver(int id) {
@@ -636,36 +702,68 @@ namespace DepartmentGUI.TTSvc {
             return base.Channel.GetSolverAsync(id);
         }
         
-        public DepartmentGUI.TTSvc.Ticket[] GetTicketsSolver(int solver) {
+        public DepartmentGUI.TTSvc.Ticket[] GetTicketsSolver(DepartmentGUI.TTSvc.User solver) {
             return base.Channel.GetTicketsSolver(solver);
         }
         
-        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsSolverAsync(int solver) {
+        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsSolverAsync(DepartmentGUI.TTSvc.User solver) {
             return base.Channel.GetTicketsSolverAsync(solver);
         }
         
-        public DepartmentGUI.TTSvc.Ticket[] GetTicketsByTypeSolver(int solver, string type) {
-            return base.Channel.GetTicketsByTypeSolver(solver, type);
+        public DepartmentGUI.TTSvc.Ticket[] GetTicketsByTypeSolver(DepartmentGUI.TTSvc.User solver, DepartmentGUI.TTSvc.TicketStatus status) {
+            return base.Channel.GetTicketsByTypeSolver(solver, status);
         }
         
-        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsByTypeSolverAsync(int solver, string type) {
-            return base.Channel.GetTicketsByTypeSolverAsync(solver, type);
+        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsByTypeSolverAsync(DepartmentGUI.TTSvc.User solver, DepartmentGUI.TTSvc.TicketStatus status) {
+            return base.Channel.GetTicketsByTypeSolverAsync(solver, status);
         }
         
-        public bool AnswerTicket(DepartmentGUI.TTSvc.Ticket ticket, int solver, string email) {
-            return base.Channel.AnswerTicket(ticket, solver, email);
+        public bool AssignTicket(int idTicket, int idSolver) {
+            return base.Channel.AssignTicket(idTicket, idSolver);
         }
         
-        public System.Threading.Tasks.Task<bool> AnswerTicketAsync(DepartmentGUI.TTSvc.Ticket ticket, int solver, string email) {
-            return base.Channel.AnswerTicketAsync(ticket, solver, email);
+        public System.Threading.Tasks.Task<bool> AssignTicketAsync(int idTicket, int idSolver) {
+            return base.Channel.AssignTicketAsync(idTicket, idSolver);
         }
         
-        public bool RedirectTicket(DepartmentGUI.TTSvc.Ticket ticket, int solver, string redirectMessage) {
+        public bool AnswerTicket(int solver, int senderTicket, int ticket, string email) {
+            return base.Channel.AnswerTicket(solver, senderTicket, ticket, email);
+        }
+        
+        public System.Threading.Tasks.Task<bool> AnswerTicketAsync(int solver, int senderTicket, int ticket, string email) {
+            return base.Channel.AnswerTicketAsync(solver, senderTicket, ticket, email);
+        }
+        
+        public bool RedirectTicket(int ticket, int solver, string redirectMessage) {
             return base.Channel.RedirectTicket(ticket, solver, redirectMessage);
         }
         
-        public System.Threading.Tasks.Task<bool> RedirectTicketAsync(DepartmentGUI.TTSvc.Ticket ticket, int solver, string redirectMessage) {
+        public System.Threading.Tasks.Task<bool> RedirectTicketAsync(int ticket, int solver, string redirectMessage) {
             return base.Channel.RedirectTicketAsync(ticket, solver, redirectMessage);
+        }
+        
+        public bool LoginSolver(int idUser) {
+            return base.Channel.LoginSolver(idUser);
+        }
+        
+        public System.Threading.Tasks.Task<bool> LoginSolverAsync(int idUser) {
+            return base.Channel.LoginSolverAsync(idUser);
+        }
+        
+        public void LogoutSolver(int idUser) {
+            base.Channel.LogoutSolver(idUser);
+        }
+        
+        public System.Threading.Tasks.Task LogoutSolverAsync(int idUser) {
+            return base.Channel.LogoutSolverAsync(idUser);
+        }
+        
+        public bool AddDepartment(string name) {
+            return base.Channel.AddDepartment(name);
+        }
+        
+        public System.Threading.Tasks.Task<bool> AddDepartmentAsync(string name) {
+            return base.Channel.AddDepartmentAsync(name);
         }
         
         public bool CheckDepartment(string name) {
@@ -676,28 +774,28 @@ namespace DepartmentGUI.TTSvc {
             return base.Channel.CheckDepartmentAsync(name);
         }
         
-        public DepartmentGUI.TTSvc.User GetDepartment(string name) {
-            return base.Channel.GetDepartment(name);
+        public DepartmentGUI.TTSvc.SecondaryQuestion[] GetQuestions() {
+            return base.Channel.GetQuestions();
         }
         
-        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.User> GetDepartmentAsync(string name) {
-            return base.Channel.GetDepartmentAsync(name);
+        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.SecondaryQuestion[]> GetQuestionsAsync() {
+            return base.Channel.GetQuestionsAsync();
         }
         
-        public DepartmentGUI.TTSvc.SecondaryQuestion[] GetQuestions(string name) {
-            return base.Channel.GetQuestions(name);
+        public DepartmentGUI.TTSvc.SecondaryQuestion GetQuestion(int id) {
+            return base.Channel.GetQuestion(id);
         }
         
-        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.SecondaryQuestion[]> GetQuestionsAsync(string name) {
-            return base.Channel.GetQuestionsAsync(name);
+        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.SecondaryQuestion> GetQuestionAsync(int id) {
+            return base.Channel.GetQuestionAsync(id);
         }
         
-        public bool AnswerQuestion(string name, DepartmentGUI.TTSvc.Ticket ticket, string responseMessage) {
-            return base.Channel.AnswerQuestion(name, ticket, responseMessage);
+        public bool AnswerQuestion(DepartmentGUI.TTSvc.SecondaryQuestion question, string department, string responseMessage) {
+            return base.Channel.AnswerQuestion(question, department, responseMessage);
         }
         
-        public System.Threading.Tasks.Task<bool> AnswerQuestionAsync(string name, DepartmentGUI.TTSvc.Ticket ticket, string responseMessage) {
-            return base.Channel.AnswerQuestionAsync(name, ticket, responseMessage);
+        public System.Threading.Tasks.Task<bool> AnswerQuestionAsync(DepartmentGUI.TTSvc.SecondaryQuestion question, string department, string responseMessage) {
+            return base.Channel.AnswerQuestionAsync(question, department, responseMessage);
         }
     }
 }

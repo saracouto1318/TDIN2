@@ -55,6 +55,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="FormsManager.cs" />
     <Compile Include="Forms\CheckDepartment.cs">
       <SubType>Form</SubType>
     </Compile>

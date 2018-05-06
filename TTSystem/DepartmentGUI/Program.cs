@@ -8,15 +8,14 @@ namespace DepartmentGUI
 {
     static class Program
     {
-        /// <summary>
-        /// Ponto de entrada principal para o aplicativo.
-        /// </summary>
+        public static FormsManager Forms { get; private set; }
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DepartmentPage());
+            Forms = new FormsManager();
+            Application.Run(Forms.CheckDepartment);
         }
     }
 }

@@ -131,35 +131,6 @@ namespace Database
         }
 
         #region User
-
-        public bool UserExists(string email)
-        {
-            SQLiteCommand command = new SQLiteCommand(_conn);
-            SQLiteDataReader reader = null;
-
-            command.CommandText = "SELECT * FROM User WHERE email = @email ";
-            command.Parameters.Add(new SQLiteParameter("@email", email));
-
-            try
-            {
-                reader = command.ExecuteReader();
-
-                bool exists = reader.Read();
-                reader.Close();
-                return exists;
-            }
-            catch (SQLiteException e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.StackTrace);
-
-                if (reader != null)
-                    reader.Close();
-
-                return false;
-            }
-        }
-
         public bool ValidateUser(string email, string password)
         {
             SQLiteCommand command = new SQLiteCommand(_conn);
@@ -214,7 +185,7 @@ namespace Database
             }
         }
 
-        public User GetUser(string idUser)
+        public User GetUser(int idUser)
         {
             SQLiteCommand command = new SQLiteCommand(_conn);
             SQLiteDataReader reader = null;
@@ -351,55 +322,13 @@ namespace Database
 
             return tickets;
         }
-
-        public bool ChangeName(string name, int id)
+        public bool UpdateUserInfo(string name, string email, string password, int id)
         {
             SQLiteCommand command = new SQLiteCommand(_conn);
 
-            command.CommandText = "UPDATE User SET name=@name WHERE idUser=@id";
+            command.CommandText = "UPDATE User SET name=@name, password=@pass, email=@email WHERE idUser=@id";
             command.Parameters.Add(new SQLiteParameter("@name", name));
-            command.Parameters.Add(new SQLiteParameter("@id", id));
-
-            try
-            {
-                command.ExecuteNonQuery();
-                return true;
-            }
-            catch (SQLiteException e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.StackTrace);
-
-                return false;
-            }
-        }
-
-        public bool ChangeEmail(string email, int id)
-        {
-            SQLiteCommand command = new SQLiteCommand(_conn);
-
-            command.CommandText = "UPDATE User SET email=@email WHERE idUser=@id";
             command.Parameters.Add(new SQLiteParameter("@email", email));
-            command.Parameters.Add(new SQLiteParameter("@id", id));
-            try
-            {
-                command.ExecuteNonQuery();
-                return true;
-            }
-            catch (SQLiteException e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.StackTrace);
-
-                return false;
-            }
-        }
-
-        public bool ChangePassword(string password, int id)
-        {
-            SQLiteCommand command = new SQLiteCommand(_conn);
-
-            command.CommandText = "UPDATE User SET password=@pass WHERE idUser=@id";
             command.Parameters.Add(new SQLiteParameter("@pass", password));
             command.Parameters.Add(new SQLiteParameter("@id", id));
 
@@ -421,13 +350,14 @@ namespace Database
 
         #region Solver
 
-        public bool CheckSolver(string email)
+        public bool CheckSolver(string email, string password)
         {
             SQLiteCommand command = new SQLiteCommand(_conn);
             SQLiteDataReader reader = null;
 
-            command.CommandText = "SELECT idSolver FROM Solver WHERE idSolver IN (SELECT idUser FROM User WHERE email = @email)";
+            command.CommandText = "SELECT idSolver FROM Solver WHERE idSolver IN (SELECT idUser FROM User WHERE email = @email AND password=@pass)";
             command.Parameters.Add(new SQLiteParameter("@email", email));
+            command.Parameters.Add(new SQLiteParameter("@pass", password));
 
             try
             {
@@ -480,32 +410,36 @@ namespace Database
             }
         }
 
-        public bool InsertSolver()
+        public bool InsertSolver(string name, string email, string password)
         {
-            int id = SelectLastUser();
-            if (id != 0)
+            if(InsertUser(name, email, password))
             {
-                SQLiteCommand command = new SQLiteCommand(_conn);
-
-                try
+                int id = SelectLastUser();
+                if (id != 0)
                 {
-                    command.CommandText = "INSERT INTO Solver(idSolver) VALUES (@idSolver)";
-                    command.Parameters.Add(new SQLiteParameter("@idSolver", id));
+                    SQLiteCommand command = new SQLiteCommand(_conn);
 
-                    int rowCount = command.ExecuteNonQuery();
+                    try
+                    {
+                        command.CommandText = "INSERT INTO Solver(idSolver) VALUES (@idSolver)";
+                        command.Parameters.Add(new SQLiteParameter("@idSolver", id));
 
-                    // If number of affected rows is lower than 1 return false
-                    return rowCount >= 1;
+                        int rowCount = command.ExecuteNonQuery();
+
+                        // If number of affected rows is lower than 1 return false
+                        return rowCount >= 1;
+                    }
+                    catch (SQLiteException e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.WriteLine(e.StackTrace);
+
+                        return false;
+                    }
                 }
-                catch (SQLiteException e)
-                {
-                    Console.WriteLine(e.Message);
-                    Console.WriteLine(e.StackTrace);
 
-                    return false;
-                }
+                return false;
             }
-
             return false;
         }
 
@@ -609,6 +543,35 @@ namespace Database
 
         #region Department
 
+        public int GetDepartmentByName(string name)
+        {
+            int id = 0;
+            SQLiteCommand command = new SQLiteCommand(_conn);
+            SQLiteDataReader reader = null;
+
+            command.CommandText = "SELECT idDepartment FROM Department WHERE name=@name";
+            command.Parameters.Add(new SQLiteParameter("@name", name));
+
+            try
+            {
+                reader = command.ExecuteReader();
+
+                if (reader.Read())
+                    id = reader.GetInt32(0);
+
+                reader.Close();
+            }
+            catch (SQLiteException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+
+                if (reader != null)
+                    reader.Close();
+            }
+
+            return id;
+        }
         public bool CheckDepartment(string name)
         {
             SQLiteCommand command = new SQLiteCommand(_conn);
@@ -664,11 +627,11 @@ namespace Database
 
         #region Session
 
-        public bool InsertSession(int idUser, string session)
+        public bool InsertSessionApp(int idUser, string session)
         {
             SQLiteCommand command = new SQLiteCommand(_conn);
 
-            command.CommandText = "INSERT INTO Session(sessionID, userID) VALUES (@session, @userID)";
+            command.CommandText = "INSERT INTO SessionApp(sessionID, userID) VALUES (@session, @userID)";
             command.Parameters.Add(new SQLiteParameter("@session", session));
             command.Parameters.Add(new SQLiteParameter("@userID", idUser));
 
@@ -687,26 +650,26 @@ namespace Database
             }
         }
 
-        public string GetUserID(string session)
+        public int GetUserID(string session)
         {
             SQLiteCommand command = new SQLiteCommand(_conn);
             SQLiteDataReader reader = null;
 
-            command.CommandText = "SELECT userID FROM Session WHERE sessionID = @session";
+            command.CommandText = "SELECT userID FROM SessionApp, SessionSolver WHERE SessionApp.sessionID = @session OR SessionSolver.sessionID = @session";
             command.Parameters.Add(new SQLiteParameter("@session", session));
 
             try
             {
                 reader = command.ExecuteReader();
-                string username = null;
+                int ID = 0;
 
                 if (reader.Read())
                 {
-                    username = SafeGetString(reader, 0);
+                    ID = reader.GetInt32(0);
                 }
 
                 reader.Close();
-                return username;
+                return ID;
             }
             catch (Exception)
             {
@@ -714,14 +677,53 @@ namespace Database
                     reader.Close();
             }
 
-            return null;
+            return 0;
         }
 
-        public void DeleteSession(int idUser)
+        public void DeleteSessionApp(int idUser)
         {
             SQLiteCommand command = new SQLiteCommand(_conn);
 
-            command.CommandText = "DELETE FROM Session WHERE idUser=@user";
+            command.CommandText = "DELETE FROM SessionApp WHERE idUser=@user";
+            command.Parameters.Add(new SQLiteParameter("@user", idUser));
+
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (SQLiteException)
+            {
+            }
+        }
+
+        public bool InsertSessionSolver(int idUser, string session)
+        {
+            SQLiteCommand command = new SQLiteCommand(_conn);
+
+            command.CommandText = "INSERT INTO SessionSolver(sessionID, userID) VALUES (@session, @userID)";
+            command.Parameters.Add(new SQLiteParameter("@session", session));
+            command.Parameters.Add(new SQLiteParameter("@userID", idUser));
+
+            try
+            {
+                int rowCount = command.ExecuteNonQuery();
+                // If number of affected rows is lower than 1 return false
+                return rowCount >= 1;
+            }
+            catch (SQLiteException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+
+                return false;
+            }
+        }
+
+        public void DeleteSessionSolver(int idUser)
+        {
+            SQLiteCommand command = new SQLiteCommand(_conn);
+
+            command.CommandText = "DELETE FROM SessionSolver WHERE idUser=@user";
             command.Parameters.Add(new SQLiteParameter("@user", idUser));
 
             try
@@ -762,6 +764,57 @@ namespace Database
             }
         }
 
+        public Ticket GetTicket(User user, int idTicket)
+        {
+            SQLiteCommand command = new SQLiteCommand(_conn);
+            SQLiteDataReader reader = null;
+            Ticket ticket = new Ticket();
+
+            command.CommandText = "SELECT * FROM Ticket WHERE idTicket = @ticket";
+            command.Parameters.Add(new SQLiteParameter("@user", idTicket));
+
+            try
+            {
+                reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    ticket.ID = reader.GetInt32(0);
+                    ticket.Author = user;
+                    ticket.Title = SafeGetString(reader, 3);
+                    ticket.Description = SafeGetString(reader, 4);
+                    ticket.Date = reader.GetDateTime(5);
+
+                    string status = SafeGetString(reader, 6);
+
+                    switch (status)
+                    {
+                        case "unassigned":
+                            ticket.Status = TicketStatus.UNASSIGNED;
+                            break;
+                        case "assigned":
+                            ticket.Status = TicketStatus.ASSIGNED;
+                            break;
+                        case "closed":
+                            ticket.Status = TicketStatus.CLOSED;
+                            break;
+                    }
+                }
+
+                reader.Close();
+                return ticket;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+
+                if (reader != null)
+                    reader.Close();
+
+                return ticket;
+            }
+        }
         public bool SolveTicket(int idTicket)
         {
             SQLiteCommand command = new SQLiteCommand(_conn);
@@ -832,14 +885,15 @@ namespace Database
             }
         }
 
-        public bool AnswerSecondaryQuestion(SecondaryQuestion question, int idDepartment, string response)
+        public bool AnswerSecondaryQuestion(SecondaryQuestion question, string department, string response)
         {
-            question.Department = idDepartment;
+            int id = GetDepartmentByName(department);
+            question.Department = id;
             question.Response = response;
 
             SQLiteCommand command = new SQLiteCommand(_conn);
-            command.CommandText = "UPDATE Ticket SET idDepartment=@id, response=@response WHERE idQuestion=@question";
-            command.Parameters.Add(new SQLiteParameter("@id", idDepartment));
+            command.CommandText = "UPDATE SecondaryQuestion SET idDepartment=@id, response=@response WHERE idQuestion=@question";
+            command.Parameters.Add(new SQLiteParameter("@id", id));
             command.Parameters.Add(new SQLiteParameter("@response", response));
             command.Parameters.Add(new SQLiteParameter("@question", question.ID));
 

@@ -15,8 +15,8 @@ public partial class _Default : Page {
         string email = String.Format("{0}", Request.Form["email"]);
         string password = String.Format("{0}", Request.Form["password"]);
 
-        if(proxy.CheckUser(email))
-            Response.Redirect("ProfilePage.aspx");
+        /*if(proxy.CheckUser(email))
+            Response.Redirect("ProfilePage.aspx");*/
     }
 
     protected void BtnRegister_Click(object sender, EventArgs e)
@@ -32,8 +32,8 @@ public partial class _Default : Page {
             Password = password
         };
 
-        if (proxy.AddUser(user) != 0)
-            Response.Redirect("ProfilePage.aspx");
+        /*if (proxy.AddUser(user) != 0)
+            Response.Redirect("ProfilePage.aspx");*/
     }
     
 }

@@ -9,69 +9,88 @@ namespace TTService {
   public interface ITTServ {
         #region WebApp
         [OperationContract]
-        int AddUser(User user);
+        bool AddUser(string name, string email, string password);
 
         [OperationContract]
-        bool CheckUser(string email);
+        bool CheckUser(string email, string password);
 
         [OperationContract]
         User GetUser(int id);
 
         [OperationContract]
-        bool UpdateUser(User user);
+        bool UpdateUser(string name, string email, string password, int idUser);
 
         [OperationContract]
-        int AddTicket(Ticket ticket);
+        bool AddTicket(int idUser, string title, string description);
 
         [OperationContract]
-        List<Ticket> GetTickets(int author);
+        List<Ticket> GetTickets(User user);
 
         [OperationContract]
-        List<Ticket> GetTicketsByType(int author, string type);
+        List<Ticket> GetTicketsByType(User user, TicketStatus status);
 
         [OperationContract]
-        Ticket GetTicket(int id);
+        Ticket GetTicket(User user, int id);
+
+        [OperationContract]
+        bool LoginApp(int idUser);
+
+        [OperationContract]
+        void LogoutApp(int idUser);
+
+        [OperationContract]
+        User GetUserLogged(string session);
 
         #endregion
 
         #region SolverGUI
         [OperationContract]
-        int AddSolver(User user);
+        bool AddSolver(string name, string email, string password);
 
         [OperationContract]
-        bool CheckSolver(string email);
+        bool CheckSolver(string email, string password);
 
         [OperationContract]
         User GetSolver(int id);
 
         [OperationContract]
-        List<Ticket> GetTicketsSolver(int solver);
+        List<Ticket> GetTicketsSolver(User solver);
 
         [OperationContract]
-        List<Ticket> GetTicketsByTypeSolver(int solver, string type);
+        List<Ticket> GetTicketsByTypeSolver(User solver, TicketStatus status);
 
         [OperationContract]
-        bool AnswerTicket(Ticket ticket, int solver, string email);
+        bool AssignTicket(int idTicket, int idSolver);
+ 
+        [OperationContract]
+        bool AnswerTicket(int solver, int senderTicket, int ticket, string email);
 
         [OperationContract]
-        bool RedirectTicket(Ticket ticket, int solver, string redirectMessage);
+        bool RedirectTicket(int ticket, int solver, string redirectMessage);
+
+        [OperationContract]
+        bool LoginSolver(int idUser);
+
+        [OperationContract]
+        void LogoutSolver(int idUser);
 
         #endregion
 
         #region DepartmentGUI
-        int AddDepartment(string name);
+        [OperationContract]
+        bool AddDepartment(string name);
 
         [OperationContract]
         bool CheckDepartment(string name);
 
         [OperationContract]
-        User GetDepartment(string name);
+        List<SecondaryQuestion> GetQuestions();
 
         [OperationContract]
-        List<SecondaryQuestion> GetQuestions(string name);
+        SecondaryQuestion GetQuestion(int id);
 
         [OperationContract]
-        bool AnswerQuestion(string name, Ticket ticket, string responseMessage);
+        bool AnswerQuestion(SecondaryQuestion question, string department, string responseMessage);
         #endregion
     }
 }

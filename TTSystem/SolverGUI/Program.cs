@@ -8,14 +8,13 @@ namespace SolverGUI
 {
     static class Program
     {
-        /// <summary>
-        /// Ponto de entrada principal para o aplicativo.
-        /// </summary>
+        public static FormsManager Forms { get; private set; }
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Forms = new FormsManager();
             Application.Run(new MainPage());
         }
     }

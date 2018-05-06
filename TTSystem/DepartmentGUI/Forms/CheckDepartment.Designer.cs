@@ -1,4 +1,4 @@
-﻿namespace DepartmentGUI.Forms
+﻿namespace DepartmentGUI
 {
     partial class CheckDepartment
     {
@@ -45,6 +45,7 @@
             this.loginBtn.TabIndex = 20;
             this.loginBtn.Text = "Login";
             this.loginBtn.UseVisualStyleBackColor = true;
+            this.loginBtn.Click += new System.EventHandler(this.LoginBtn_Click);
             // 
             // label3
             // 

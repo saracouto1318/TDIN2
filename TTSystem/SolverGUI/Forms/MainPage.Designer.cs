@@ -42,6 +42,8 @@
             this.nameRegister = new System.Windows.Forms.TextBox();
             this.passwordLogin = new System.Windows.Forms.TextBox();
             this.emailLogin = new System.Windows.Forms.TextBox();
+            this.labelLogin = new MaterialSkin.Controls.MaterialLabel();
+            this.labelRegister = new MaterialSkin.Controls.MaterialLabel();
             this.SuspendLayout();
             // 
             // label1
@@ -132,6 +134,7 @@
             this.loginBtn.TabIndex = 16;
             this.loginBtn.Text = "Login";
             this.loginBtn.UseVisualStyleBackColor = true;
+            this.loginBtn.Click += new System.EventHandler(this.LoginBtn_Click);
             // 
             // registerBtn
             // 
@@ -144,6 +147,7 @@
             this.registerBtn.TabIndex = 17;
             this.registerBtn.Text = "Register";
             this.registerBtn.UseVisualStyleBackColor = true;
+            this.registerBtn.Click += new System.EventHandler(this.RegisterBtn_Click);
             // 
             // passwordRegister
             // 
@@ -180,11 +184,43 @@
             this.emailLogin.Size = new System.Drawing.Size(134, 20);
             this.emailLogin.TabIndex = 2;
             // 
+            // labelLogin
+            // 
+            this.labelLogin.AutoSize = true;
+            this.labelLogin.BackColor = System.Drawing.Color.White;
+            this.labelLogin.Depth = 0;
+            this.labelLogin.Font = new System.Drawing.Font("Roboto", 11F);
+            this.labelLogin.ForeColor = System.Drawing.Color.Red;
+            this.labelLogin.Location = new System.Drawing.Point(118, 306);
+            this.labelLogin.MouseState = MaterialSkin.MouseState.HOVER;
+            this.labelLogin.Name = "labelLogin";
+            this.labelLogin.Size = new System.Drawing.Size(210, 19);
+            this.labelLogin.TabIndex = 18;
+            this.labelLogin.Text = "This solver isn\'t registered yet";
+            this.labelLogin.Visible = false;
+            // 
+            // labelRegister
+            // 
+            this.labelRegister.AutoSize = true;
+            this.labelRegister.BackColor = System.Drawing.Color.White;
+            this.labelRegister.Depth = 0;
+            this.labelRegister.Font = new System.Drawing.Font("Roboto", 11F);
+            this.labelRegister.ForeColor = System.Drawing.Color.Red;
+            this.labelRegister.Location = new System.Drawing.Point(528, 344);
+            this.labelRegister.MouseState = MaterialSkin.MouseState.HOVER;
+            this.labelRegister.Name = "labelRegister";
+            this.labelRegister.Size = new System.Drawing.Size(179, 19);
+            this.labelRegister.TabIndex = 19;
+            this.labelRegister.Text = "This solver already exists";
+            this.labelRegister.Visible = false;
+            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelRegister);
+            this.Controls.Add(this.labelLogin);
             this.Controls.Add(this.registerBtn);
             this.Controls.Add(this.loginBtn);
             this.Controls.Add(this.label7);
@@ -222,5 +258,7 @@
         private System.Windows.Forms.TextBox nameRegister;
         private System.Windows.Forms.TextBox passwordLogin;
         private System.Windows.Forms.TextBox emailLogin;
+        private MaterialSkin.Controls.MaterialLabel labelLogin;
+        private MaterialSkin.Controls.MaterialLabel labelRegister;
     }
 }

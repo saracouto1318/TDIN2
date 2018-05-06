@@ -30,9 +30,6 @@
         {
             this.label3 = new System.Windows.Forms.Label();
             this.answerBtn = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.logoutBtn = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.ticketTitle = new MaterialSkin.Controls.MaterialLabel();
-            this.label2 = new System.Windows.Forms.Label();
             this.ticketID = new System.Windows.Forms.Label();
             this.question = new MaterialSkin.Controls.MaterialLabel();
             this.SuspendLayout();
@@ -42,7 +39,7 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(34, 207);
+            this.label3.Location = new System.Drawing.Point(32, 186);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(106, 25);
             this.label3.TabIndex = 41;
@@ -59,43 +56,7 @@
             this.answerBtn.TabIndex = 40;
             this.answerBtn.Text = "Answer";
             this.answerBtn.UseVisualStyleBackColor = true;
-            // 
-            // logoutBtn
-            // 
-            this.logoutBtn.Depth = 0;
-            this.logoutBtn.Location = new System.Drawing.Point(644, 99);
-            this.logoutBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.logoutBtn.Name = "logoutBtn";
-            this.logoutBtn.Primary = true;
-            this.logoutBtn.Size = new System.Drawing.Size(121, 28);
-            this.logoutBtn.TabIndex = 38;
-            this.logoutBtn.Text = "Logout";
-            this.logoutBtn.UseVisualStyleBackColor = true;
-            // 
-            // ticketTitle
-            // 
-            this.ticketTitle.AutoSize = true;
-            this.ticketTitle.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ticketTitle.Depth = 0;
-            this.ticketTitle.Font = new System.Drawing.Font("Roboto", 11F);
-            this.ticketTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.ticketTitle.Location = new System.Drawing.Point(105, 146);
-            this.ticketTitle.MouseState = MaterialSkin.MouseState.HOVER;
-            this.ticketTitle.Name = "ticketTitle";
-            this.ticketTitle.Size = new System.Drawing.Size(35, 19);
-            this.ticketTitle.TabIndex = 37;
-            this.ticketTitle.Text = "title";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(32, 141);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 25);
-            this.label2.TabIndex = 36;
-            this.label2.Text = "Title";
+            this.answerBtn.Click += new System.EventHandler(this.AnswerBtn_Click);
             // 
             // ticketID
             // 
@@ -115,7 +76,7 @@
             this.question.Depth = 0;
             this.question.Font = new System.Drawing.Font("Roboto", 11F);
             this.question.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.question.Location = new System.Drawing.Point(35, 248);
+            this.question.Location = new System.Drawing.Point(33, 238);
             this.question.MouseState = MaterialSkin.MouseState.HOVER;
             this.question.Name = "question";
             this.question.Size = new System.Drawing.Size(68, 19);
@@ -130,9 +91,6 @@
             this.Controls.Add(this.question);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.answerBtn);
-            this.Controls.Add(this.logoutBtn);
-            this.Controls.Add(this.ticketTitle);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.ticketID);
             this.Name = "TicketQuestion";
             this.Text = "Response Ticket";
@@ -144,9 +102,6 @@
         #endregion
         private System.Windows.Forms.Label label3;
         private MaterialSkin.Controls.MaterialRaisedButton answerBtn;
-        private MaterialSkin.Controls.MaterialRaisedButton logoutBtn;
-        private MaterialSkin.Controls.MaterialLabel ticketTitle;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label ticketID;
         private MaterialSkin.Controls.MaterialLabel question;
     }

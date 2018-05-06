@@ -1,4 +1,5 @@
-﻿using MaterialSkin;
+﻿using GUI.TTSvc;
+using MaterialSkin;
 using MaterialSkin.Controls;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,10 @@ namespace SolverGUI
 {
     public partial class SolvePage : MaterialForm
     {
+        public TTServClient proxy;
         public SolvePage()
         {
+            proxy = new TTServClient();
             InitializeComponent();
 
             var materialSkinManager = MaterialSkinManager.Instance;

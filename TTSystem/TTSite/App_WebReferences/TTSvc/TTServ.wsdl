@@ -97,6 +97,12 @@
   <wsdl:message name="ITTServ_RedirectTicket_OutputMessage">
     <wsdl:part name="parameters" element="tns:RedirectTicketResponse" />
   </wsdl:message>
+  <wsdl:message name="ITTServ_AddDepartment_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddDepartment" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_AddDepartment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddDepartmentResponse" />
+  </wsdl:message>
   <wsdl:message name="ITTServ_CheckDepartment_InputMessage">
     <wsdl:part name="parameters" element="tns:CheckDepartment" />
   </wsdl:message>
@@ -181,6 +187,10 @@
     <wsdl:operation name="RedirectTicket">
       <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/RedirectTicket" message="tns:ITTServ_RedirectTicket_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/RedirectTicketResponse" message="tns:ITTServ_RedirectTicket_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddDepartment">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/AddDepartment" message="tns:ITTServ_AddDepartment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/AddDepartmentResponse" message="tns:ITTServ_AddDepartment_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="CheckDepartment">
       <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/CheckDepartment" message="tns:ITTServ_CheckDepartment_InputMessage" />
@@ -329,6 +339,15 @@
     </wsdl:operation>
     <wsdl:operation name="RedirectTicket">
       <soap:operation soapAction="http://tempuri.org/ITTServ/RedirectTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddDepartment">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/AddDepartment" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

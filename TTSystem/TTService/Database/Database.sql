@@ -1,7 +1,7 @@
 CREATE TABLE User(
     idUser INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(50) NOT NULL
 );
 
@@ -70,10 +70,18 @@ CREATE TABLE Email(
         ON UPDATE CASCADE
 );
 
-CREATE TABLE Session(
+CREATE TABLE SessionApp(
     sessionID int NOT NULL PRIMARY KEY,
     userID varchar(50) NOT NULL,
     FOREIGN KEY (idUser) REFERENCES User(idUser)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE SessionSolver(
+    sessionID int NOT NULL PRIMARY KEY AUTOINCREMENT,
+    userID varchar(50) NOT NULL,
+    FOREIGN KEY (idUser) REFERENCES Solver(idSolver)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );

@@ -32,7 +32,6 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label1 = new MaterialSkin.Controls.MaterialLabel();
             this.departmentName = new System.Windows.Forms.Label();
-            this.logoutBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -63,7 +62,7 @@
             this.label1.AutoSize = true;
             this.label1.Depth = 0;
             this.label1.Font = new System.Drawing.Font("Roboto", 11F);
-            this.label1.ForeColor = System.Drawing.Color.Red;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label1.Location = new System.Drawing.Point(216, 114);
             this.label1.MouseState = MaterialSkin.MouseState.HOVER;
             this.label1.Name = "label1";
@@ -82,24 +81,11 @@
             this.departmentName.TabIndex = 27;
             this.departmentName.Text = "Department";
             // 
-            // logoutBtn
-            // 
-            this.logoutBtn.Depth = 0;
-            this.logoutBtn.Location = new System.Drawing.Point(636, 91);
-            this.logoutBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.logoutBtn.Name = "logoutBtn";
-            this.logoutBtn.Primary = true;
-            this.logoutBtn.Size = new System.Drawing.Size(121, 28);
-            this.logoutBtn.TabIndex = 30;
-            this.logoutBtn.Text = "Logout";
-            this.logoutBtn.UseVisualStyleBackColor = true;
-            // 
             // DepartmentPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.logoutBtn);
             this.Controls.Add(this.departmentName);
             this.Controls.Add(this.tabControl);
             this.Name = "DepartmentPage";
@@ -116,7 +102,6 @@
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Label departmentName;
-        private MaterialSkin.Controls.MaterialRaisedButton logoutBtn;
         private MaterialSkin.Controls.MaterialLabel label1;
     }
 }

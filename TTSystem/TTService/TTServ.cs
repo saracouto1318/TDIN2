@@ -10,118 +10,129 @@ namespace TTService {
         private Database.Database _db = Database.Database.Initialize();
 
         #region WebApp
-        public int AddTicket(User author, Ticket ticket)
+        public bool AddUser(string name, string email, string password)
         {
-            throw new NotImplementedException();
+            return _db.InsertUser(name, email, password);
         }
-
-        public int AddTicket(Ticket ticket)
+        public bool CheckUser(string email, string password)
         {
-            throw new NotImplementedException();
+            return _db.ValidateUser(email, password);
         }
-
-        public int AddUser(User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool CheckUser(string email)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Ticket GetTicket(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Ticket> GetTicketsByType(int author, string type)
-        {
-            throw new NotImplementedException();
-        }
-
         public User GetUser(int id)
         {
-            throw new NotImplementedException();
+            return _db.GetUser(id);
+        }
+        public bool UpdateUser(string name, string email, string password, int idUser)
+        {
+            return _db.UpdateUserInfo(name, email, password, idUser);
+        }
+        public bool AddTicket(int idUser, string title, string description)
+        {
+            return _db.InsertTicket(idUser, title, description);
+        }
+        public List<Ticket> GetTickets(User user)
+        {
+            return _db.GetUserTickets(user);
+        }
+        public List<Ticket> GetTicketsByType(User user, TicketStatus status)
+        {
+            return _db.GetUserTicketsPerType(user, status);
+        }
+        public Ticket GetTicket(User user, int id)
+        {
+            return _db.GetTicket(user, id);
+        }
+        public bool LoginApp(int idUser)
+        {
+            string userSession = System.Guid.NewGuid().ToString();
+            _db.DeleteSessionApp(idUser);
+            return _db.InsertSessionApp(idUser, userSession);
+        }
+        
+        public void LogoutApp(int idUser)
+        {
+            _db.DeleteSessionApp(idUser);
         }
 
-        public bool UpdateUser(User user)
+        public User GetUserLogged(string session)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<Ticket> GetTickets(int author)
-        {
-            throw new NotImplementedException();
+            int id = _db.GetUserID(session);
+            if (id != 0)
+                return _db.GetUser(id);
+            return new User();
         }
 
         #endregion
 
         #region SolverGUI
-        public int AddSolver(User user)
+        public bool AddSolver(string name, string email, string password)
         {
-            throw new NotImplementedException();
+            return _db.InsertSolver(name, email, password);
         }
-
-        public bool CheckSolver(string email)
+        public bool CheckSolver(string email, string password)
         {
-            throw new NotImplementedException();
+            return _db.CheckSolver(email, password);
         }
-
         public User GetSolver(int id)
         {
-            throw new NotImplementedException();
+            return _db.GetUser(id);
         }
-
-        public List<Ticket> GetTicketsSolver(int solver)
+        public List<Ticket> GetTicketsSolver(User solver)
         {
-            throw new NotImplementedException();
+            return _db.GetTicketsSolver(solver);
         }
-
-        public List<Ticket> GetTicketsByTypeSolver(int solver, string type)
+        public List<Ticket> GetTicketsByTypeSolver(User solver, TicketStatus status)
         {
-            throw new NotImplementedException();
+            return _db.GetUserTicketsPerTypeSolver(solver, status);
         }
-
-        public bool AnswerTicket(Ticket ticket, int solver, string email)
+        public bool AssignTicket(int idTicket, int idSolver)
         {
-            throw new NotImplementedException();
+            return _db.AssignTicket(idTicket, idSolver);
         }
-
-        public bool RedirectTicket(Ticket ticket, int solver, string redirectMessage)
+        public bool AnswerTicket(int solver, int senderTicket, int ticket, string email)
         {
-            throw new NotImplementedException();
+            if(_db.SolveTicket(ticket))
+                return _db.InsertEmail(solver, senderTicket, ticket, email);
+            return false;
+        }
+        public bool RedirectTicket(int ticket, int solver, string redirectMessage)
+        {
+            return _db.InsertSecondaryQuestion(ticket, solver, redirectMessage);
+        }
+        public bool LoginSolver(int idUser)
+        {
+            string userSession = System.Guid.NewGuid().ToString();
+            _db.DeleteSessionApp(idUser);
+            return _db.InsertSessionSolver(idUser, userSession);
         }
 
+        public void LogoutSolver(int idUser)
+        {
+            _db.DeleteSessionSolver(idUser);
+        }
         #endregion
 
         #region DepartmentGUI
-
-        public int AddDepartment(string name)
+        public bool AddDepartment(string name)
         {
-            throw new NotImplementedException();
+            return _db.InsertDepartment(name);
         }
-
         public bool CheckDepartment(string name)
         {
-            throw new NotImplementedException();
+            return _db.CheckDepartment(name);
         }
-
-        public User GetDepartment(string name)
+        public List<SecondaryQuestion> GetQuestions()
         {
-            throw new NotImplementedException();
+            return _db.GetSecondaryQuestions();
         }
-
-        public List<SecondaryQuestion> GetQuestions(string name)
+        public SecondaryQuestion GetQuestion(int id)
         {
-            throw new NotImplementedException();
+            return _db.GetSecondaryQuestion(id);
         }
-
-        public bool AnswerQuestion(string name, Ticket ticket, string responseMessage)
+        public bool AnswerQuestion(SecondaryQuestion question, string department, string responseMessage)
         {
-            throw new NotImplementedException();
+            return _db.AnswerSecondaryQuestion(question, department, responseMessage);
         }
-
         #endregion
     }
 }

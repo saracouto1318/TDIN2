@@ -38,7 +38,7 @@ public partial class ProfilePage : System.Web.UI.Page
         user.Email = email;
         user.Password = password;
 
-        proxy.UpdateUser(user);
+        //proxy.UpdateUser(user);
     }
 
     protected void Create_Click(object sender, EventArgs e)
@@ -54,7 +54,7 @@ public partial class ProfilePage : System.Web.UI.Page
             Status = TTService.TicketStatus.UNASSIGNED
         };
 
-        proxy.AddTicket(ticket);
+        //proxy.AddTicket(ticket);
     }
 
     protected void All_Click(object sender, EventArgs e)
