@@ -32,13 +32,15 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.title = new MaterialSkin.Controls.MaterialLabel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.ticketLabel = new System.Windows.Forms.Label();
             this.date = new MaterialSkin.Controls.MaterialLabel();
             this.description = new MaterialSkin.Controls.MaterialLabel();
             this.solveBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.redirectBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.logoutBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.profileBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.assignBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.status = new MaterialSkin.Controls.MaterialLabel();
             this.SuspendLayout();
             // 
             // label2
@@ -57,7 +59,7 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(39, 260);
+            this.label3.Location = new System.Drawing.Point(39, 250);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(131, 25);
             this.label3.TabIndex = 11;
@@ -88,16 +90,16 @@
             this.title.TabIndex = 18;
             this.title.Text = "title";
             // 
-            // label1
+            // ticketLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(30, 97);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(117, 29);
-            this.label1.TabIndex = 19;
-            this.label1.Text = "Ticket ID";
+            this.ticketLabel.AutoSize = true;
+            this.ticketLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ticketLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ticketLabel.Location = new System.Drawing.Point(30, 97);
+            this.ticketLabel.Name = "ticketLabel";
+            this.ticketLabel.Size = new System.Drawing.Size(117, 29);
+            this.ticketLabel.TabIndex = 19;
+            this.ticketLabel.Text = "Ticket ID";
             // 
             // date
             // 
@@ -120,7 +122,7 @@
             this.description.Depth = 0;
             this.description.Font = new System.Drawing.Font("Roboto", 11F);
             this.description.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.description.Location = new System.Drawing.Point(40, 302);
+            this.description.Location = new System.Drawing.Point(40, 290);
             this.description.MouseState = MaterialSkin.MouseState.HOVER;
             this.description.Name = "description";
             this.description.Size = new System.Drawing.Size(84, 19);
@@ -130,7 +132,7 @@
             // solveBtn
             // 
             this.solveBtn.Depth = 0;
-            this.solveBtn.Location = new System.Drawing.Point(254, 387);
+            this.solveBtn.Location = new System.Drawing.Point(393, 387);
             this.solveBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.solveBtn.Name = "solveBtn";
             this.solveBtn.Primary = true;
@@ -138,11 +140,12 @@
             this.solveBtn.TabIndex = 22;
             this.solveBtn.Text = "Solve";
             this.solveBtn.UseVisualStyleBackColor = true;
+            this.solveBtn.Click += new System.EventHandler(this.SolveBtn_Click);
             // 
             // redirectBtn
             // 
             this.redirectBtn.Depth = 0;
-            this.redirectBtn.Location = new System.Drawing.Point(444, 387);
+            this.redirectBtn.Location = new System.Drawing.Point(567, 387);
             this.redirectBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.redirectBtn.Name = "redirectBtn";
             this.redirectBtn.Primary = true;
@@ -150,6 +153,7 @@
             this.redirectBtn.TabIndex = 23;
             this.redirectBtn.Text = "Redirect";
             this.redirectBtn.UseVisualStyleBackColor = true;
+            this.redirectBtn.Click += new System.EventHandler(this.RedirectBtn_Click);
             // 
             // logoutBtn
             // 
@@ -162,6 +166,7 @@
             this.logoutBtn.TabIndex = 24;
             this.logoutBtn.Text = "Logout";
             this.logoutBtn.UseVisualStyleBackColor = true;
+            this.logoutBtn.Click += new System.EventHandler(this.LogoutBtn_Click);
             // 
             // profileBtn
             // 
@@ -174,19 +179,49 @@
             this.profileBtn.TabIndex = 25;
             this.profileBtn.Text = "Profile";
             this.profileBtn.UseVisualStyleBackColor = true;
+            this.profileBtn.Click += new System.EventHandler(this.ProfileBtn_Click);
+            // 
+            // assignBtn
+            // 
+            this.assignBtn.Depth = 0;
+            this.assignBtn.Location = new System.Drawing.Point(218, 387);
+            this.assignBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.assignBtn.Name = "assignBtn";
+            this.assignBtn.Primary = true;
+            this.assignBtn.Size = new System.Drawing.Size(121, 40);
+            this.assignBtn.TabIndex = 26;
+            this.assignBtn.Text = "Assign";
+            this.assignBtn.UseVisualStyleBackColor = true;
+            this.assignBtn.Click += new System.EventHandler(this.AssignBtn_Click);
+            // 
+            // status
+            // 
+            this.status.AutoSize = true;
+            this.status.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.status.Depth = 0;
+            this.status.Font = new System.Drawing.Font("Roboto", 11F);
+            this.status.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.status.Location = new System.Drawing.Point(181, 101);
+            this.status.MouseState = MaterialSkin.MouseState.HOVER;
+            this.status.Name = "status";
+            this.status.Size = new System.Drawing.Size(51, 19);
+            this.status.TabIndex = 28;
+            this.status.Text = "status";
             // 
             // TicketPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.status);
+            this.Controls.Add(this.assignBtn);
             this.Controls.Add(this.profileBtn);
             this.Controls.Add(this.logoutBtn);
             this.Controls.Add(this.redirectBtn);
             this.Controls.Add(this.solveBtn);
             this.Controls.Add(this.description);
             this.Controls.Add(this.date);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.ticketLabel);
             this.Controls.Add(this.title);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label3);
@@ -203,12 +238,14 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label6;
         private MaterialSkin.Controls.MaterialLabel title;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label ticketLabel;
         private MaterialSkin.Controls.MaterialLabel date;
         private MaterialSkin.Controls.MaterialLabel description;
         private MaterialSkin.Controls.MaterialRaisedButton solveBtn;
         private MaterialSkin.Controls.MaterialRaisedButton redirectBtn;
         private MaterialSkin.Controls.MaterialRaisedButton logoutBtn;
         private MaterialSkin.Controls.MaterialRaisedButton profileBtn;
+        private MaterialSkin.Controls.MaterialRaisedButton assignBtn;
+        private MaterialSkin.Controls.MaterialLabel status;
     }
 }

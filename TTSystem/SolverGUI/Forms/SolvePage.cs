@@ -16,15 +16,57 @@ namespace SolverGUI
     public partial class SolvePage : MaterialForm
     {
         public TTServClient proxy;
-        public SolvePage()
+        public User user;
+        public Ticket ticket;
+        public SolvePage(User user, Ticket ticket)
         {
             proxy = new TTServClient();
             InitializeComponent();
+
+            this.user = user;
+            this.ticket = ticket;
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+
+            GetTicketInfo();
+        }
+        public void GetTicketInfo()
+        {
+            ticketID.Text = "Ticket " + this.ticket.ID.ToString();
+            title.Text = this.ticket.Title;
+        }
+
+        private void TicketBtn_Click(object sender, EventArgs e)
+        {
+            Hide();
+            new TicketPage(user, ticket.ID).ShowDialog();
+            Show();
+        }
+
+        private void ProfileBtn_Click(object sender, EventArgs e)
+        {
+            Hide();
+            new PersonalPage(user.ID).ShowDialog();
+            Show();
+        }
+
+        private void LogoutBtn_Click(object sender, EventArgs e)
+        {
+            Hide();
+            proxy.Logout(user.ID);
+            new MainPage().ShowDialog();
+            Show();
+        }
+
+        private void SendBtn_Click(object sender, EventArgs e)
+        {
+            string emailText = email.Text;
+            proxy.AnswerTicket(user.ID, ticket.Author.ID, ticket.ID, emailText);
+            new TicketPage(user, ticket.ID).ShowDialog();
+            Show();
         }
     }
 }

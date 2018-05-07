@@ -77,20 +77,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="success">
-                            <td>1</td>
-                            <td><a href="ticket.html">Missing things</a></td>
-                            <td>OI OI OI</td>
-                            <td>30/04/2018</td>
-                            <td>Closed</td>
+                        <% foreach(TTService.Ticket ticket in tickets) { %>
+                            <%
+                                if(ticket.Status != TTService.TicketStatus.CLOSED)
+                                {%><tr class="danger"><% } 
+                                else {%><tr class="success"><% } 
+                            %>
+
+                            <td><%: ticket.Title %></td>
+                            <td><%: ticket.Description %></td>
+                            <td><%: ticket.Date.ToString() %></td>
+                            <td><%: ticket.Status.ToString() %></td>
                         </tr>
-                        <tr class="danger">
-                            <td>1</td>
-                            <td>Missing things</td>
-                            <td>OI OI OI</td>
-                            <td>30/04/2018</td>
-                            <td>Open</td>
-                        </tr>
+                        <% } //foreach %>
+                        
                     </tbody>
                 </table>
             </div>

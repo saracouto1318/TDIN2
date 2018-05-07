@@ -802,14 +802,14 @@ namespace Database
             }
         }
 
-        public Ticket GetTicket(User user, int idTicket)
+        public Ticket GetTicket(int idTicket)
         {
             SQLiteCommand command = new SQLiteCommand(_conn);
             SQLiteDataReader reader = null;
             Ticket ticket = new Ticket();
 
             command.CommandText = "SELECT * FROM Ticket WHERE idTicket = @ticket";
-            command.Parameters.Add(new SQLiteParameter("@user", idTicket));
+            command.Parameters.Add(new SQLiteParameter("@ticket", idTicket));
 
             try
             {
@@ -818,7 +818,7 @@ namespace Database
                 if (reader.Read())
                 {
                     ticket.ID = reader.GetInt32(0);
-                    ticket.Author = user;
+                    ticket.Author = GetUser(reader.GetInt32(1));
                     ticket.Title = SafeGetString(reader, 3);
                     ticket.Description = SafeGetString(reader, 4);
                     ticket.Date = reader.GetDateTime(5);

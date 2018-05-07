@@ -33,7 +33,7 @@ namespace TTService {
         List<Ticket> GetTicketsByType(User user, TicketStatus status);
 
         [OperationContract]
-        Ticket GetTicket(User user, int id);
+        Ticket GetTicket(int id);
 
         [OperationContract]
         bool Login(int idUser);

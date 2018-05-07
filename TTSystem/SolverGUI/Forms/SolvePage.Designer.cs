@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.email = new System.Windows.Forms.RichTextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.ticketID = new System.Windows.Forms.Label();
             this.title = new MaterialSkin.Controls.MaterialLabel();
             this.label2 = new System.Windows.Forms.Label();
             this.profileBtn = new MaterialSkin.Controls.MaterialRaisedButton();
@@ -47,16 +47,16 @@
             this.email.TabIndex = 25;
             this.email.Text = "";
             // 
-            // label1
+            // ticketID
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(36, 89);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(117, 29);
-            this.label1.TabIndex = 26;
-            this.label1.Text = "Ticket ID";
+            this.ticketID.AutoSize = true;
+            this.ticketID.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ticketID.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ticketID.Location = new System.Drawing.Point(36, 89);
+            this.ticketID.Name = "ticketID";
+            this.ticketID.Size = new System.Drawing.Size(117, 29);
+            this.ticketID.TabIndex = 26;
+            this.ticketID.Text = "Ticket ID";
             // 
             // title
             // 
@@ -94,6 +94,7 @@
             this.profileBtn.TabIndex = 30;
             this.profileBtn.Text = "Profile";
             this.profileBtn.UseVisualStyleBackColor = true;
+            this.profileBtn.Click += new System.EventHandler(this.ProfileBtn_Click);
             // 
             // logoutBtn
             // 
@@ -106,6 +107,7 @@
             this.logoutBtn.TabIndex = 29;
             this.logoutBtn.Text = "Logout";
             this.logoutBtn.UseVisualStyleBackColor = true;
+            this.logoutBtn.Click += new System.EventHandler(this.LogoutBtn_Click);
             // 
             // ticketBtn
             // 
@@ -118,6 +120,7 @@
             this.ticketBtn.TabIndex = 32;
             this.ticketBtn.Text = "Ticket Page";
             this.ticketBtn.UseVisualStyleBackColor = true;
+            this.ticketBtn.Click += new System.EventHandler(this.TicketBtn_Click);
             // 
             // sendBtn
             // 
@@ -130,6 +133,7 @@
             this.sendBtn.TabIndex = 33;
             this.sendBtn.Text = "Send";
             this.sendBtn.UseVisualStyleBackColor = true;
+            this.sendBtn.Click += new System.EventHandler(this.SendBtn_Click);
             // 
             // label3
             // 
@@ -154,7 +158,7 @@
             this.Controls.Add(this.logoutBtn);
             this.Controls.Add(this.title);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.ticketID);
             this.Controls.Add(this.email);
             this.Name = "SolvePage";
             this.Text = "Solve Page";
@@ -165,7 +169,7 @@
 
         #endregion
         private System.Windows.Forms.RichTextBox email;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label ticketID;
         private MaterialSkin.Controls.MaterialLabel title;
         private System.Windows.Forms.Label label2;
         private MaterialSkin.Controls.MaterialRaisedButton profileBtn;

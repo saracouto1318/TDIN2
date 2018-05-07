@@ -455,10 +455,10 @@ namespace DepartmentGUI.TTSvc {
         System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket[]> GetTicketsByTypeAsync(DepartmentGUI.TTSvc.User user, DepartmentGUI.TTSvc.TicketStatus status);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTicket", ReplyAction="http://tempuri.org/ITTServ/GetTicketResponse")]
-        DepartmentGUI.TTSvc.Ticket GetTicket(DepartmentGUI.TTSvc.User user, int id);
+        DepartmentGUI.TTSvc.Ticket GetTicket(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTicket", ReplyAction="http://tempuri.org/ITTServ/GetTicketResponse")]
-        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket> GetTicketAsync(DepartmentGUI.TTSvc.User user, int id);
+        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket> GetTicketAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/Login", ReplyAction="http://tempuri.org/ITTServ/LoginResponse")]
         bool Login(int idUser);
@@ -654,12 +654,12 @@ namespace DepartmentGUI.TTSvc {
             return base.Channel.GetTicketsByTypeAsync(user, status);
         }
         
-        public DepartmentGUI.TTSvc.Ticket GetTicket(DepartmentGUI.TTSvc.User user, int id) {
-            return base.Channel.GetTicket(user, id);
+        public DepartmentGUI.TTSvc.Ticket GetTicket(int id) {
+            return base.Channel.GetTicket(id);
         }
         
-        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket> GetTicketAsync(DepartmentGUI.TTSvc.User user, int id) {
-            return base.Channel.GetTicketAsync(user, id);
+        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.Ticket> GetTicketAsync(int id) {
+            return base.Channel.GetTicketAsync(id);
         }
         
         public bool Login(int idUser) {

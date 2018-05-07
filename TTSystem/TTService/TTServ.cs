@@ -44,9 +44,9 @@ namespace TTService {
         {
             return _db.GetUserTicketsPerType(user, status);
         }
-        public Ticket GetTicket(User user, int id)
+        public Ticket GetTicket(int id)
         {
-            return _db.GetTicket(user, id);
+            return _db.GetTicket(id);
         }
         public bool Login(int idUser)
         {

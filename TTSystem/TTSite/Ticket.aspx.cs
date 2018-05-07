@@ -12,7 +12,7 @@ public partial class Ticket : System.Web.UI.Page
     TTService.Ticket ticket;
     protected void Page_Load(object sender, EventArgs e)
     {
-        /*String idString = Request.QueryString["id"];
+        String idString = Request.QueryString["id"];
         int id = Int32.Parse(idString);
 
         String ticketID = Request.QueryString["ticket"];
@@ -21,9 +21,9 @@ public partial class Ticket : System.Web.UI.Page
         user = proxy.GetUser(id);
         ticket = proxy.GetTicket(idTicket);
 
-        title.InnerText = ticket.title;
-        date.InnerText = ticket.date.ToString();
-        description.InnerText = ticket.description;
-        status.InnerText = ticket.status.ToString();*/
+        title.InnerText = ticket.Title;
+        date.InnerText = ticket.Date.ToString();
+        description.InnerText = ticket.Description;
+        status.InnerText = ticket.Status.ToString();
     }
 }

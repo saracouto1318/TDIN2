@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Drawing;
 using System.Web.UI;
+using TTService;
 using TTSvc;
 
 public partial class _Default : Page {
-  TTServClient proxy;
+    TTServClient proxy;
+    public User user;
 
   protected void Page_Load(object sender, EventArgs e) {
     proxy = new TTServClient();
+    user = new User();
   }
 
     protected void BtnLogin_Click(object sender, EventArgs e)
@@ -15,8 +18,13 @@ public partial class _Default : Page {
         string email = String.Format("{0}", Request.Form["email"]);
         string password = String.Format("{0}", Request.Form["password"]);
 
-        /*if(proxy.CheckUser(email))
-            Response.Redirect("ProfilePage.aspx");*/
+        if(proxy.CheckUser(email, password))
+        {
+            this.user = proxy.GetUserByEmail(email);
+            proxy.Login(this.user.ID);
+            Response.Redirect("ProfilePage.aspx?id=" + this.user.ID.ToString());
+        }
+            
     }
 
     protected void BtnRegister_Click(object sender, EventArgs e)
@@ -25,15 +33,12 @@ public partial class _Default : Page {
         string email = String.Format("{0}", Request.Form["emailRegister"]);
         string password = String.Format("{0}", Request.Form["passwordRegister"]);
 
-        TTService.User user = new TTService.User
+        if (proxy.AddUser(name, email, password))
         {
-            Name = name,
-            Email = email,
-            Password = password
-        };
-
-        /*if (proxy.AddUser(user) != 0)
-            Response.Redirect("ProfilePage.aspx");*/
+            this.user = proxy.GetUserByEmail(email);
+            proxy.Login(this.user.ID);
+            Response.Redirect("ProfilePage.aspx?id="+this.user.ID.ToString());
+        }
     }
     
 }

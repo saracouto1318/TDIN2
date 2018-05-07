@@ -157,7 +157,7 @@ namespace SolverGUI
                     labelTmp.Click += (object sender, EventArgs e) =>
                     {
                         Hide();
-                        new TicketPage(t.ID).ShowDialog();
+                        new TicketPage(user, t.ID).ShowDialog();
                         Show();
                     };
 
@@ -174,7 +174,7 @@ namespace SolverGUI
                     labelTmp.Click += (object sender, EventArgs e) =>
                     {
                         Hide();
-                        new TicketPage(t.ID).ShowDialog();
+                        new TicketPage(user, t.ID).ShowDialog();
                         Show();
                     };
 
@@ -191,7 +191,7 @@ namespace SolverGUI
                     labelTmp.Click += (object sender, EventArgs e) =>
                     {
                         Hide();
-                        new TicketPage(t.ID).ShowDialog();
+                        new TicketPage(user, t.ID).ShowDialog();
                         Show();
                     };
 
@@ -209,7 +209,7 @@ namespace SolverGUI
                     labelTmp.Click += (object sender, EventArgs e) =>
                     {
                         Hide();
-                        new TicketPage(t.ID).ShowDialog();
+                        new TicketPage(user, t.ID).ShowDialog();
                         Show();
                     };
 
@@ -226,7 +226,7 @@ namespace SolverGUI
                     labelTmp.Click += (object sender, EventArgs e) =>
                     {
                         Hide();
-                        new TicketPage(t.ID).ShowDialog();
+                        new TicketPage(user,t.ID).ShowDialog();
                         Show();
                     };
 
