@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net.Mail;
 
 namespace TTService {
   public class TTServ : ITTServ {
@@ -102,8 +103,23 @@ namespace TTService {
         }
         public bool AnswerTicket(int solver, int senderTicket, int ticket, string email)
         {
-            if(_db.SolveTicket(ticket))
+            if (_db.SolveTicket(ticket))
+            {
+                User to = GetUser(senderTicket);
+                Ticket ticketInfo = GetTicket(ticket);
+
+                MailMessage mail = new MailMessage("trouble_tickets@gmail.com", to.Email);
+                SmtpClient client = new SmtpClient();
+                client.Port = 25;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Host = "smtp.gmail.com";
+                mail.Subject = "Ticket #" + ticketInfo.ID + " - " + ticketInfo.Title;
+                mail.Body = email;
+                client.Send(mail);
                 return _db.InsertEmail(solver, senderTicket, ticket, email);
+            }
+                
             return false;
         }
         public bool RedirectTicket(int ticket, int solver, string redirectMessage)
