@@ -4,10 +4,11 @@ using System.Net.Mail;
 using System.ServiceModel;
 
 namespace TTService {
-    public class TTService : ITTService {
+    public class TTServ : ITTServ {
 
         private Database.Database _db = Database.Database.Initialize();
-
+        public static List<ITTChanged> subscribers = new List<ITTChanged>();
+        
         #region WebApp
         public bool AddUser(string name, string email, string password)
         {
@@ -62,7 +63,75 @@ namespace TTService {
                 return _db.GetUser(id);
             return new User();
         }
+        #endregion
 
+        #region SolverGUI
+        public void Subscribe()
+        {
+            ITTChanged callback = OperationContext.Current.GetCallbackChannel<ITTChanged>();
+            if (!subscribers.Contains(callback))
+            {
+                subscribers.Add(callback);
+            }
+        }
+        public void Unsubscribe()
+        {
+            ITTChanged callback = OperationContext.Current.GetCallbackChannel<ITTChanged>();
+            subscribers.Remove(callback);
+        }
+        public bool RegisterSolver(string name, string email, string password)
+        {
+            return _db.InsertSolver(name, email, password);
+        }
+        public bool LoginSolver(string email, string password)
+        {
+            return _db.CheckSolver(email, password);
+        }
+        public User GetSolver(int id)
+        {
+            return _db.GetUser(id);
+        }
+        public List<Ticket> GetUnassignedTT()
+        {
+            return _db.GetTicketsUnassigned();
+        }
+        public List<Ticket> GetSolverTT(User solver)
+        {
+            return _db.GetTicketsSolver(solver);
+        }
+        public List<Ticket> GetSolverTTByType(User solver, TicketStatus status)
+        {
+            return _db.GetUserTicketsPerTypeSolver(solver, status);
+        }
+        public bool AssignTicket(int idTicket, int idSolver)
+        {
+            return _db.AssignTicket(idTicket, idSolver);
+        }
+        public bool AnswerTicket(int solver, int senderTicket, int ticket, string email)
+        {
+            if (_db.SolveTicket(ticket))
+            {
+                User to = _db.GetUser(senderTicket);
+                Ticket ticketInfo = _db.GetTicket(ticket);
+
+                MailMessage mail = new MailMessage("trouble_tickets@gmail.com", to.Email);
+                SmtpClient client = new SmtpClient();
+                client.Port = 25;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Host = "smtp.gmail.com";
+                mail.Subject = "Ticket #" + ticketInfo.ID + " - " + ticketInfo.Title;
+                mail.Body = email;
+                client.Send(mail);
+                return _db.InsertEmail(solver, senderTicket, ticket, email);
+            }
+
+            return false;
+        }
+        public bool RedirectTicket(int ticket, int solver, string redirectMessage)
+        {
+            return _db.InsertSecondaryQuestion(ticket, solver, redirectMessage);
+        }
         #endregion
 
         #region DepartmentGUI
@@ -88,7 +157,7 @@ namespace TTService {
         }
         #endregion
     }
-
+    /*
     public class SolverService : ISolverService
     {
         private Database.Database _db = Database.Database.Initialize();
@@ -139,8 +208,8 @@ namespace TTService {
         {
             if (_db.SolveTicket(ticket))
             {
-                User to = GetUser(senderTicket);
-                Ticket ticketInfo = GetTicket(ticket);
+                User to = _db.GetUser(senderTicket);
+                Ticket ticketInfo = _db.GetTicket(ticket);
 
                 MailMessage mail = new MailMessage("trouble_tickets@gmail.com", to.Email);
                 SmtpClient client = new SmtpClient();
@@ -161,4 +230,5 @@ namespace TTService {
             return _db.InsertSecondaryQuestion(ticket, solver, redirectMessage);
         }
     }
+    */
 }

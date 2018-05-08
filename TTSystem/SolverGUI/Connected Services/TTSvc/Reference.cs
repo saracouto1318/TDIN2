@@ -478,17 +478,29 @@ namespace GUI.TTSvc {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetUserLogged", ReplyAction="http://tempuri.org/ITTServ/GetUserLoggedResponse")]
         System.Threading.Tasks.Task<GUI.TTSvc.User> GetUserLoggedAsync(string session);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AddSolver", ReplyAction="http://tempuri.org/ITTServ/AddSolverResponse")]
-        bool AddSolver(string name, string email, string password);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/Subscribe", ReplyAction="http://tempuri.org/ITTServ/SubscribeResponse")]
+        void Subscribe();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AddSolver", ReplyAction="http://tempuri.org/ITTServ/AddSolverResponse")]
-        System.Threading.Tasks.Task<bool> AddSolverAsync(string name, string email, string password);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/Subscribe", ReplyAction="http://tempuri.org/ITTServ/SubscribeResponse")]
+        System.Threading.Tasks.Task SubscribeAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/CheckSolver", ReplyAction="http://tempuri.org/ITTServ/CheckSolverResponse")]
-        bool CheckSolver(string email, string password);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/Unsubscribe", ReplyAction="http://tempuri.org/ITTServ/UnsubscribeResponse")]
+        void Unsubscribe();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/CheckSolver", ReplyAction="http://tempuri.org/ITTServ/CheckSolverResponse")]
-        System.Threading.Tasks.Task<bool> CheckSolverAsync(string email, string password);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/Unsubscribe", ReplyAction="http://tempuri.org/ITTServ/UnsubscribeResponse")]
+        System.Threading.Tasks.Task UnsubscribeAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/RegisterSolver", ReplyAction="http://tempuri.org/ITTServ/RegisterSolverResponse")]
+        bool RegisterSolver(string name, string email, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/RegisterSolver", ReplyAction="http://tempuri.org/ITTServ/RegisterSolverResponse")]
+        System.Threading.Tasks.Task<bool> RegisterSolverAsync(string name, string email, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/LoginSolver", ReplyAction="http://tempuri.org/ITTServ/LoginSolverResponse")]
+        bool LoginSolver(string email, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/LoginSolver", ReplyAction="http://tempuri.org/ITTServ/LoginSolverResponse")]
+        System.Threading.Tasks.Task<bool> LoginSolverAsync(string email, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetSolver", ReplyAction="http://tempuri.org/ITTServ/GetSolverResponse")]
         GUI.TTSvc.User GetSolver(int id);
@@ -496,23 +508,23 @@ namespace GUI.TTSvc {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetSolver", ReplyAction="http://tempuri.org/ITTServ/GetSolverResponse")]
         System.Threading.Tasks.Task<GUI.TTSvc.User> GetSolverAsync(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTicketsUnassigned", ReplyAction="http://tempuri.org/ITTServ/GetTicketsUnassignedResponse")]
-        GUI.TTSvc.Ticket[] GetTicketsUnassigned();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetUnassignedTT", ReplyAction="http://tempuri.org/ITTServ/GetUnassignedTTResponse")]
+        GUI.TTSvc.Ticket[] GetUnassignedTT();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTicketsUnassigned", ReplyAction="http://tempuri.org/ITTServ/GetTicketsUnassignedResponse")]
-        System.Threading.Tasks.Task<GUI.TTSvc.Ticket[]> GetTicketsUnassignedAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetUnassignedTT", ReplyAction="http://tempuri.org/ITTServ/GetUnassignedTTResponse")]
+        System.Threading.Tasks.Task<GUI.TTSvc.Ticket[]> GetUnassignedTTAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTicketsSolver", ReplyAction="http://tempuri.org/ITTServ/GetTicketsSolverResponse")]
-        GUI.TTSvc.Ticket[] GetTicketsSolver(GUI.TTSvc.User solver);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetSolverTT", ReplyAction="http://tempuri.org/ITTServ/GetSolverTTResponse")]
+        GUI.TTSvc.Ticket[] GetSolverTT(GUI.TTSvc.User solver);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTicketsSolver", ReplyAction="http://tempuri.org/ITTServ/GetTicketsSolverResponse")]
-        System.Threading.Tasks.Task<GUI.TTSvc.Ticket[]> GetTicketsSolverAsync(GUI.TTSvc.User solver);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetSolverTT", ReplyAction="http://tempuri.org/ITTServ/GetSolverTTResponse")]
+        System.Threading.Tasks.Task<GUI.TTSvc.Ticket[]> GetSolverTTAsync(GUI.TTSvc.User solver);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTicketsByTypeSolver", ReplyAction="http://tempuri.org/ITTServ/GetTicketsByTypeSolverResponse")]
-        GUI.TTSvc.Ticket[] GetTicketsByTypeSolver(GUI.TTSvc.User solver, GUI.TTSvc.TicketStatus status);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetSolverTTByType", ReplyAction="http://tempuri.org/ITTServ/GetSolverTTByTypeResponse")]
+        GUI.TTSvc.Ticket[] GetSolverTTByType(GUI.TTSvc.User solver, GUI.TTSvc.TicketStatus status);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetTicketsByTypeSolver", ReplyAction="http://tempuri.org/ITTServ/GetTicketsByTypeSolverResponse")]
-        System.Threading.Tasks.Task<GUI.TTSvc.Ticket[]> GetTicketsByTypeSolverAsync(GUI.TTSvc.User solver, GUI.TTSvc.TicketStatus status);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetSolverTTByType", ReplyAction="http://tempuri.org/ITTServ/GetSolverTTByTypeResponse")]
+        System.Threading.Tasks.Task<GUI.TTSvc.Ticket[]> GetSolverTTByTypeAsync(GUI.TTSvc.User solver, GUI.TTSvc.TicketStatus status);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AssignTicket", ReplyAction="http://tempuri.org/ITTServ/AssignTicketResponse")]
         bool AssignTicket(int idTicket, int idSolver);
@@ -686,20 +698,36 @@ namespace GUI.TTSvc {
             return base.Channel.GetUserLoggedAsync(session);
         }
         
-        public bool AddSolver(string name, string email, string password) {
-            return base.Channel.AddSolver(name, email, password);
+        public void Subscribe() {
+            base.Channel.Subscribe();
         }
         
-        public System.Threading.Tasks.Task<bool> AddSolverAsync(string name, string email, string password) {
-            return base.Channel.AddSolverAsync(name, email, password);
+        public System.Threading.Tasks.Task SubscribeAsync() {
+            return base.Channel.SubscribeAsync();
         }
         
-        public bool CheckSolver(string email, string password) {
-            return base.Channel.CheckSolver(email, password);
+        public void Unsubscribe() {
+            base.Channel.Unsubscribe();
         }
         
-        public System.Threading.Tasks.Task<bool> CheckSolverAsync(string email, string password) {
-            return base.Channel.CheckSolverAsync(email, password);
+        public System.Threading.Tasks.Task UnsubscribeAsync() {
+            return base.Channel.UnsubscribeAsync();
+        }
+        
+        public bool RegisterSolver(string name, string email, string password) {
+            return base.Channel.RegisterSolver(name, email, password);
+        }
+        
+        public System.Threading.Tasks.Task<bool> RegisterSolverAsync(string name, string email, string password) {
+            return base.Channel.RegisterSolverAsync(name, email, password);
+        }
+        
+        public bool LoginSolver(string email, string password) {
+            return base.Channel.LoginSolver(email, password);
+        }
+        
+        public System.Threading.Tasks.Task<bool> LoginSolverAsync(string email, string password) {
+            return base.Channel.LoginSolverAsync(email, password);
         }
         
         public GUI.TTSvc.User GetSolver(int id) {
@@ -710,28 +738,28 @@ namespace GUI.TTSvc {
             return base.Channel.GetSolverAsync(id);
         }
         
-        public GUI.TTSvc.Ticket[] GetTicketsUnassigned() {
-            return base.Channel.GetTicketsUnassigned();
+        public GUI.TTSvc.Ticket[] GetUnassignedTT() {
+            return base.Channel.GetUnassignedTT();
         }
         
-        public System.Threading.Tasks.Task<GUI.TTSvc.Ticket[]> GetTicketsUnassignedAsync() {
-            return base.Channel.GetTicketsUnassignedAsync();
+        public System.Threading.Tasks.Task<GUI.TTSvc.Ticket[]> GetUnassignedTTAsync() {
+            return base.Channel.GetUnassignedTTAsync();
         }
         
-        public GUI.TTSvc.Ticket[] GetTicketsSolver(GUI.TTSvc.User solver) {
-            return base.Channel.GetTicketsSolver(solver);
+        public GUI.TTSvc.Ticket[] GetSolverTT(GUI.TTSvc.User solver) {
+            return base.Channel.GetSolverTT(solver);
         }
         
-        public System.Threading.Tasks.Task<GUI.TTSvc.Ticket[]> GetTicketsSolverAsync(GUI.TTSvc.User solver) {
-            return base.Channel.GetTicketsSolverAsync(solver);
+        public System.Threading.Tasks.Task<GUI.TTSvc.Ticket[]> GetSolverTTAsync(GUI.TTSvc.User solver) {
+            return base.Channel.GetSolverTTAsync(solver);
         }
         
-        public GUI.TTSvc.Ticket[] GetTicketsByTypeSolver(GUI.TTSvc.User solver, GUI.TTSvc.TicketStatus status) {
-            return base.Channel.GetTicketsByTypeSolver(solver, status);
+        public GUI.TTSvc.Ticket[] GetSolverTTByType(GUI.TTSvc.User solver, GUI.TTSvc.TicketStatus status) {
+            return base.Channel.GetSolverTTByType(solver, status);
         }
         
-        public System.Threading.Tasks.Task<GUI.TTSvc.Ticket[]> GetTicketsByTypeSolverAsync(GUI.TTSvc.User solver, GUI.TTSvc.TicketStatus status) {
-            return base.Channel.GetTicketsByTypeSolverAsync(solver, status);
+        public System.Threading.Tasks.Task<GUI.TTSvc.Ticket[]> GetSolverTTByTypeAsync(GUI.TTSvc.User solver, GUI.TTSvc.TicketStatus status) {
+            return base.Channel.GetSolverTTByTypeAsync(solver, status);
         }
         
         public bool AssignTicket(int idTicket, int idSolver) {

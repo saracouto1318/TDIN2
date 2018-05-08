@@ -57,11 +57,11 @@ public partial class ProfilePage : System.Web.UI.Page
 
     protected void Open_Click(object sender, EventArgs e)
     {
-        Ticket[] assign = proxy.GetTicketsByType(user, TicketStatus.ASSIGNED);
-        Ticket[] unassigned = proxy.GetTicketsByType(user, TicketStatus.UNASSIGNED);
+        TTService.Ticket[] assign = proxy.GetTicketsByType(user, TicketStatus.ASSIGNED);
+        TTService.Ticket[] unassigned = proxy.GetTicketsByType(user, TicketStatus.UNASSIGNED);
 
-        List<Ticket> list = assign.ToList();
-        foreach (Ticket t in unassigned)
+        List<TTService.Ticket> list = assign.ToList();
+        foreach (TTService.Ticket t in unassigned)
             list.Add(t);
 
         tickets = list.ToArray();

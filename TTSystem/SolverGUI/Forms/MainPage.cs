@@ -32,7 +32,7 @@ namespace SolverGUI
             string email = emailLogin.Text;
             string password = passwordLogin.Text;
 
-            if (proxy.CheckSolver(email, password))
+            if (proxy.LoginSolver(email, password))
             {
                 User user = proxy.GetUserByEmail(email);
                 proxy.Login(user.ID);
@@ -51,7 +51,7 @@ namespace SolverGUI
             string email = emailRegister.Text;
             string password = passwordRegister.Text;
 
-            if (!proxy.AddSolver(name, email, password))
+            if (!proxy.RegisterSolver(name, email, password))
                 labelRegister.Visible = true;
             else
             {

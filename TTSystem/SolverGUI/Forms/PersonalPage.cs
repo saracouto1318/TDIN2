@@ -82,10 +82,10 @@ namespace SolverGUI
         private bool CheckExist(TicketStatus status)
         {
             if (status == TicketStatus.UNASSIGNED)
-                if (proxy.GetTicketsUnassigned().Length > 0)
+                if (proxy.GetUnassignedTT().Length > 0)
                     return true;
             else
-                if (proxy.GetTicketsByTypeSolver(this.user, status).Length > 0)
+                if (proxy.GetSolverTTByType(this.user, status).Length > 0)
                     return true;
             return false;
         }
@@ -95,9 +95,9 @@ namespace SolverGUI
             Ticket[] tickets;
 
             if (status == TicketStatus.UNASSIGNED)
-                tickets = proxy.GetTicketsUnassigned();
+                tickets = proxy.GetUnassignedTT();
             else
-                tickets = proxy.GetTicketsByTypeSolver(this.user, status);
+                tickets = proxy.GetSolverTTByType(this.user, status);
 
 
             panel.Visible = true;

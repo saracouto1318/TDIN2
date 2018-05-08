@@ -176,7 +176,27 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="AddSolver">
+  <xs:element name="Subscribe">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SubscribeResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Unsubscribe">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UnsubscribeResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegisterSolver">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
@@ -185,14 +205,14 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="AddSolverResponse">
+  <xs:element name="RegisterSolverResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="AddSolverResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="RegisterSolverResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="CheckSolver">
+  <xs:element name="LoginSolver">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
@@ -200,10 +220,10 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="CheckSolverResponse">
+  <xs:element name="LoginSolverResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="CheckSolverResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="LoginSolverResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -221,33 +241,33 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetTicketsUnassigned">
+  <xs:element name="GetUnassignedTT">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetTicketsUnassignedResponse">
+  <xs:element name="GetUnassignedTTResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="GetTicketsUnassignedResult" nillable="true" type="q11:ArrayOfTicket" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="GetUnassignedTTResult" nillable="true" type="q11:ArrayOfTicket" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetTicketsSolver">
+  <xs:element name="GetSolverTT">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="solver" nillable="true" type="q12:User" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetTicketsSolverResponse">
+  <xs:element name="GetSolverTTResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="GetTicketsSolverResult" nillable="true" type="q13:ArrayOfTicket" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="GetSolverTTResult" nillable="true" type="q13:ArrayOfTicket" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetTicketsByTypeSolver">
+  <xs:element name="GetSolverTTByType">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="solver" nillable="true" type="q14:User" />
@@ -255,10 +275,10 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetTicketsByTypeSolverResponse">
+  <xs:element name="GetSolverTTByTypeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="GetTicketsByTypeSolverResult" nillable="true" type="q16:ArrayOfTicket" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="GetSolverTTByTypeResult" nillable="true" type="q16:ArrayOfTicket" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

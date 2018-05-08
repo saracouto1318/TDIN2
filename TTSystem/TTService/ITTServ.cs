@@ -5,8 +5,8 @@ using System.ServiceModel;
 using TTService;
 
 namespace TTService {
-    [ServiceContract]
-    public interface ITTService {
+    [ServiceContract/*(Namespace = "http://fe.up.pt/apm", CallbackContract = typeof(ITTChanged))*/]
+    public interface ITTServ {
         #region WebApp
         [OperationContract]
         bool AddUser(string name, string email, string password);
@@ -45,7 +45,42 @@ namespace TTService {
         User GetUserLogged(string session);
 
         #endregion
-        
+
+        #region SolverGUI
+        [OperationContract]
+        void Subscribe();
+
+        [OperationContract]
+        void Unsubscribe();
+
+        [OperationContract]
+        bool RegisterSolver(string name, string email, string password);
+
+        [OperationContract]
+        bool LoginSolver(string email, string password);
+
+        [OperationContract]
+        User GetSolver(int id);
+
+        [OperationContract]
+        List<Ticket> GetUnassignedTT();
+
+        [OperationContract]
+        List<Ticket> GetSolverTT(User solver);
+
+        [OperationContract]
+        List<Ticket> GetSolverTTByType(User solver, TicketStatus status);
+
+        [OperationContract]
+        bool AssignTicket(int idTicket, int idSolver);
+
+        [OperationContract]
+        bool AnswerTicket(int solver, int senderTicket, int ticket, string email);
+
+        [OperationContract]
+        bool RedirectTicket(int ticket, int solver, string redirectMessage);
+        #endregion
+
         #region DepartmentGUI
         [OperationContract]
         bool AddDepartment(string name);
@@ -64,7 +99,7 @@ namespace TTService {
         #endregion
     }
 
-    [ServiceContract(/*Namespace = "http://fe.up.pt/apm", */CallbackContract = typeof(ITTChanged))]
+    //[ServiceContract(/*Namespace = "http://fe.up.pt/apm", */CallbackContract = typeof(ITTChanged))]
     public interface ISolverService
     {
         [OperationContract]
