@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.Net.Mail;
+using System.ServiceModel;
 
 namespace TTService {
-  public class TTServ : ITTServ {
+    public class TTService : ITTService {
 
         private Database.Database _db = Database.Database.Initialize();
 
@@ -23,12 +21,10 @@ namespace TTService {
         {
             return _db.GetUser(id);
         }
-
         public User GetUserByEmail(string email)
         {
             return _db.GetUserByEmail(email);
         }
-
         public bool UpdateUser(string name, string email, string password, int idUser)
         {
             return _db.UpdateUserInfo(name, email, password, idUser);
@@ -55,12 +51,10 @@ namespace TTService {
             _db.DeleteSession(idUser);
             return _db.InsertSession(idUser, userSession);
         }
-        
         public void Logout(int idUser)
         {
             _db.DeleteSession(idUser);
         }
-
         public User GetUserLogged(string session)
         {
             int id = _db.GetUserID(session);
@@ -71,12 +65,53 @@ namespace TTService {
 
         #endregion
 
-        #region SolverGUI
-        public bool AddSolver(string name, string email, string password)
+        #region DepartmentGUI
+        public bool AddDepartment(string name)
+        {
+            return _db.InsertDepartment(name);
+        }
+        public bool CheckDepartment(string name)
+        {
+            return _db.CheckDepartment(name);
+        }
+        public List<SecondaryQuestion> GetQuestions()
+        {
+            return _db.GetSecondaryQuestions();
+        }
+        public SecondaryQuestion GetQuestion(int id)
+        {
+            return _db.GetSecondaryQuestion(id);
+        }
+        public bool AnswerQuestion(SecondaryQuestion question, string department, string responseMessage)
+        {
+            return _db.AnswerSecondaryQuestion(question, department, responseMessage);
+        }
+        #endregion
+    }
+
+    public class SolverService : ISolverService
+    {
+        private Database.Database _db = Database.Database.Initialize();
+        public static List<ITTChanged> subscribers = new List<ITTChanged>();
+
+        public void Subscribe()
+        {
+            ITTChanged callback = OperationContext.Current.GetCallbackChannel<ITTChanged>();
+            if (!subscribers.Contains(callback))
+            {
+                subscribers.Add(callback);
+            }
+        }
+        public void Unsubscribe()
+        {
+            ITTChanged callback = OperationContext.Current.GetCallbackChannel<ITTChanged>();
+            subscribers.Remove(callback);
+        }
+        public bool RegisterSolver(string name, string email, string password)
         {
             return _db.InsertSolver(name, email, password);
         }
-        public bool CheckSolver(string email, string password)
+        public bool LoginSolver(string email, string password)
         {
             return _db.CheckSolver(email, password);
         }
@@ -84,16 +119,15 @@ namespace TTService {
         {
             return _db.GetUser(id);
         }
-
-        public List<Ticket> GetTicketsUnassigned()
+        public List<Ticket> GetUnassignedTT()
         {
             return _db.GetTicketsUnassigned();
         }
-        public List<Ticket> GetTicketsSolver(User solver)
+        public List<Ticket> GetSolverTT(User solver)
         {
             return _db.GetTicketsSolver(solver);
         }
-        public List<Ticket> GetTicketsByTypeSolver(User solver, TicketStatus status)
+        public List<Ticket> GetSolverTTByType(User solver, TicketStatus status)
         {
             return _db.GetUserTicketsPerTypeSolver(solver, status);
         }
@@ -119,36 +153,12 @@ namespace TTService {
                 client.Send(mail);
                 return _db.InsertEmail(solver, senderTicket, ticket, email);
             }
-                
+
             return false;
         }
         public bool RedirectTicket(int ticket, int solver, string redirectMessage)
         {
             return _db.InsertSecondaryQuestion(ticket, solver, redirectMessage);
         }
-        #endregion
-
-        #region DepartmentGUI
-        public bool AddDepartment(string name)
-        {
-            return _db.InsertDepartment(name);
-        }
-        public bool CheckDepartment(string name)
-        {
-            return _db.CheckDepartment(name);
-        }
-        public List<SecondaryQuestion> GetQuestions()
-        {
-            return _db.GetSecondaryQuestions();
-        }
-        public SecondaryQuestion GetQuestion(int id)
-        {
-            return _db.GetSecondaryQuestion(id);
-        }
-        public bool AnswerQuestion(SecondaryQuestion question, string department, string responseMessage)
-        {
-            return _db.AnswerSecondaryQuestion(question, department, responseMessage);
-        }
-        #endregion
     }
 }
