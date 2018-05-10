@@ -2,66 +2,416 @@
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.ServiceModel;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace TTService {
     public class TTServ : ITTServ {
 
-        private Database.Database _db = Database.Database.Initialize();
+        private Database.Database _db;
         public static List<ITTChanged> subscribers = new List<ITTChanged>();
         
         #region WebApp
         public bool AddUser(string name, string email, string password)
         {
-            return _db.InsertUser(name, email, password);
+            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
+            {
+                try
+                {
+                    c.Open();
+                    string sql = "INSERT INTO Users (name, email, password) VALUES ('" + name + "', '" + email + "', '" + password + "')";
+                    SqlCommand cmd = new SqlCommand(sql, c);
+                    int rowCount = cmd.ExecuteNonQuery();
+                    return rowCount >= 1;
+                }
+                catch (SqlException)
+                {
+                    return false;
+                }
+                finally
+                {
+                    c.Close();
+                }
+            }
         }
         public bool CheckUser(string email, string password)
         {
-            return _db.ValidateUser(email, password);
+            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTs"].ConnectionString))
+            {
+                try
+                {
+                    c.Open();
+                    string sql = "SELECT * FROM Users WHERE email='" + email + "' AND password='" + password + "'";
+                    SqlCommand cmd = new SqlCommand(sql, c);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    bool exists = reader.Read();
+                    reader.Close();
+                    return exists;
+                }
+                catch (SqlException)
+                {
+                    return false;
+                }
+                finally
+                {
+                    c.Close();
+                }
+            }
         }
         public User GetUser(int id)
         {
-            return _db.GetUser(id);
+            User userInfo = new User();
+
+            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTs"].ConnectionString))
+            {
+                try
+                {
+                    c.Open();
+                    string sql = "SELECT * FROM Users WHERE idUser =" + id;
+                    SqlCommand cmd = new SqlCommand(sql, c);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        userInfo.Name = reader.GetString(1);
+                        userInfo.ID = reader.GetInt32(0);
+                        userInfo.Email = reader.GetString(2);
+                        userInfo.Password = reader.GetString(3);
+                    }
+
+                    List<Ticket> tickets = GetTickets(userInfo);
+                    userInfo.Tickets = tickets;
+
+                    reader.Close();
+                    return userInfo;
+                }
+                catch (SqlException)
+                {
+                    return userInfo;
+                }
+                finally
+                {
+                    c.Close();
+                }
+            }
         }
         public User GetUserByEmail(string email)
         {
-            return _db.GetUserByEmail(email);
+            User userInfo = new User();
+
+            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTs"].ConnectionString))
+            {
+                try
+                {
+                    c.Open();
+                    string sql = "SELECT * FROM Users WHERE email = '" + email + "'";
+                    SqlCommand cmd = new SqlCommand(sql, c);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        userInfo.Name = reader.GetString(1);
+                        userInfo.ID = reader.GetInt32(0);
+                        userInfo.Email = reader.GetString(2);
+                        userInfo.Password = reader.GetString(3);
+                    }
+
+                    List<Ticket> tickets = GetTickets(userInfo);
+                    userInfo.Tickets = tickets;
+
+                    reader.Close();
+                    return userInfo;
+                }
+                catch (SqlException)
+                {
+                    return userInfo;
+                }
+                finally
+                {
+                    c.Close();
+                }
+            }
         }
         public bool UpdateUser(string name, string email, string password, int idUser)
         {
-            return _db.UpdateUserInfo(name, email, password, idUser);
+            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTs"].ConnectionString))
+            {
+                try
+                {
+                    c.Open();
+                    string sql = "UPDATE Users SET name ='" + name + "', password = '" + password + "', email = '" + email + "' WHERE idUser = " + idUser;
+                    SqlCommand cmd = new SqlCommand(sql, c);
+                    int rowCount = cmd.ExecuteNonQuery();
+                    return rowCount >= 1;
+                }
+                catch (SqlException)
+                {
+                    return false;
+                }
+                finally
+                {
+                    c.Close();
+                }
+            }
         }
         public bool AddTicket(int idUser, string title, string description)
         {
-            return _db.InsertTicket(idUser, title, description);
+            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
+            {
+                try
+                {
+                    c.Open();
+                    string sql = "INSERT INTO Ticket(idSender, idSolver, title, description, dateTime, status) VALUES (" + idUser + ", null, '" + title + "', '" + description + "', " + DateTime.Now + ", 'unassigned')";
+                    SqlCommand cmd = new SqlCommand(sql, c);
+                    int rowCount = cmd.ExecuteNonQuery();
+                    return rowCount >= 1;
+                }
+                catch (SqlException)
+                {
+                    return false;
+                }
+                finally
+                {
+                    c.Close();
+                }
+            }
         }
         public List<Ticket> GetTickets(User user)
         {
-            return _db.GetUserTickets(user);
+            List<Ticket> tickets = new List<Ticket>();
+
+            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTs"].ConnectionString))
+            {
+                try
+                {
+                    c.Open();
+                    string sql = "SELECT * FROM Ticket WHERE idSender = " + user.ID;
+                    SqlCommand cmd = new SqlCommand(sql, c);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Ticket ticket = new Ticket();
+                        ticket.ID = reader.GetInt32(0);
+                        ticket.Date = reader.GetDateTime(5);
+                        ticket.Description = reader.GetString(4);
+                        ticket.Title = reader.GetString(3);
+
+                        string status = reader.GetString(6);
+
+                        switch (status)
+                        {
+                            case "unassigned":
+                                ticket.Status = TicketStatus.UNASSIGNED;
+                                break;
+                            case "assigned":
+                                ticket.Status = TicketStatus.ASSIGNED;
+                                break;
+                            case "close":
+                                ticket.Status = TicketStatus.CLOSED;
+                                break;
+                        }
+
+                        tickets.Add(ticket);
+                    }
+
+                    reader.Close();   
+                }
+                catch (SqlException)
+                {
+                }
+                finally
+                {
+                    c.Close();
+                }
+
+                return tickets;
+            }
         }
         public List<Ticket> GetTicketsByType(User user, TicketStatus status)
         {
-            return _db.GetUserTicketsPerType(user, status);
+            List<Ticket> tickets = new List<Ticket>();
+
+            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTs"].ConnectionString))
+            {
+                try
+                {
+                    c.Open();
+                    string sql = "SELECT * FROM Ticket WHERE idSender = " + user.ID + "status = ";
+
+                    if (status == TicketStatus.UNASSIGNED)
+                        sql += "'unassigned'";
+                    else if (status == TicketStatus.ASSIGNED)
+                        sql += "'assigned'";
+                    else if (status == TicketStatus.CLOSED)
+                        sql += "'closed'";
+
+                    SqlCommand cmd = new SqlCommand(sql, c);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Ticket ticket = new Ticket();
+                        ticket.ID = reader.GetInt32(0);
+                        ticket.Date = reader.GetDateTime(5);
+                        ticket.Description = reader.GetString(4);
+                        ticket.Title = reader.GetString(3);
+                        ticket.Status = status;
+
+                        tickets.Add(ticket);
+                    }
+
+                    reader.Close();
+                }
+                catch (SqlException)
+                {
+                }
+                finally
+                {
+                    c.Close();
+                }
+
+                return tickets;
+            }
         }
         public Ticket GetTicket(int id)
         {
-            return _db.GetTicket(id);
+            Ticket ticket = new Ticket();
+
+            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTs"].ConnectionString))
+            {
+                try
+                {
+                    c.Open();
+                    string sql = "SELECT * FROM Ticket WHERE idTicket = " + id;
+                    SqlCommand cmd = new SqlCommand(sql, c);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        ticket.ID = reader.GetInt32(0);
+                        ticket.Author = GetUser(reader.GetInt32(1));
+                        ticket.Title = reader.GetString(3);
+                        ticket.Description = reader.GetString(4);
+                        ticket.Date = reader.GetDateTime(5);
+
+                        string status = reader.GetString(6);
+
+                        switch (status)
+                        {
+                            case "unassigned":
+                                ticket.Status = TicketStatus.UNASSIGNED;
+                                break;
+                            case "assigned":
+                                ticket.Status = TicketStatus.ASSIGNED;
+                                break;
+                            case "closed":
+                                ticket.Status = TicketStatus.CLOSED;
+                                break;
+                        }
+                    }
+
+                    reader.Close();
+                    return ticket;
+                }
+                catch (SqlException)
+                {
+                    return ticket;
+                }
+                finally
+                {
+                    c.Close();
+                }
+            }
         }
         public bool Login(int idUser)
         {
             string userSession = System.Guid.NewGuid().ToString();
-            _db.DeleteSession(idUser);
-            return _db.InsertSession(idUser, userSession);
+            
+            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
+            {
+                try
+                {
+                    c.Open();
+                    string sql = "DELETE FROM Session WHERE idUser=" + idUser;
+                    SqlCommand cmd = new SqlCommand(sql, c);
+                    int rowCount = cmd.ExecuteNonQuery();
+                    
+                    if(rowCount >= 1)
+                    {
+                        sql = "INSERT INTO Session(sessionID, userID) VALUES ('" + userSession + "'," + idUser;
+                        cmd = new SqlCommand(sql, c);
+                        rowCount = cmd.ExecuteNonQuery();
+
+                        return rowCount >= 1;
+                    }
+
+                    return false;
+                }
+                catch (SqlException)
+                {
+                    return false;
+                }
+                finally
+                {
+                    c.Close();
+                }
+            }
         }
         public void Logout(int idUser)
         {
-            _db.DeleteSession(idUser);
+            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
+            {
+                try
+                {
+                    c.Open();
+                    string sql = "DELETE FROM Session WHERE idUser=" + idUser;
+                    SqlCommand cmd = new SqlCommand(sql, c);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SqlException)
+                {
+                }
+                finally
+                {
+                    c.Close();
+                }
+            }
         }
         public User GetUserLogged(string session)
         {
-            int id = _db.GetUserID(session);
-            if (id != 0)
-                return _db.GetUser(id);
-            return new User();
+            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
+            {
+                try
+                {
+                    c.Open();
+                    string sql = "SELECT userID FROM Session WHERE sessionID = '" + session + "'";
+                    SqlCommand cmd = new SqlCommand(sql, c);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    int ID = 0;
+
+                    if (reader.Read())
+                        ID = reader.GetInt32(0);
+
+                    reader.Close();
+
+                    if (ID != 0)
+                        return GetUser(ID);
+                    return new User();
+                }
+                catch (SqlException)
+                {
+                    return new User();
+                }
+                finally
+                {
+                    c.Close();
+                }
+            }
+            
         }
         #endregion
 

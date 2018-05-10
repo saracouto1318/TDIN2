@@ -32,7 +32,7 @@
       </div>
 
       <div id="loginBody">
-        <form method="POST" action="Default.aspx" runat="server">
+        <form method="POST" action="Default.aspx" runat="server" novalidate="novalidate">
           <div id="login" class="modal-dialog modal-login">
             <div class="modal-content">
               <div class="modal-header">			
