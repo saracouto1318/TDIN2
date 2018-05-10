@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Threading.Tasks;
+using System.Configuration;
 using TTService;
 
 namespace Database
@@ -12,9 +13,6 @@ namespace Database
         public static Database instance;
 
         private SQLiteConnection _conn;
-
-        public const string DB_PATH = "database.sqlite";
-        public const string SQL_PATH = "database.sql";
 
         private Database()
         {
@@ -33,27 +31,17 @@ namespace Database
 
         private void StartDB()
         {
-            bool justCreated = false;
-            if (!File.Exists(DB_PATH))
-            {
-                justCreated = true;
-                SQLiteConnection.CreateFile(DB_PATH);
-            }
 
-            _conn = new SQLiteConnection("Data Source=" + DB_PATH + ";Version=3;;foreign keys=true;");
+            _conn = new SQLiteConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString);
             _conn.Open();
 
-            if (justCreated)
-            {
-                CreateDB();
-            }
+            CreateDB();
         }
 
         private void CreateDB()
         {
             SQLiteCommand command = new SQLiteCommand(_conn);
             SQLiteTransaction transaction = null;
-            command.CommandText = File.ReadAllText(SQL_PATH);
 
             try
             {
@@ -63,15 +51,6 @@ namespace Database
             }
             catch (SQLiteException e)
             {
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.StackTrace);
-
-                try
-                {
-                    File.Delete(SQL_PATH);
-                }
-                catch (Exception) { }
-
                 if (transaction != null)
                     transaction.Rollback();
             }
