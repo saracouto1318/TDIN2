@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ProfilePage.aspx.cs" Inherits="ProfilePage" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ProfilePage.aspx.cs" Inherits="_ProfilePage" %>
 
 <!DOCTYPE html>
 
@@ -22,7 +22,7 @@
     </head>
     <body>
         <div class="wrapper">
-        <form method="POST" action="ProfilePage.aspx" class="form-horizontal" runat="server">
+        <form class="form-horizontal" runat="server" novalidate="novalidate">
             
         <div class="modal-dialog modal-login">
             <div class="modal-content">
@@ -37,6 +37,22 @@
                 </div>
             </div>
         </div>
+       <div id="newTickets" class="modal-dialog modal-login">
+        <div class="modal-content">
+            <h3>New Trouble Ticket</h3>
+            <br />
+            <div style="margin-bottom: 25px" class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                <input id="title" type="text" class="form-control" name="title" value="" placeholder="Title" />                                        
+            </div>
+            <div style="margin-bottom: 25px" class="input-group">
+                <textarea id="description" class="form-control" name="description" rows="10" placeholder="Description"></textarea>                                        
+            </div>
+            <div class="form-group">
+             <asp:Button runat="server" ID="createTicket" Class="btn btn-success btn-sm" Text="Create" OnClick="Create_Click"/>
+           </div>
+             </div>
+      </div>
        <div id="editProfile" class="modal-dialog modal-login">
         <div class="modal-content">
             <h3>Edit Profile</h3>
@@ -53,8 +69,10 @@
                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                     <input runat="server" id="loginPassword" type="password" class="form-control" name="password" placeholder="Password" />
                 </div>
-            <asp:Button ID="editForm" runat="server" Class="btn btn-success btn-sm" Text="Edit" OnClick="Edit_Click"/>
-        </div>
+            <div class="form-group">
+            <asp:Button runat="server" ID="editForm" Class="btn btn-success btn-sm" Text="Edit" OnClick="Edit_Click"/>
+ </div>
+            </div>
      </div>
      <div id="myTickets"class="modal-dialog modal-login">
         <div class="modal-content">
@@ -66,6 +84,7 @@
                 <asp:Button ID="closeTicket" runat="server" Class="btn btn-warning btn-sm" Text="Close" OnClick="Close_Click"/>
             </div>
             <div class="table-responsive">
+                <% if(tickets.Length > 0) { %>
                 <table class="table">
                     <thead>
                         <tr >
@@ -83,34 +102,24 @@
                                 {%><tr class="danger"><% } 
                                 else {%><tr class="success"><% } 
                             %>
-
+                            <td><%: ticket.ID %></td>
                             <td><%: ticket.Title %></td>
                             <td><%: ticket.Description %></td>
                             <td><%: ticket.Date.ToString() %></td>
                             <td><%: ticket.Status.ToString() %></td>
                         </tr>
-                        <% } //foreach %>
+                        <% } %>
                         
                     </tbody>
                 </table>
+                <% } else { %>
+                <p class="noTicket">You don't have any tickets</p>
+                <% } %>
             </div>
         </div>
       </div>
-      <div id="newTickets" class="modal-dialog modal-login">
-        <div class="modal-content">
-            <h3>New Trouble Ticket</h3>
-            <br />
-            <div style="margin-bottom: 25px" class="input-group">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-                <input id="title" type="text" class="form-control" name="title" value="" placeholder="Title" />                                        
-            </div>
-            <div style="margin-bottom: 25px" class="input-group">
-                <textarea id="description" class="form-control" name="description" rows="10" placeholder="Description"></textarea>                                        
-            </div>
-            <asp:Button ID="createTicket" runat="server" Class="btn btn-success btn-sm" Text="Create" OnClick="Create_Click"/>
-        </div>
-      </div>
-            </form> 
+      
+    </form> 
     </div>
       <div class="footer push">
          <span class="copyright">Copyright &copy; 2018</span>

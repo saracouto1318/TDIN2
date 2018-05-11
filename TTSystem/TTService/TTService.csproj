@@ -80,9 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Database\Database.sql" />
-    <Content Include="Database\TTdatabase.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

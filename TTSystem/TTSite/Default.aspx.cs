@@ -36,8 +36,8 @@ public partial class _Default : Page {
         if (proxy.AddUser(name, email, password))
         {
             this.user = proxy.GetUserByEmail(email);
-            proxy.Login(this.user.ID);
-            Response.Redirect("ProfilePage.aspx?id="+this.user.ID.ToString());
+            if(proxy.Login(this.user.ID))
+                Response.Redirect("ProfilePage.aspx?id="+this.user.ID.ToString());
         }
     }
     

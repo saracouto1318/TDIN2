@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using TTService;
 using TTSvc;
 
-public partial class ProfilePage : System.Web.UI.Page
+public partial class _ProfilePage : Page
 {
     TTServClient proxy;
     User user;
@@ -39,7 +38,8 @@ public partial class ProfilePage : System.Web.UI.Page
         user.Email = email;
         user.Password = password;
 
-        proxy.UpdateUser(name, email, password, user.ID); ;
+        if(proxy.UpdateUser(name, email, password, user.ID))
+            Response.Redirect("ProfilePage.aspx?id=" + user.ID.ToString());
     }
 
     protected void Create_Click(object sender, EventArgs e)
@@ -47,7 +47,8 @@ public partial class ProfilePage : System.Web.UI.Page
         string title = String.Format("{0}", Request.Form["title"]);
         string description = String.Format("{0}", Request.Form["description"]);
 
-        proxy.AddTicket(user.ID, title, description);
+        if(proxy.AddTicket(user.ID, title, description))
+            Response.Redirect("ProfilePage.aspx?id=" + user.ID.ToString());
     }
 
     protected void All_Click(object sender, EventArgs e)

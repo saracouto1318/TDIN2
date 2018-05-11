@@ -162,7 +162,7 @@ namespace TTService {
                 try
                 {
                     c.Open();
-                    string sql = "INSERT INTO Ticket(idSender, idSolver, title, description, dateTime, status) VALUES (" + idUser + ", null, '" + title + "', '" + description + "', " + DateTime.Now + ", 'unassigned')";
+                    string sql = "INSERT INTO Ticket(idSender, idSolver, title, description, dateTime, status) VALUES (" + idUser + ", null, '" + title + "', '" + description + "', '" + DateTime.Now + "', 'unassigned')";
                     SqlCommand cmd = new SqlCommand(sql, c);
                     int rowCount = cmd.ExecuteNonQuery();
                     return rowCount >= 1;
@@ -328,26 +328,17 @@ namespace TTService {
         public bool Login(int idUser)
         {
             string userSession = System.Guid.NewGuid().ToString();
-            
+
             using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
             {
                 try
                 {
                     c.Open();
-                    string sql = "DELETE FROM Session WHERE idUser=" + idUser;
+                    string sql = "INSERT INTO Session(userID, session) VALUES (" + idUser + ",'" + userSession + "')";
                     SqlCommand cmd = new SqlCommand(sql, c);
                     int rowCount = cmd.ExecuteNonQuery();
-                    
-                    if(rowCount >= 1)
-                    {
-                        sql = "INSERT INTO Session(sessionID, userID) VALUES ('" + userSession + "'," + idUser;
-                        cmd = new SqlCommand(sql, c);
-                        rowCount = cmd.ExecuteNonQuery();
 
-                        return rowCount >= 1;
-                    }
-
-                    return false;
+                    return rowCount >= 1;
                 }
                 catch (SqlException)
                 {
@@ -359,7 +350,7 @@ namespace TTService {
                 }
             }
         }
-        public void Logout(int idUser)
+     public void Logout(int idUser)
         {
             using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
             {
@@ -386,7 +377,7 @@ namespace TTService {
                 try
                 {
                     c.Open();
-                    string sql = "SELECT userID FROM Session WHERE sessionID = '" + session + "'";
+                    string sql = "SELECT userID FROM Session WHERE session = '" + session + "'";
                     SqlCommand cmd = new SqlCommand(sql, c);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -462,7 +453,7 @@ namespace TTService {
                 try
                 {
                     c.Open();
-                    string sql = "SELECT idSolver FROM Solver WHERE idSolver IN (SELECT idUser FROM User WHERE email = '" + email + "' AND password = '" + password + "')";
+                    string sql = "SELECT idSolver FROM Solver WHERE idSolver IN (SELECT idUser FROM Users WHERE email = '" + email + "' AND password = '" + password + "')";
                     SqlCommand cmd = new SqlCommand(sql, c);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -683,7 +674,7 @@ namespace TTService {
                     try
                     {
                         c.Open();
-                        string sql = "INSERT INTO User(idSender, idReceiver, idTicket, content, dateTime) VALUES (" + solver + "," + senderTicket + "," + ticket + ",'" + email + "'," + DateTime.Now;
+                        string sql = "INSERT INTO User(idSender, idReceiver, idTicket, content, dateTime) VALUES (" + solver + "," + senderTicket + "," + ticket + ",'" + email + "','" + DateTime.Now + "'";
                         SqlCommand cmd = new SqlCommand(sql, c);
                         int rowCount = cmd.ExecuteNonQuery();
                         return rowCount >= 1;
@@ -708,7 +699,7 @@ namespace TTService {
                 try
                 {
                     c.Open();
-                    string sql = "INSERT INTO SecondaryQuestions(idTicket, idSender, idDepartment, question, response, dateTime) VALUES (" + ticket + ", " + solver + ", null, '" + redirectMessage + "', null, " + DateTime.Now + ")";
+                    string sql = "INSERT INTO SecondaryQuestions(idTicket, idSender, idDepartment, question, response, dateTime) VALUES (" + ticket + ", " + solver + ", null, '" + redirectMessage + "', null, '" + DateTime.Now + "')";
                     SqlCommand cmd = new SqlCommand(sql, c);
                     int rowCount = cmd.ExecuteNonQuery();
                     return rowCount >= 1;
