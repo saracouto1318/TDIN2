@@ -34,4 +34,8 @@ public partial class Ticket : System.Web.UI.Page
         proxy.Logout(user.ID);
         Response.Redirect("Default.aspx");
     }
+    protected void Profile_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ProfilePage.aspx?id=" + user.ID);
+    }
 }

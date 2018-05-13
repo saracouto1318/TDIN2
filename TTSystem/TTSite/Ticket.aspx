@@ -33,6 +33,7 @@
                         <div runat="server" id="status"  class='profile-usertitle-email'>Status</div>
                         <br />
                         <div runat="server" id="description" class='profile-usertitle-email'>Ticket Description</div>
+                            <asp:Button ID="Profile" runat="server" Class="btn btn-sucess btn-sm" Text="My Profile" OnClick="Profile_Click"/>
                             <asp:Button ID="Logout" runat="server" Class="btn btn-danger btn-sm" Text="Logout" OnClick="Logout_Click"/>
                         </form>
                     </div>

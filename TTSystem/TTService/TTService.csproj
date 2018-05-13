@@ -70,7 +70,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\Database.cs" />
     <Compile Include="ITTServ.cs" />
     <Compile Include="Models\SecondaryQuestion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
