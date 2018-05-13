@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TTSvc;
-public partial class Ticket : System.Web.UI.Page
+public partial class _Ticket : Page
 {
     TTServClient proxy;
     TTService.User user;

@@ -330,6 +330,21 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="MyQuestions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSolver" type="xs:int" />
+        <xs:element minOccurs="0" name="type" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MyQuestionsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="MyQuestionsResult" nillable="true" type="q17:ArrayOfSecondaryQuestion" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="AddDepartment">
     <xs:complexType>
       <xs:sequence>
@@ -366,7 +381,7 @@
   <xs:element name="GetQuestionsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="GetQuestionsResult" nillable="true" type="q17:ArrayOfSecondaryQuestion" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="GetQuestionsResult" nillable="true" type="q18:ArrayOfSecondaryQuestion" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -380,14 +395,14 @@
   <xs:element name="GetQuestionResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="GetQuestionResult" nillable="true" type="q18:SecondaryQuestion" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="GetQuestionResult" nillable="true" type="q19:SecondaryQuestion" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AnswerQuestion">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="question" nillable="true" type="q19:SecondaryQuestion" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="question" nillable="true" type="q20:SecondaryQuestion" />
         <xs:element minOccurs="0" name="department" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="responseMessage" nillable="true" type="xs:string" />
       </xs:sequence>

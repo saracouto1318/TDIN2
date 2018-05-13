@@ -208,7 +208,7 @@ namespace TTService {
                             case "assigned":
                                 ticket.Status = TicketStatus.ASSIGNED;
                                 break;
-                            case "close":
+                            case "closed":
                                 ticket.Status = TicketStatus.CLOSED;
                                 break;
                         }
@@ -238,7 +238,7 @@ namespace TTService {
                 try
                 {
                     c.Open();
-                    string sql = "SELECT * FROM Ticket WHERE idSender = " + user.ID + "status = ";
+                    string sql = "SELECT * FROM Ticket WHERE idSender = " + user.ID + "AND status = ";
 
                     if (status == TicketStatus.UNASSIGNED)
                         sql += "'unassigned'";

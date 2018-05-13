@@ -88,7 +88,7 @@
             <div class='profile-userbuttons'>
                 <asp:Button ID="allTicket" runat="server" Class="btn btn-success btn-sm" Text="All" OnClick="All_Click"/>
                 <asp:Button ID="openTicket" runat="server" Class="btn btn-danger btn-sm" Text="Open" OnClick="Open_Click"/>
-                <asp:Button ID="closeTicket" runat="server" Class="btn btn-warning btn-sm" Text="Close" OnClick="Close_Click"/>
+                <asp:Button ID="closeTicket" runat="server" Class="btn btn-warning btn-sm" Text="Closed" OnClick="Close_Click"/>
             </div>
             <div class="table-responsive">
                 <% if(tickets.Length > 0) { %>
