@@ -36,7 +36,7 @@ namespace SolverGUI
 
         public void GetTicketInfo()
         {
-            ticketLabel.Text = "Ticket " + this.ticket.ID.ToString();
+            ticketLabel.Text = "Ticket #" + this.ticket.ID.ToString();
             title.Text = this.ticket.Title;
         }
 

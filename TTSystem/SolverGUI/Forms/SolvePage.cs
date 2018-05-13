@@ -35,7 +35,7 @@ namespace SolverGUI
         }
         public void GetTicketInfo()
         {
-            ticketID.Text = "Ticket " + this.ticket.ID.ToString();
+            ticketID.Text = "Ticket #" + this.ticket.ID.ToString();
             title.Text = this.ticket.Title;
         }
 

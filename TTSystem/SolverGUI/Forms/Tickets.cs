@@ -19,6 +19,7 @@ namespace GUI.Forms
         public TTServClient proxy;
         public int idUser;
         public User user;
+        private TableLayoutPanel panel = new TableLayoutPanel();
         public Tickets(int idUser)
         {
             InitializeComponent();
@@ -41,52 +42,70 @@ namespace GUI.Forms
         public void GetUserInfo()
         {
             this.user = proxy.GetUser(idUser);
-            name.Text = this.user.Name;
-            email.Text = this.user.Email;
         }
 
         private void OpenBtn_Click(object sender, EventArgs e)
         {
-            tabControl1.SelectedTab = tabControl;
+            label2.Visible = false;
+            label3.Visible = false;
+
             if (!CheckExist(TicketStatus.UNASSIGNED))
+            {
                 label1.Visible = true;
+                panel.Visible = false;
+            }
             else
             {
                 label1.Visible = false;
                 CreateTable(TicketStatus.UNASSIGNED);
+                panel.Visible = true;
             }
         }
 
         private void MyTicketsBtn_Click(object sender, EventArgs e)
         {
-            tabControl1.SelectedTab = tabPage2;
+            label1.Visible = false;
+            label3.Visible = false;
+
             if (!CheckExist(TicketStatus.ASSIGNED))
-                label1.Visible = true;
+            {
+                label2.Visible = true;
+                panel.Visible = false;
+            }
             else
             {
-                label1.Visible = false;
+                label2.Visible = false;
                 CreateTable(TicketStatus.ASSIGNED);
+                panel.Visible = true;
             }
         }
 
         private void CloseBtn_Click(object sender, EventArgs e)
         {
-            tabControl1.SelectedTab = tabPage3;
+            label1.Visible = false;
+            label2.Visible = false;
+
             if (!CheckExist(TicketStatus.CLOSED))
-                label1.Visible = true;
+            {
+                label3.Visible = true;
+                panel.Visible = false;
+            }
             else
             {
-                label1.Visible = false;
+                label3.Visible = false;
                 CreateTable(TicketStatus.CLOSED);
+                panel.Visible = true;
             }
         }
 
         private bool CheckExist(TicketStatus status)
         {
             if (status == TicketStatus.UNASSIGNED)
+            {
                 if (proxy.GetUnassignedTT().Length > 0)
                     return true;
-                else
+            }
+            else
                 if (proxy.GetSolverTTByType(this.user, status).Length > 0)
                     return true;
             return false;
@@ -127,21 +146,21 @@ namespace GUI.Forms
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
-            }, 1, 0);
+            }, 2, 0);
             panel.Controls.Add(new Label()
             {
                 Text = "Status",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
-            }, 2, 0);
+            }, 3, 0);
             panel.Controls.Add(new Label()
             {
                 Text = "Date",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
-            }, 3, 0);
+            }, 4, 0);
 
             int index = 0;
             foreach (Ticket t in tickets)
@@ -249,13 +268,13 @@ namespace GUI.Forms
                 ColumnCount = 5
             };
 
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 10F));
             panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 20F));
             panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 20F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 20F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 20F));
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 30F));
             panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 20F));
             panel.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (0));
-            panel.Location = new Point(150, 221);
+            panel.Location = new Point(100, 221);
             panel.Name = "tableLayoutPanel1";
             panel.Size = new Size(100, 40);
             panel.AutoSize = true;
@@ -268,6 +287,13 @@ namespace GUI.Forms
             proxy.Logout(user.ID);
             Hide();
             new MainPage().ShowDialog();
+            Show();
+        }
+
+        private void ProfileBtn_Click(object sender, EventArgs e)
+        {
+            Hide();
+            new PersonalPage(this.user.ID).ShowDialog();
             Show();
         }
     }

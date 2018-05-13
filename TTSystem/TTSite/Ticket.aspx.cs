@@ -12,6 +12,8 @@ public partial class Ticket : System.Web.UI.Page
     TTService.Ticket ticket;
     protected void Page_Load(object sender, EventArgs e)
     {
+        proxy = new TTServClient();
+
         String idString = Request.QueryString["id"];
         int id = Int32.Parse(idString);
 

@@ -39,19 +39,19 @@ namespace SolverGUI
         public void GetTicketInfo()
         {
             this.ticketInfo = proxy.GetTicket(this.ticketID);
-            ticketLabel.Text = "Ticket " + this.ticketInfo.ID.ToString();
+            ticketLabel.Text = "Ticket #" + this.ticketInfo.ID.ToString();
             title.Text = this.ticketInfo.Title;
             date.Text = this.ticketInfo.Date.ToString();
             description.Text = this.ticketInfo.Description;
             status.Text = this.ticketInfo.Status.ToString();
 
-            if(this.ticketInfo.Status == TicketStatus.CLOSED)
+            if (this.ticketInfo.Status == TicketStatus.CLOSED)
             {
                 this.assignBtn.Visible = false;
                 this.solveBtn.Visible = false;
                 this.redirectBtn.Visible = false;
             }
-            else if(this.ticketInfo.Status == TicketStatus.ASSIGNED)
+            else if (this.ticketInfo.Status == TicketStatus.ASSIGNED)
                 this.assignBtn.Visible = false;
         }
 
@@ -80,6 +80,7 @@ namespace SolverGUI
 
         private void RedirectBtn_Click(object sender, EventArgs e)
         {
+            redirectBtn.Visible = false;
             Hide();
             proxy.AssignTicket(ticketInfo.ID, user.ID);
             new RedirectPage(user, ticketInfo).ShowDialog();

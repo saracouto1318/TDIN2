@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using TTService;
 using TTSvc;
 
@@ -72,5 +73,17 @@ public partial class _ProfilePage : Page
     {
         tickets = proxy.GetTicketsByType(user, TicketStatus.CLOSED);
     }
-    
+
+    protected void Logout_Click(object sender, EventArgs e)
+    {
+        proxy.Logout(user.ID);
+        Response.Redirect("Default.aspx");
+    }
+    protected void Ticket_Click(object sender, EventArgs e)
+    {
+        Button button = (Button)sender;
+        string buttonId = button.ID;
+        int ID = Int32.Parse(buttonId);
+        Response.Redirect("Ticket.aspx?id=" + user.ID.ToString() + "&ticket=" + ID);
+    }
 }

@@ -39,7 +39,7 @@ namespace DepartmentGUI
         public void GetQuestionInfo()
         {
             this.secQuestion = proxy.GetQuestion(this.idQuestion);
-            ticketID.Text = this.secQuestion.TicketID.ToString();
+            ticketID.Text = "Ticket #" + this.secQuestion.TicketID.ToString();
         }
 
         private void SendBtn_Click(object sender, EventArgs e)

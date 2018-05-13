@@ -26,6 +26,7 @@ public partial class _Default : Page {
             proxy.Login(this.user.ID);
             Response.Redirect("ProfilePage.aspx?id=" + this.user.ID.ToString());
         }
+
         loginError.Visible = true;
             
     }
@@ -42,6 +43,7 @@ public partial class _Default : Page {
             if(proxy.Login(this.user.ID))
                 Response.Redirect("ProfilePage.aspx?id="+this.user.ID.ToString());
         }
+
         registerError.Visible = true;
     }
     

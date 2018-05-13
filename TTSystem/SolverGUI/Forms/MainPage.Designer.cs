@@ -197,6 +197,7 @@
             this.labelLogin.Size = new System.Drawing.Size(234, 18);
             this.labelLogin.TabIndex = 20;
             this.labelLogin.Text = "This solver isn\'t registered yet";
+            this.labelLogin.Visible = false;
             // 
             // labelRegister
             // 
@@ -209,6 +210,7 @@
             this.labelRegister.Size = new System.Drawing.Size(199, 18);
             this.labelRegister.TabIndex = 21;
             this.labelRegister.Text = "This solver already exists";
+            this.labelRegister.Visible = false;
             // 
             // MainPage
             // 

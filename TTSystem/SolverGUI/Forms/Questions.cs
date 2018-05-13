@@ -19,6 +19,7 @@ namespace GUI.Forms
         public TTServClient proxy;
         public int idUser;
         public User user;
+        private TableLayoutPanel panel = new TableLayoutPanel();
         public Questions(int idUser)
         {
             InitializeComponent();
@@ -41,8 +42,6 @@ namespace GUI.Forms
         public void GetUserInfo()
         {
             this.user = proxy.GetUser(idUser);
-            name.Text = this.user.Name;
-            email.Text = this.user.Email;
         }
 
         private bool CheckExist(bool value)
@@ -197,26 +196,41 @@ namespace GUI.Forms
 
         private void OpenBtn_Click(object sender, EventArgs e)
         {
-            tabControl1.SelectedTab = tabControl;
+            label2.Visible = false;
             if (!CheckExist(false))
+            {
                 label1.Visible = true;
+                panel.Visible = false;
+            }
             else
             {
                 label1.Visible = false;
+                panel.Visible = true;
                 CreateTable(false);
             }
         }
 
         private void CloseBtn_Click(object sender, EventArgs e)
         {
-            tabControl1.SelectedTab = tabPage2;
+            label1.Visible = false;
             if (!CheckExist(true))
-                label1.Visible = true;
+            {
+                label2.Visible = true;
+                panel.Visible = false;
+            }
             else
             {
-                label1.Visible = false;
+                label2.Visible = false;
+                panel.Visible = true;
                 CreateTable(true);
             }
+        }
+
+        private void ProfileBtn_Click(object sender, EventArgs e)
+        {
+            Hide();
+            new PersonalPage(user.ID).ShowDialog();
+            Show();
         }
     }
 }

@@ -52,7 +52,7 @@ namespace GUI.Forms
         {
             this.secQuestion = proxy.GetQuestion(idQuestion);
             status.Text = (secQuestion.Response == null) ? "Open" : "Closed";
-            ticketID.Text = secQuestion.TicketID.ToString();
+            ticketID.Text = "Ticket #" + secQuestion.TicketID.ToString();
             date.Text = secQuestion.Date.ToString();
             question.Text = secQuestion.Question.ToString();
 

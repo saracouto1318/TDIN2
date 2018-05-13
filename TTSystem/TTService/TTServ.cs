@@ -162,7 +162,7 @@ namespace TTService {
                 try
                 {
                     c.Open();
-                    string sql = "INSERT INTO Ticket(idSender, idSolver, title, description, dateTime, status) VALUES (" + idUser + ", null, '" + title + "', '" + description + "', '" + DateTime.Now + "', 'unassigned')";
+                    string sql = "INSERT INTO Ticket(idSender, idSolver, title, description, dateTime, status) VALUES (" + idUser + ", null, '" + title + "', '" + description + "', GetDate(), 'unassigned')";
                     SqlCommand cmd = new SqlCommand(sql, c);
                     int rowCount = cmd.ExecuteNonQuery();
                     return rowCount >= 1;
@@ -659,14 +659,18 @@ namespace TTService {
                 User to = GetUser(senderTicket);
                 Ticket ticketInfo = GetTicket(ticket);
 
-                MailMessage mail = new MailMessage("trouble_tickets@gmail.com", to.Email);
-                SmtpClient client = new SmtpClient();
-                client.Port = 25;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-                client.Host = "smtp.gmail.com";
+                MailMessage mail = new MailMessage();
+                SmtpClient client = new SmtpClient("smtp.gmail.com");
+
+                mail.From = new MailAddress("trouble_tickets@gmail.com");
+                mail.To.Add(to.Email.ToString());
                 mail.Subject = "Ticket #" + ticketInfo.ID + " - " + ticketInfo.Title;
                 mail.Body = email;
+
+                client.Port = 987;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.EnableSsl = true;
                 client.Send(mail);
 
                 using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
@@ -674,7 +678,7 @@ namespace TTService {
                     try
                     {
                         c.Open();
-                        string sql = "INSERT INTO User(idSender, idReceiver, idTicket, content, dateTime) VALUES (" + solver + "," + senderTicket + "," + ticket + ",'" + email + "','" + DateTime.Now + "'";
+                        string sql = "INSERT INTO User(idSender, idReceiver, idTicket, content, dateTime) VALUES (" + solver + "," + senderTicket + "," + ticket + ",'" + email + "', GetDate()";
                         SqlCommand cmd = new SqlCommand(sql, c);
                         int rowCount = cmd.ExecuteNonQuery();
                         return rowCount >= 1;
@@ -699,7 +703,7 @@ namespace TTService {
                 try
                 {
                     c.Open();
-                    string sql = "INSERT INTO SecondaryQuestions(idTicket, idSender, idDepartment, question, response, dateTime) VALUES (" + ticket + ", " + solver + ", null, '" + redirectMessage + "', null, '" + DateTime.Now + "')";
+                    string sql = "INSERT INTO SecondaryQuestions(idTicket, idSender, idDepartment, question, response, dateTime) VALUES (" + ticket + ", " + solver + ", null, '" + redirectMessage + "', null, GetDate())";
                     SqlCommand cmd = new SqlCommand(sql, c);
                     int rowCount = cmd.ExecuteNonQuery();
                     return rowCount >= 1;

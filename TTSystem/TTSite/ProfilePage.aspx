@@ -21,9 +21,9 @@
         <link href="~/Content/css/profile.css" rel="stylesheet"/>
     </head>
     <body>
+
         <div class="wrapper">
-        <form class="form-horizontal" runat="server" novalidate="novalidate">
-            
+        <form class="form-horizontal" runat="server" novalidate="novalidate">  
         <div class="modal-dialog modal-login">
             <div class="modal-content">
                 <div class='profile-usertitle'>
@@ -34,6 +34,7 @@
                     <a id="edit" class='btn btn-success btn-sm'>Edit Profile</a>
                     <a id="my" class='btn btn-primary btn-sm'>My Trouble Tickets</a>
                     <a id="new" class='btn btn-info btn-sm'>New Trouble Ticket</a>
+                    <a id="logout" class='btn btn-danger btn-sm'>Logout</a>
                 </div>
             </div>
         </div>
@@ -98,9 +99,11 @@
                     <tbody>
                         <% foreach(TTService.Ticket ticket in tickets) { %>
                             <%
-                                if(ticket.Status != TTService.TicketStatus.CLOSED)
-                                {%><tr class="danger"><% } 
-                                else {%><tr class="success"><% } 
+                                if(ticket.Status == TTService.TicketStatus.CLOSED)
+                                {%><tr class="success"><% }
+                                else if(ticket.Status == TTService.TicketStatus.ASSIGNED)
+                                {%><tr class="warning"><% } 
+                                else {%><tr class="danger"><% }
                             %>
                             <td><%: ticket.ID %></td>
                             <td><%: ticket.Title %></td>
@@ -118,8 +121,8 @@
             </div>
         </div>
       </div>
-      
-    </form> 
+       
+            </form>
     </div>
       <div class="footer push">
          <span class="copyright">Copyright &copy; 2018</span>

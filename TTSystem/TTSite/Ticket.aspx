@@ -33,6 +33,7 @@
                         <div runat="server" id="status"  class='profile-usertitle-email'>Status</div>
                         <br />
                         <div runat="server" id="description" class='profile-usertitle-email'>Ticket Description</div>
+                            <a id="logout" class='btn btn-danger btn-sm'>Logout</a>
                         </form>
                     </div>
                 </div>

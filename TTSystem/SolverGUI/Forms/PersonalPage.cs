@@ -17,7 +17,6 @@ namespace SolverGUI
     public partial class PersonalPage : MaterialForm
     {
         public TTServClient proxy;
-        //private TableLayoutPanel panel = new TableLayoutPanel();
         public int idUser;
         public User user;
         public PersonalPage(int idUser)

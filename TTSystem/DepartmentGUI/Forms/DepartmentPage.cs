@@ -25,7 +25,7 @@ namespace DepartmentGUI
             InitializeComponent();
 
             this.name = name;
-            departmentName.Text = this.name;
+            departmentName.Text = "Department " + this.name;
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
@@ -71,7 +71,7 @@ namespace DepartmentGUI
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
-            }, 1, 0);
+            }, 2, 0);
 
             int index = 0;
             foreach (SecondaryQuestion question in questions)
@@ -140,7 +140,7 @@ namespace DepartmentGUI
 
             panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             panel.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (0));
-            panel.Location = new Point(350, 189);
+            panel.Location = new Point(290, 228);
             panel.Name = "tableLayoutPanel1";
             panel.Size = new Size(100, 40);
             panel.AutoSize = true;
