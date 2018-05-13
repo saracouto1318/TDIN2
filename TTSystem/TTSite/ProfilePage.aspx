@@ -19,6 +19,12 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <link href="~/Content/css/profile.css" rel="stylesheet"/>
+        <script type="text/javascript">
+       function Redirect(id, ticket)
+       {
+        location.href="Ticket.aspx?id=" + id + "&ticket=" + ticket;
+       }
+    </script>
     </head>
     <body>
 
@@ -34,7 +40,7 @@
                     <a id="edit" class='btn btn-success btn-sm'>Edit Profile</a>
                     <a id="my" class='btn btn-primary btn-sm'>My Trouble Tickets</a>
                     <a id="new" class='btn btn-info btn-sm'>New Trouble Ticket</a>
-                    <a id="logout" class='btn btn-danger btn-sm'>Logout</a>
+                    <asp:Button ID="Logout" runat="server" Class="btn btn-danger btn-sm" Text="Logout" OnClick="Logout_Click"/>
                 </div>
             </div>
         </div>
@@ -100,10 +106,10 @@
                         <% foreach(TTService.Ticket ticket in tickets) { %>
                             <%
                                 if(ticket.Status == TTService.TicketStatus.CLOSED)
-                                {%><tr class="success"><% }
+                                {%><tr class="success" onclick="Redirect(<%: user.ID %>,<%: ticket.ID %>);"><% }
                                 else if(ticket.Status == TTService.TicketStatus.ASSIGNED)
-                                {%><tr class="warning"><% } 
-                                else {%><tr class="danger"><% }
+                                {%><tr class="warning" onclick="Redirect(<%: user.ID %>,<%: ticket.ID %>);"><% } 
+                                else {%><tr class="danger" onclick="Redirect(<%: user.ID %>,<%: ticket.ID %>);"><% }
                             %>
                             <td><%: ticket.ID %></td>
                             <td><%: ticket.Title %></td>

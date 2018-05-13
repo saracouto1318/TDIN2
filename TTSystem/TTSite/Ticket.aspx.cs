@@ -28,4 +28,10 @@ public partial class Ticket : System.Web.UI.Page
         description.InnerText = ticket.Description;
         status.InnerText = ticket.Status.ToString();
     }
+
+    protected void Logout_Click(object sender, EventArgs e)
+    {
+        proxy.Logout(user.ID);
+        Response.Redirect("Default.aspx");
+    }
 }

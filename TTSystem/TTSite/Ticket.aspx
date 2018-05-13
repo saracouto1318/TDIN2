@@ -26,14 +26,14 @@
             <div class="modal-content col-md-18">
                 <div class='profile-sidebar'>
                     <div class='profile-usertitle'>
-                        <form method="POST" action="Ticket.aspx" role="form" runat="server">
+                        <form role="form" runat="server" novalidate="novalidate">
                         <div runat="server" id="title" class='profile-usertitle-name'>Ticket Title</div>
                             <br />
                         <div runat="server" id="date" class='profile-usertitle-email'>Date</div>
                         <div runat="server" id="status"  class='profile-usertitle-email'>Status</div>
                         <br />
                         <div runat="server" id="description" class='profile-usertitle-email'>Ticket Description</div>
-                            <a id="logout" class='btn btn-danger btn-sm'>Logout</a>
+                            <asp:Button ID="Logout" runat="server" Class="btn btn-danger btn-sm" Text="Logout" OnClick="Logout_Click"/>
                         </form>
                     </div>
                 </div>

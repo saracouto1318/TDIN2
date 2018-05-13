@@ -10,7 +10,7 @@ using TTSvc;
 public partial class _ProfilePage : Page
 {
     TTServClient proxy;
-    User user;
+    public User user;
     public TTService.Ticket[] tickets;
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -78,12 +78,5 @@ public partial class _ProfilePage : Page
     {
         proxy.Logout(user.ID);
         Response.Redirect("Default.aspx");
-    }
-    protected void Ticket_Click(object sender, EventArgs e)
-    {
-        Button button = (Button)sender;
-        string buttonId = button.ID;
-        int ID = Int32.Parse(buttonId);
-        Response.Redirect("Ticket.aspx?id=" + user.ID.ToString() + "&ticket=" + ID);
     }
 }
