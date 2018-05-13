@@ -667,7 +667,7 @@ namespace TTService {
                 mail.Subject = "Ticket #" + ticketInfo.ID + " - " + ticketInfo.Title;
                 mail.Body = email;
 
-                client.Port = 987;
+                client.Port = 25;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 client.UseDefaultCredentials = false;
                 client.EnableSsl = true;
