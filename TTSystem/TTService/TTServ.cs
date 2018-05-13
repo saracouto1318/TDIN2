@@ -714,6 +714,48 @@ namespace TTService {
                 }
             }
         }
+        public List<SecondaryQuestion> MyQuestions(int idSolver, bool type)
+        {
+            List<SecondaryQuestion> questions = new List<SecondaryQuestion>();
+
+            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
+            {
+                try
+                {
+                    c.Open();
+                    string sql = "";
+                    if (type)
+                        sql += "SELECT * FROM SecondaryQuestions WHERE idSender = " + idSolver + "AND idDepartment IS NULL";
+                    else
+                        sql += "SELECT * FROM SecondaryQuestions WHERE idSender = " + idSolver + "AND idDepartment IS NOT NULL";
+                    SqlCommand cmd = new SqlCommand(sql, c);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        SecondaryQuestion question = new SecondaryQuestion();
+                        question.ID = reader.GetInt32(0);
+                        question.Date = reader.GetDateTime(6);
+                        question.SenderID = reader.GetInt32(2);
+                        question.TicketID = reader.GetInt32(1);
+                        question.Question = reader.GetString(4);
+
+                        questions.Add(question);
+                    }
+
+                    reader.Close();
+                }
+                catch (SqlException)
+                {
+                }
+                finally
+                {
+                    c.Close();
+                }
+
+                return questions;
+            }
+        }
         #endregion
 
         #region DepartmentGUI

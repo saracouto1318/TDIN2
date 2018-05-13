@@ -11,6 +11,8 @@ public partial class _Default : Page {
   protected void Page_Load(object sender, EventArgs e) {
     proxy = new TTServClient();
     user = new User();
+    loginError.Visible = false;
+    registerError.Visible = false;
   }
 
     protected void BtnLogin_Click(object sender, EventArgs e)
@@ -24,6 +26,7 @@ public partial class _Default : Page {
             proxy.Login(this.user.ID);
             Response.Redirect("ProfilePage.aspx?id=" + this.user.ID.ToString());
         }
+        loginError.Visible = true;
             
     }
 
@@ -39,6 +42,7 @@ public partial class _Default : Page {
             if(proxy.Login(this.user.ID))
                 Response.Redirect("ProfilePage.aspx?id="+this.user.ID.ToString());
         }
+        registerError.Visible = true;
     }
     
 }

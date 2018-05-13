@@ -42,8 +42,8 @@
             this.nameRegister = new System.Windows.Forms.TextBox();
             this.passwordLogin = new System.Windows.Forms.TextBox();
             this.emailLogin = new System.Windows.Forms.TextBox();
-            this.labelLogin = new MaterialSkin.Controls.MaterialLabel();
-            this.labelRegister = new MaterialSkin.Controls.MaterialLabel();
+            this.labelLogin = new System.Windows.Forms.Label();
+            this.labelRegister = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -153,6 +153,7 @@
             // 
             this.passwordRegister.Location = new System.Drawing.Point(614, 304);
             this.passwordRegister.Name = "passwordRegister";
+            this.passwordRegister.PasswordChar = '*';
             this.passwordRegister.Size = new System.Drawing.Size(134, 20);
             this.passwordRegister.TabIndex = 6;
             // 
@@ -174,6 +175,7 @@
             // 
             this.passwordLogin.Location = new System.Drawing.Point(172, 256);
             this.passwordLogin.Name = "passwordLogin";
+            this.passwordLogin.PasswordChar = '*';
             this.passwordLogin.Size = new System.Drawing.Size(134, 20);
             this.passwordLogin.TabIndex = 3;
             // 
@@ -187,32 +189,26 @@
             // labelLogin
             // 
             this.labelLogin.AutoSize = true;
-            this.labelLogin.BackColor = System.Drawing.Color.White;
-            this.labelLogin.Depth = 0;
-            this.labelLogin.Font = new System.Drawing.Font("Roboto", 11F);
+            this.labelLogin.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.labelLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelLogin.ForeColor = System.Drawing.Color.Red;
-            this.labelLogin.Location = new System.Drawing.Point(118, 306);
-            this.labelLogin.MouseState = MaterialSkin.MouseState.HOVER;
+            this.labelLogin.Location = new System.Drawing.Point(83, 319);
             this.labelLogin.Name = "labelLogin";
-            this.labelLogin.Size = new System.Drawing.Size(210, 19);
-            this.labelLogin.TabIndex = 18;
+            this.labelLogin.Size = new System.Drawing.Size(234, 18);
+            this.labelLogin.TabIndex = 20;
             this.labelLogin.Text = "This solver isn\'t registered yet";
-            this.labelLogin.Visible = false;
             // 
             // labelRegister
             // 
             this.labelRegister.AutoSize = true;
-            this.labelRegister.BackColor = System.Drawing.Color.White;
-            this.labelRegister.Depth = 0;
-            this.labelRegister.Font = new System.Drawing.Font("Roboto", 11F);
+            this.labelRegister.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.labelRegister.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelRegister.ForeColor = System.Drawing.Color.Red;
-            this.labelRegister.Location = new System.Drawing.Point(528, 344);
-            this.labelRegister.MouseState = MaterialSkin.MouseState.HOVER;
+            this.labelRegister.Location = new System.Drawing.Point(514, 345);
             this.labelRegister.Name = "labelRegister";
-            this.labelRegister.Size = new System.Drawing.Size(179, 19);
-            this.labelRegister.TabIndex = 19;
+            this.labelRegister.Size = new System.Drawing.Size(199, 18);
+            this.labelRegister.TabIndex = 21;
             this.labelRegister.Text = "This solver already exists";
-            this.labelRegister.Visible = false;
             // 
             // MainPage
             // 
@@ -258,7 +254,7 @@
         private System.Windows.Forms.TextBox nameRegister;
         private System.Windows.Forms.TextBox passwordLogin;
         private System.Windows.Forms.TextBox emailLogin;
-        private MaterialSkin.Controls.MaterialLabel labelLogin;
-        private MaterialSkin.Controls.MaterialLabel labelRegister;
+        private System.Windows.Forms.Label labelLogin;
+        private System.Windows.Forms.Label labelRegister;
     }
 }

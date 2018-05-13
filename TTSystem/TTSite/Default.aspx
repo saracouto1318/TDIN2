@@ -52,6 +52,7 @@
                     <asp:Button runat="server" Class="btn btn-primary btn-block btn-lg" Text="Login" OnClick="BtnLogin_Click"/>
                   </div>		
               </div>
+              <p class="error" id="loginError" runat="server">This user isn't registered</p>
               <div class="modal-footer account">
                 <a id="create" href="#register">Create Account</a>
               </div>
@@ -80,6 +81,7 @@
                    <asp:Button runat="server" Class="btn btn-primary btn-block btn-lg" Text="Register" OnClick="BtnRegister_Click"/>
                  </div>			
               </div>
+              <p class="error" id="registerError" runat="server">This user already exists</p>
               <div class="modal-footer">
                 <a id="signin" href="#login">Login</a>
               </div>           

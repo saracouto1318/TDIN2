@@ -28,111 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label2 = new MaterialSkin.Controls.MaterialLabel();
-            this.tabControl = new System.Windows.Forms.TabPage();
-            this.label1 = new MaterialSkin.Controls.MaterialLabel();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.label3 = new MaterialSkin.Controls.MaterialLabel();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
             this.name = new MaterialSkin.Controls.MaterialLabel();
             this.email = new MaterialSkin.Controls.MaterialLabel();
             this.logoutBtn = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.closeBtn = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.openBtn = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.myTicketsBtn = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.tabPage2.SuspendLayout();
-            this.tabControl.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.ttBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.questionBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.ticketsOpen = new MaterialSkin.Controls.MaterialLabel();
+            this.tickets = new MaterialSkin.Controls.MaterialLabel();
+            this.questionsOpen = new MaterialSkin.Controls.MaterialLabel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.label2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 27);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(607, 246);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "My Trouble Tickets";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Depth = 0;
-            this.label2.Font = new System.Drawing.Font("Roboto", 11F);
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label2.Location = new System.Drawing.Point(160, 117);
-            this.label2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(291, 19);
-            this.label2.TabIndex = 36;
-            this.label2.Text = "You don\'t have any trouble ticket assigned";
-            this.label2.Visible = false;
-            // 
-            // tabControl
-            // 
-            this.tabControl.Controls.Add(this.label1);
-            this.tabControl.Location = new System.Drawing.Point(4, 27);
-            this.tabControl.Name = "tabControl";
-            this.tabControl.Padding = new System.Windows.Forms.Padding(3);
-            this.tabControl.Size = new System.Drawing.Size(607, 246);
-            this.tabControl.TabIndex = 0;
-            this.tabControl.Text = "Trouble Tickets";
-            this.tabControl.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Depth = 0;
-            this.label1.Font = new System.Drawing.Font("Roboto", 11F);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label1.Location = new System.Drawing.Point(203, 108);
-            this.label1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(201, 19);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "No trouble tickets registered";
-            this.label1.Visible = false;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.label3);
-            this.tabPage3.Location = new System.Drawing.Point(4, 27);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(607, 246);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "My Closed Trouble Tickets";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Depth = 0;
-            this.label3.Font = new System.Drawing.Font("Roboto", 11F);
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label3.Location = new System.Drawing.Point(163, 108);
-            this.label3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(291, 19);
-            this.label3.TabIndex = 37;
-            this.label3.Text = "You don\'t have any trouble ticket assigned";
-            this.label3.Visible = false;
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabControl);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControl1.Location = new System.Drawing.Point(40, 161);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(615, 277);
-            this.tabControl1.TabIndex = 7;
             // 
             // name
             // 
@@ -141,7 +50,7 @@
             this.name.Depth = 0;
             this.name.Font = new System.Drawing.Font("Roboto", 11F);
             this.name.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.name.Location = new System.Drawing.Point(49, 80);
+            this.name.Location = new System.Drawing.Point(112, 94);
             this.name.MouseState = MaterialSkin.MouseState.HOVER;
             this.name.Name = "name";
             this.name.Size = new System.Drawing.Size(46, 19);
@@ -155,7 +64,7 @@
             this.email.Depth = 0;
             this.email.Font = new System.Drawing.Font("Roboto", 11F);
             this.email.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.email.Location = new System.Drawing.Point(49, 115);
+            this.email.Location = new System.Drawing.Point(112, 133);
             this.email.MouseState = MaterialSkin.MouseState.HOVER;
             this.email.Name = "email";
             this.email.Size = new System.Drawing.Size(46, 19);
@@ -175,84 +84,167 @@
             this.logoutBtn.UseVisualStyleBackColor = true;
             this.logoutBtn.Click += new System.EventHandler(this.LogoutBtn_Click);
             // 
-            // closeBtn
+            // ttBtn
             // 
-            this.closeBtn.Depth = 0;
-            this.closeBtn.Location = new System.Drawing.Point(667, 330);
-            this.closeBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.closeBtn.Name = "closeBtn";
-            this.closeBtn.Primary = true;
-            this.closeBtn.Size = new System.Drawing.Size(121, 28);
-            this.closeBtn.TabIndex = 34;
-            this.closeBtn.Text = "Tickets Close";
-            this.closeBtn.UseVisualStyleBackColor = true;
-            this.closeBtn.Click += new System.EventHandler(this.CloseBtn_Click);
+            this.ttBtn.Depth = 0;
+            this.ttBtn.Location = new System.Drawing.Point(256, 302);
+            this.ttBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.ttBtn.Name = "ttBtn";
+            this.ttBtn.Primary = true;
+            this.ttBtn.Size = new System.Drawing.Size(131, 44);
+            this.ttBtn.TabIndex = 34;
+            this.ttBtn.Text = "Trouble Tickets";
+            this.ttBtn.UseVisualStyleBackColor = true;
+            this.ttBtn.Click += new System.EventHandler(this.TtBtn_Click);
             // 
-            // openBtn
+            // questionBtn
             // 
-            this.openBtn.Depth = 0;
-            this.openBtn.Location = new System.Drawing.Point(667, 244);
-            this.openBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.openBtn.Name = "openBtn";
-            this.openBtn.Primary = true;
-            this.openBtn.Size = new System.Drawing.Size(121, 28);
-            this.openBtn.TabIndex = 33;
-            this.openBtn.Text = "Tickets Open";
-            this.openBtn.UseVisualStyleBackColor = true;
-            this.openBtn.Click += new System.EventHandler(this.OpenBtn_Click);
+            this.questionBtn.Depth = 0;
+            this.questionBtn.Location = new System.Drawing.Point(452, 302);
+            this.questionBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.questionBtn.Name = "questionBtn";
+            this.questionBtn.Primary = true;
+            this.questionBtn.Size = new System.Drawing.Size(132, 44);
+            this.questionBtn.TabIndex = 35;
+            this.questionBtn.Text = "Secondary Questions";
+            this.questionBtn.UseVisualStyleBackColor = true;
+            this.questionBtn.Click += new System.EventHandler(this.QuestionBtn_Click);
             // 
-            // myTicketsBtn
+            // ticketsOpen
             // 
-            this.myTicketsBtn.Depth = 0;
-            this.myTicketsBtn.Location = new System.Drawing.Point(667, 287);
-            this.myTicketsBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.myTicketsBtn.Name = "myTicketsBtn";
-            this.myTicketsBtn.Primary = true;
-            this.myTicketsBtn.Size = new System.Drawing.Size(121, 28);
-            this.myTicketsBtn.TabIndex = 35;
-            this.myTicketsBtn.Text = "My Tickets";
-            this.myTicketsBtn.UseVisualStyleBackColor = true;
-            this.myTicketsBtn.Click += new System.EventHandler(this.MyTicketsBtn_Click);
+            this.ticketsOpen.AutoSize = true;
+            this.ticketsOpen.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ticketsOpen.Depth = 0;
+            this.ticketsOpen.Font = new System.Drawing.Font("Roboto", 11F);
+            this.ticketsOpen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.ticketsOpen.Location = new System.Drawing.Point(211, 208);
+            this.ticketsOpen.MouseState = MaterialSkin.MouseState.HOVER;
+            this.ticketsOpen.Name = "ticketsOpen";
+            this.ticketsOpen.Size = new System.Drawing.Size(17, 19);
+            this.ticketsOpen.TabIndex = 36;
+            this.ticketsOpen.Text = "0";
+            // 
+            // tickets
+            // 
+            this.tickets.AutoSize = true;
+            this.tickets.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.tickets.Depth = 0;
+            this.tickets.Font = new System.Drawing.Font("Roboto", 11F);
+            this.tickets.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.tickets.Location = new System.Drawing.Point(427, 209);
+            this.tickets.MouseState = MaterialSkin.MouseState.HOVER;
+            this.tickets.Name = "tickets";
+            this.tickets.Size = new System.Drawing.Size(17, 19);
+            this.tickets.TabIndex = 37;
+            this.tickets.Text = "0";
+            // 
+            // questionsOpen
+            // 
+            this.questionsOpen.AutoSize = true;
+            this.questionsOpen.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.questionsOpen.Depth = 0;
+            this.questionsOpen.Font = new System.Drawing.Font("Roboto", 11F);
+            this.questionsOpen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.questionsOpen.Location = new System.Drawing.Point(663, 209);
+            this.questionsOpen.MouseState = MaterialSkin.MouseState.HOVER;
+            this.questionsOpen.Name = "questionsOpen";
+            this.questionsOpen.Size = new System.Drawing.Size(17, 19);
+            this.questionsOpen.TabIndex = 38;
+            this.questionsOpen.Text = "0";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(51, 93);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 20);
+            this.label1.TabIndex = 39;
+            this.label1.Text = "Name";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(51, 133);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 20);
+            this.label2.TabIndex = 40;
+            this.label2.Text = "Email";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(81, 208);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(114, 20);
+            this.label3.TabIndex = 41;
+            this.label3.Text = "Tickets Open";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(315, 208);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(93, 20);
+            this.label4.TabIndex = 42;
+            this.label4.Text = "My Tickets";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(527, 208);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(117, 20);
+            this.label5.TabIndex = 43;
+            this.label5.Text = "My Questions";
             // 
             // PersonalPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.myTicketsBtn);
-            this.Controls.Add(this.closeBtn);
-            this.Controls.Add(this.openBtn);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.questionsOpen);
+            this.Controls.Add(this.tickets);
+            this.Controls.Add(this.ticketsOpen);
+            this.Controls.Add(this.questionBtn);
+            this.Controls.Add(this.ttBtn);
             this.Controls.Add(this.logoutBtn);
             this.Controls.Add(this.email);
             this.Controls.Add(this.name);
-            this.Controls.Add(this.tabControl1);
             this.Name = "PersonalPage";
             this.Text = "Personal Page";
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.tabControl.ResumeLayout(false);
-            this.tabControl.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabControl;
-        private System.Windows.Forms.TabControl tabControl1;
         private MaterialSkin.Controls.MaterialLabel name;
         private MaterialSkin.Controls.MaterialLabel email;
         private MaterialSkin.Controls.MaterialRaisedButton logoutBtn;
-        private MaterialSkin.Controls.MaterialRaisedButton closeBtn;
-        private MaterialSkin.Controls.MaterialRaisedButton openBtn;
-        private MaterialSkin.Controls.MaterialRaisedButton myTicketsBtn;
-        private MaterialSkin.Controls.MaterialLabel label1;
-        private MaterialSkin.Controls.MaterialLabel label2;
-        private MaterialSkin.Controls.MaterialLabel label3;
+        private MaterialSkin.Controls.MaterialRaisedButton ttBtn;
+        private MaterialSkin.Controls.MaterialRaisedButton questionBtn;
+        private MaterialSkin.Controls.MaterialLabel ticketsOpen;
+        private MaterialSkin.Controls.MaterialLabel tickets;
+        private MaterialSkin.Controls.MaterialLabel questionsOpen;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }

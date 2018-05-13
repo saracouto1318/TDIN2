@@ -79,6 +79,9 @@ namespace TTService {
 
         [OperationContract]
         bool RedirectTicket(int ticket, int solver, string redirectMessage);
+
+        [OperationContract]
+        List<SecondaryQuestion> MyQuestions(int idSolver, bool type);
         #endregion
 
         #region DepartmentGUI

@@ -30,8 +30,8 @@
         {
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.label1 = new MaterialSkin.Controls.MaterialLabel();
             this.departmentName = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -57,19 +57,6 @@
             this.tabPage1.Text = "Questions";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Depth = 0;
-            this.label1.Font = new System.Drawing.Font("Roboto", 11F);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label1.Location = new System.Drawing.Point(216, 114);
-            this.label1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(171, 19);
-            this.label1.TabIndex = 37;
-            this.label1.Text = "No questions registered";
-            // 
             // departmentName
             // 
             this.departmentName.AutoSize = true;
@@ -80,6 +67,16 @@
             this.departmentName.Size = new System.Drawing.Size(148, 29);
             this.departmentName.TabIndex = 27;
             this.departmentName.Text = "Department";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Red;
+            this.label1.Location = new System.Drawing.Point(199, 117);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(188, 18);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "No questions registered";
             // 
             // DepartmentPage
             // 
@@ -102,6 +99,6 @@
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Label departmentName;
-        private MaterialSkin.Controls.MaterialLabel label1;
+        private System.Windows.Forms.Label label1;
     }
 }
