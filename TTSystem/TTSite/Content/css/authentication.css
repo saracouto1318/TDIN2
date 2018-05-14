@@ -80,3 +80,23 @@
     color: orangered;
     font-weight: bold;
 }
+
+#loginBody {
+    min-height: 100%;
+    height: auto !important;
+    /* This line and the next line are not necessary unless you need IE6 support */
+    margin: 0 auto 40px;
+    text-align: center;
+}
+
+#login, #register {
+    display: inline-block;
+    margin: 5%;
+}
+.modal-content.login{
+    height: 370px;
+}
+
+#Button1{
+    margin-top: 80px;
+}
