@@ -350,7 +350,7 @@ namespace TTService {
                 }
             }
         }
-     public void Logout(int idUser)
+        public void Logout(int idUser)
         {
             using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
             {
@@ -696,14 +696,15 @@ namespace TTService {
 
             return false;
         }
-        public bool RedirectTicket(int ticket, int solver, string redirectMessage)
+        public bool RedirectTicket(int ticket, int solver, string redirectMessage, string department)
         {
+            int id = GetDepartmentID(department);
             using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
             {
                 try
                 {
                     c.Open();
-                    string sql = "INSERT INTO SecondaryQuestions(idTicket, idSender, idDepartment, question, response, dateTime) VALUES (" + ticket + ", " + solver + ", null, '" + redirectMessage + "', null, GetDate())";
+                    string sql = "INSERT INTO SecondaryQuestions(idTicket, idSender, idDepartment, question, response, dateTime) VALUES (" + ticket + ", " + solver + ", " + id + ", '" + redirectMessage + "', null, GetDate())";
                     SqlCommand cmd = new SqlCommand(sql, c);
                     int rowCount = cmd.ExecuteNonQuery();
                     return rowCount >= 1;
@@ -810,7 +811,39 @@ namespace TTService {
                 }
             }
         }
-        public List<SecondaryQuestion> GetQuestions()
+        public List<string> GetDepartments()
+        {
+            List<string> departments = new List<string>();
+
+            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
+            {
+                try
+                {
+                    c.Open();
+                    string sql = "SELECT name FROM Department";
+                    SqlCommand cmd = new SqlCommand(sql, c);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        string department = reader.GetString(0);
+                        departments.Add(department);
+                    }
+
+                    reader.Close();
+                }
+                catch (SqlException)
+                {
+                }
+                finally
+                {
+                    c.Close();
+                }
+
+                return departments;
+            }
+        }
+        public List<SecondaryQuestion> GetQuestions(int idDepartment)
         {
             List<SecondaryQuestion> questions = new List<SecondaryQuestion>();
 
@@ -819,7 +852,7 @@ namespace TTService {
                 try
                 {
                     c.Open();
-                    string sql = "SELECT * FROM SecondaryQuestions WHERE idDepartment IS NULL AND response IS NULL";
+                    string sql = "SELECT * FROM SecondaryQuestions WHERE idDepartment =" + idDepartment + " AND response IS NULL";
                     SqlCommand cmd = new SqlCommand(sql, c);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -941,78 +974,5 @@ namespace TTService {
         }
         #endregion
     }
-    /*
-    public class SolverService : ISolverService
-    {
-        private Database.Database _db = Database.Database.Initialize();
-        public static List<ITTChanged> subscribers = new List<ITTChanged>();
-
-        public void Subscribe()
-        {
-            ITTChanged callback = OperationContext.Current.GetCallbackChannel<ITTChanged>();
-            if (!subscribers.Contains(callback))
-            {
-                subscribers.Add(callback);
-            }
-        }
-        public void Unsubscribe()
-        {
-            ITTChanged callback = OperationContext.Current.GetCallbackChannel<ITTChanged>();
-            subscribers.Remove(callback);
-        }
-        public bool RegisterSolver(string name, string email, string password)
-        {
-            return _db.InsertSolver(name, email, password);
-        }
-        public bool LoginSolver(string email, string password)
-        {
-            return _db.CheckSolver(email, password);
-        }
-        public User GetSolver(int id)
-        {
-            return _db.GetUser(id);
-        }
-        public List<Ticket> GetUnassignedTT()
-        {
-            return _db.GetTicketsUnassigned();
-        }
-        public List<Ticket> GetSolverTT(User solver)
-        {
-            return _db.GetTicketsSolver(solver);
-        }
-        public List<Ticket> GetSolverTTByType(User solver, TicketStatus status)
-        {
-            return _db.GetUserTicketsPerTypeSolver(solver, status);
-        }
-        public bool AssignTicket(int idTicket, int idSolver)
-        {
-            return _db.AssignTicket(idTicket, idSolver);
-        }
-        public bool AnswerTicket(int solver, int senderTicket, int ticket, string email)
-        {
-            if (_db.SolveTicket(ticket))
-            {
-                User to = _db.GetUser(senderTicket);
-                Ticket ticketInfo = _db.GetTicket(ticket);
-
-                MailMessage mail = new MailMessage("trouble_tickets@gmail.com", to.Email);
-                SmtpClient client = new SmtpClient();
-                client.Port = 25;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-                client.Host = "smtp.gmail.com";
-                mail.Subject = "Ticket #" + ticketInfo.ID + " - " + ticketInfo.Title;
-                mail.Body = email;
-                client.Send(mail);
-                return _db.InsertEmail(solver, senderTicket, ticket, email);
-            }
-
-            return false;
-        }
-        public bool RedirectTicket(int ticket, int solver, string redirectMessage)
-        {
-            return _db.InsertSecondaryQuestion(ticket, solver, redirectMessage);
-        }
-    }
-    */
+    
 }

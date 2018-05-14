@@ -78,7 +78,7 @@ namespace TTService {
         bool AnswerTicket(int solver, int senderTicket, int ticket, string email);
 
         [OperationContract]
-        bool RedirectTicket(int ticket, int solver, string redirectMessage);
+        bool RedirectTicket(int ticket, int solver, string redirectMessage, string department);
 
         [OperationContract]
         List<SecondaryQuestion> MyQuestions(int idSolver, bool type);
@@ -92,7 +92,10 @@ namespace TTService {
         bool CheckDepartment(string name);
 
         [OperationContract]
-        List<SecondaryQuestion> GetQuestions();
+        List<string> GetDepartments();
+
+        [OperationContract]
+        List<SecondaryQuestion> GetQuestions(int idDepartment);
 
         [OperationContract]
         SecondaryQuestion GetQuestion(int id);
@@ -100,43 +103,6 @@ namespace TTService {
         [OperationContract]
         bool AnswerQuestion(SecondaryQuestion question, string department, string responseMessage);
         #endregion
-    }
-
-    //[ServiceContract(/*Namespace = "http://fe.up.pt/apm", */CallbackContract = typeof(ITTChanged))]
-    public interface ISolverService
-    {
-        [OperationContract]
-        void Subscribe();
-
-        [OperationContract]
-        void Unsubscribe();
-
-        [OperationContract]
-        bool RegisterSolver(string name, string email, string password);
-
-        [OperationContract]
-        bool LoginSolver(string email, string password);
-
-        [OperationContract]
-        User GetSolver(int id);
-
-        [OperationContract]
-        List<Ticket> GetUnassignedTT();
-
-        [OperationContract]
-        List<Ticket> GetSolverTT(User solver);
-
-        [OperationContract]
-        List<Ticket> GetSolverTTByType(User solver, TicketStatus status);
-
-        [OperationContract]
-        bool AssignTicket(int idTicket, int idSolver);
-
-        [OperationContract]
-        bool AnswerTicket(int solver, int senderTicket, int ticket, string email);
-
-        [OperationContract]
-        bool RedirectTicket(int ticket, int solver, string redirectMessage);
     }
 
     public interface ITTChanged

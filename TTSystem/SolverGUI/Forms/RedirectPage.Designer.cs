@@ -38,11 +38,13 @@
             this.title = new MaterialSkin.Controls.MaterialLabel();
             this.label2 = new System.Windows.Forms.Label();
             this.redirectBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.departments = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // message
             // 
-            this.message.Location = new System.Drawing.Point(84, 226);
+            this.message.Location = new System.Drawing.Point(84, 305);
             this.message.Name = "message";
             this.message.Size = new System.Drawing.Size(624, 162);
             this.message.TabIndex = 14;
@@ -103,7 +105,7 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(79, 198);
+            this.label3.Location = new System.Drawing.Point(79, 262);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(107, 25);
             this.label3.TabIndex = 37;
@@ -137,7 +139,7 @@
             // redirectBtn
             // 
             this.redirectBtn.Depth = 0;
-            this.redirectBtn.Location = new System.Drawing.Point(350, 406);
+            this.redirectBtn.Location = new System.Drawing.Point(350, 492);
             this.redirectBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.redirectBtn.Name = "redirectBtn";
             this.redirectBtn.Primary = true;
@@ -147,11 +149,33 @@
             this.redirectBtn.UseVisualStyleBackColor = true;
             this.redirectBtn.Click += new System.EventHandler(this.RedirectBtn_Click);
             // 
+            // departments
+            // 
+            this.departments.BackColor = System.Drawing.SystemColors.Window;
+            this.departments.FormattingEnabled = true;
+            this.departments.Location = new System.Drawing.Point(183, 192);
+            this.departments.Name = "departments";
+            this.departments.Size = new System.Drawing.Size(121, 21);
+            this.departments.TabIndex = 39;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(29, 186);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(133, 25);
+            this.label1.TabIndex = 40;
+            this.label1.Text = "Department";
+            // 
             // RedirectPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 467);
+            this.ClientSize = new System.Drawing.Size(800, 544);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.departments);
             this.Controls.Add(this.redirectBtn);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.title);
@@ -179,5 +203,7 @@
         private MaterialSkin.Controls.MaterialLabel title;
         private System.Windows.Forms.Label label2;
         private MaterialSkin.Controls.MaterialRaisedButton redirectBtn;
+        private System.Windows.Forms.ComboBox departments;
+        private System.Windows.Forms.Label label1;
     }
 }
