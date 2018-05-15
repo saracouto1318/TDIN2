@@ -16,15 +16,13 @@ namespace GUI.Forms
 {
     public partial class Questions : MaterialForm
     {
-        public TTServClient proxy;
+        public Client client;
         public int idUser;
         public User user;
         private TableLayoutPanel panel = new TableLayoutPanel();
         public Questions(int idUser)
         {
-            InitializeComponent();
-
-            proxy = new TTServClient();
+            client = Client.Instance;
 
             InitializeComponent();
 
@@ -41,19 +39,19 @@ namespace GUI.Forms
 
         public void GetUserInfo()
         {
-            this.user = proxy.GetUser(idUser);
+            this.user = client.Proxy.GetUser(idUser);
         }
 
         private bool CheckExist(bool value)
         {
-            return proxy.MyQuestions(this.user.ID, value).Length > 0;
+            return client.Proxy.MyQuestions(this.user.ID, value).Length > 0;
         }
 
         private void CreateTable(bool value)
         {
             SecondaryQuestion[] questions;
 
-            questions = proxy.MyQuestions(this.user.ID, value);
+            questions = client.Proxy.MyQuestions(this.user.ID, value);
 
 
             panel.Visible = true;
@@ -188,7 +186,7 @@ namespace GUI.Forms
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
-            proxy.Logout(user.ID);
+            client.Proxy.Logout(user.ID);
             Hide();
             new MainPage().ShowDialog();
             Show();

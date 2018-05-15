@@ -16,12 +16,12 @@ namespace SolverGUI
 {
     public partial class PersonalPage : MaterialForm
     {
-        public TTServClient proxy;
+        public Client client;
         public int idUser;
         public User user;
         public PersonalPage(int idUser)
         {
-            proxy = new TTServClient();
+            client = Client.Instance;
 
             InitializeComponent();
 
@@ -38,17 +38,17 @@ namespace SolverGUI
 
         public void GetUserInfo()
         {
-            this.user = proxy.GetUser(idUser);
+            this.user = client.Proxy.GetUser(idUser);
             name.Text = this.user.Name;
             email.Text = this.user.Email;
-            ticketsOpen.Text = proxy.GetUnassignedTT().Length.ToString();
-            tickets.Text = proxy.GetSolverTT(this.user).Length.ToString();
-            questionsOpen.Text = ((proxy.MyQuestions(this.user.ID, true).Length) + (proxy.MyQuestions(this.user.ID, false).Length)).ToString();
+            ticketsOpen.Text = client.Proxy.GetUnassignedTT().Length.ToString();
+            tickets.Text = client.Proxy.GetSolverTT(this.user).Length.ToString();
+            questionsOpen.Text = ((client.Proxy.MyQuestions(this.user.ID, true).Length) + (client.Proxy.MyQuestions(this.user.ID, false).Length)).ToString();
         }
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
-            proxy.Logout(user.ID);
+            client.Proxy.Logout(user.ID);
             Hide();
             new MainPage().ShowDialog();
             Show();

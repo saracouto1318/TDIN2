@@ -15,12 +15,13 @@ namespace SolverGUI
 {
     public partial class SolvePage : MaterialForm
     {
-        public TTServClient proxy;
+        public Client client;
         public User user;
         public Ticket ticket;
         public SolvePage(User user, Ticket ticket)
         {
-            proxy = new TTServClient();
+            client = Client.Instance;
+
             InitializeComponent();
 
             this.user = user;
@@ -56,7 +57,7 @@ namespace SolverGUI
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            proxy.Logout(user.ID);
+            client.Proxy.Logout(user.ID);
             new MainPage().ShowDialog();
             Show();
         }
@@ -64,7 +65,7 @@ namespace SolverGUI
         private void SendBtn_Click(object sender, EventArgs e)
         {
             string emailText = email.Text;
-            proxy.AnswerTicket(user.ID, ticket.Author.ID, ticket.ID, emailText);
+            client.Proxy.AnswerTicket(user.ID, ticket.Author.ID, ticket.ID, emailText);
             new TicketPage(user, ticket.ID).ShowDialog();
             Show();
         }

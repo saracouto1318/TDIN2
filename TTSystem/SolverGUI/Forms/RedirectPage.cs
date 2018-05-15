@@ -15,12 +15,13 @@ namespace SolverGUI
 {
     public partial class RedirectPage : MaterialForm
     {
-        public TTServClient proxy;
+        public Client client;
         public User user;
         public Ticket ticket;
         public RedirectPage(User user, Ticket ticket)
         {
-            proxy = new TTServClient();
+            client = Client.Instance;
+            
             InitializeComponent();
 
             this.user = user;
@@ -43,7 +44,7 @@ namespace SolverGUI
 
         public void GetDepartments()
         {
-            String[] departments = proxy.GetDepartments();
+            String[] departments = client.Proxy.GetDepartments();
 
             foreach (string department in departments)
                 this.departments.Items.Add(department);
@@ -66,7 +67,7 @@ namespace SolverGUI
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            proxy.Logout(user.ID);
+            client.Proxy.Logout(user.ID);
             new MainPage().ShowDialog();
             Show();
         }
@@ -77,7 +78,7 @@ namespace SolverGUI
 
             Hide();
             string redirect = message.Text;
-            proxy.RedirectTicket(ticket.ID, user.ID, redirect, department);
+            client.Proxy.RedirectTicket(ticket.ID, user.ID, redirect, department);
             new TicketPage(user, ticket.ID).ShowDialog();
             Show();
         }

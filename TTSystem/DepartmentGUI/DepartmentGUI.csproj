@@ -120,6 +120,9 @@
     <None Include="Connected Services\TTSvc\Service2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\TTSvc\Service3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\TTSvc\TTServ.wsdl" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GUI.TTSvc;
 using MaterialSkin;
@@ -16,15 +10,13 @@ namespace GUI.Forms
 {
     public partial class Tickets : MaterialForm
     {
-        public TTServClient proxy;
+        public Client client;
         public int idUser;
         public User user;
         private TableLayoutPanel panel = new TableLayoutPanel();
         public Tickets(int idUser)
         {
-            InitializeComponent();
-
-            proxy = new TTServClient();
+            client = Client.Instance;
 
             InitializeComponent();
 
@@ -41,7 +33,7 @@ namespace GUI.Forms
 
         public void GetUserInfo()
         {
-            this.user = proxy.GetUser(idUser);
+            this.user = client.Proxy.GetUser(idUser);
         }
 
         private void OpenBtn_Click(object sender, EventArgs e)
@@ -102,11 +94,11 @@ namespace GUI.Forms
         {
             if (status == TicketStatus.UNASSIGNED)
             {
-                if (proxy.GetUnassignedTT().Length > 0)
+                if (client.Proxy.GetUnassignedTT().Length > 0)
                     return true;
             }
             else
-                if (proxy.GetSolverTTByType(this.user, status).Length > 0)
+                if (client.Proxy.GetSolverTTByType(this.user, status).Length > 0)
                     return true;
             return false;
         }
@@ -116,9 +108,9 @@ namespace GUI.Forms
             Ticket[] tickets;
 
             if (status == TicketStatus.UNASSIGNED)
-                tickets = proxy.GetUnassignedTT();
+                tickets = client.Proxy.GetUnassignedTT();
             else
-                tickets = proxy.GetSolverTTByType(this.user, status);
+                tickets = client.Proxy.GetSolverTTByType(this.user, status);
 
 
             panel.Visible = true;
@@ -284,7 +276,7 @@ namespace GUI.Forms
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
-            proxy.Logout(user.ID);
+            client.Proxy.Logout(user.ID);
             Hide();
             new MainPage().ShowDialog();
             Show();

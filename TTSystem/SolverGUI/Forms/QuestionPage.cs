@@ -16,19 +16,17 @@ namespace GUI.Forms
 {
     public partial class QuestionPage : MaterialForm
     {
-        public TTServClient proxy;
+        public Client client;
         public int idUser;
         public User user;
         public int idQuestion;
         public SecondaryQuestion secQuestion;
         public QuestionPage(int idUser, int idQuestion)
         {
-            InitializeComponent();
-
-            proxy = new TTServClient();
+            client = Client.Instance;
 
             InitializeComponent();
-
+            
             this.user = new User();
             this.secQuestion = new SecondaryQuestion();
             this.idUser = idUser;
@@ -45,12 +43,12 @@ namespace GUI.Forms
 
         public void GetUserInfo()
         {
-            this.user = proxy.GetUser(idUser);
+            this.user = client.Proxy.GetUser(idUser);
         }
 
         public void GetQuestionInfo()
         {
-            this.secQuestion = proxy.GetQuestion(idQuestion);
+            this.secQuestion = client.Proxy.GetQuestion(idQuestion);
             status.Text = (secQuestion.Response == null) ? "Open" : "Closed";
             ticketID.Text = "Ticket #" + secQuestion.TicketID.ToString();
             date.Text = secQuestion.Date.ToString();
@@ -75,7 +73,7 @@ namespace GUI.Forms
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
-            proxy.Logout(user.ID);
+            client.Proxy.Logout(user.ID);
             Hide();
             new MainPage().ShowDialog();
             Show();

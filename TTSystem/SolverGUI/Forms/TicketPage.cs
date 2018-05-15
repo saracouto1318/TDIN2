@@ -15,14 +15,14 @@ namespace SolverGUI
 {
     public partial class TicketPage : MaterialForm
     {
-        public TTServClient proxy;
+        public Client client;
 
         public User user;
         public Ticket ticketInfo;
         public int ticketID;
         public TicketPage(User user, int ticketID)
         {
-            proxy = new TTServClient();
+            client = Client.Instance;
             InitializeComponent();
 
             this.user = user;
@@ -38,7 +38,7 @@ namespace SolverGUI
 
         public void GetTicketInfo()
         {
-            this.ticketInfo = proxy.GetTicket(this.ticketID);
+            this.ticketInfo = client.Proxy.GetTicket(this.ticketID);
             ticketLabel.Text = "Ticket #" + this.ticketInfo.ID.ToString();
             title.Text = this.ticketInfo.Title;
             date.Text = this.ticketInfo.Date.ToString();
@@ -65,7 +65,7 @@ namespace SolverGUI
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            proxy.Logout(user.ID);
+            client.Proxy.Logout(user.ID);
             new MainPage().ShowDialog();
             Show();
         }
@@ -73,7 +73,7 @@ namespace SolverGUI
         private void SolveBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            proxy.AssignTicket(ticketInfo.ID, user.ID);
+            client.Proxy.AssignTicket(ticketInfo.ID, user.ID);
             new SolvePage(user, ticketInfo).ShowDialog();
             Show();
         }
@@ -82,14 +82,14 @@ namespace SolverGUI
         {
             redirectBtn.Visible = false;
             Hide();
-            proxy.AssignTicket(ticketInfo.ID, user.ID);
+            client.Proxy.AssignTicket(ticketInfo.ID, user.ID);
             new RedirectPage(user, ticketInfo).ShowDialog();
             Show();
         }
 
         private void AssignBtn_Click(object sender, EventArgs e)
         {
-            proxy.AssignTicket(ticketInfo.ID, user.ID);
+            client.Proxy.AssignTicket(ticketInfo.ID, user.ID);
             MessageBox.Show("Ticket " + ticketInfo.ID.ToString() + " was assigned to you");
         }
     }

@@ -403,7 +403,7 @@ namespace GUI.TTSvc {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="TTSvc.ITTServ")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="TTSvc.ITTServ", CallbackContract=typeof(GUI.TTSvc.ITTServCallback))]
     public interface ITTServ {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AddUser", ReplyAction="http://tempuri.org/ITTServ/AddUserResponse")]
@@ -588,30 +588,41 @@ namespace GUI.TTSvc {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface ITTServCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ITTServ/NewTT")]
+        void NewTT(GUI.TTSvc.Ticket ticket);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ITTServ/AssignedTT")]
+        void AssignedTT(GUI.TTSvc.Ticket ticket);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface ITTServChannel : GUI.TTSvc.ITTServ, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class TTServClient : System.ServiceModel.ClientBase<GUI.TTSvc.ITTServ>, GUI.TTSvc.ITTServ {
+    public partial class TTServClient : System.ServiceModel.DuplexClientBase<GUI.TTSvc.ITTServ>, GUI.TTSvc.ITTServ {
         
-        public TTServClient() {
+        public TTServClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
         }
         
-        public TTServClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
+        public TTServClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
         }
         
-        public TTServClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public TTServClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public TTServClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public TTServClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public TTServClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
+        public TTServClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
         }
         
         public bool AddUser(string name, string email, string password) {

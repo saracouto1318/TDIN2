@@ -5,6 +5,7 @@
       <xsd:import schemaLocation="http://localhost:63756/Service.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:63756/Service.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:63756/Service.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/TTService" />
+      <xsd:import schemaLocation="http://localhost:63756/Service.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ITTServ_AddUser_InputMessage">
@@ -163,6 +164,12 @@
   <wsdl:message name="ITTServ_CheckDepartment_OutputMessage">
     <wsdl:part name="parameters" element="tns:CheckDepartmentResponse" />
   </wsdl:message>
+  <wsdl:message name="ITTServ_GetDepartments_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDepartments" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetDepartments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDepartmentsResponse" />
+  </wsdl:message>
   <wsdl:message name="ITTServ_GetQuestions_InputMessage">
     <wsdl:part name="parameters" element="tns:GetQuestions" />
   </wsdl:message>
@@ -285,6 +292,10 @@
     <wsdl:operation name="CheckDepartment">
       <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/CheckDepartment" message="tns:ITTServ_CheckDepartment_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/CheckDepartmentResponse" message="tns:ITTServ_CheckDepartment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartments">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetDepartments" message="tns:ITTServ_GetDepartments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetDepartmentsResponse" message="tns:ITTServ_GetDepartments_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetQuestions">
       <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetQuestions" message="tns:ITTServ_GetQuestions_InputMessage" />
@@ -528,6 +539,15 @@
     </wsdl:operation>
     <wsdl:operation name="CheckDepartment">
       <soap:operation soapAction="http://tempuri.org/ITTServ/CheckDepartment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartments">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/GetDepartments" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

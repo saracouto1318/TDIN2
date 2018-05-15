@@ -539,10 +539,10 @@ namespace DepartmentGUI.TTSvc {
         System.Threading.Tasks.Task<bool> AnswerTicketAsync(int solver, int senderTicket, int ticket, string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/RedirectTicket", ReplyAction="http://tempuri.org/ITTServ/RedirectTicketResponse")]
-        bool RedirectTicket(int ticket, int solver, string redirectMessage);
+        bool RedirectTicket(int ticket, int solver, string redirectMessage, string department);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/RedirectTicket", ReplyAction="http://tempuri.org/ITTServ/RedirectTicketResponse")]
-        System.Threading.Tasks.Task<bool> RedirectTicketAsync(int ticket, int solver, string redirectMessage);
+        System.Threading.Tasks.Task<bool> RedirectTicketAsync(int ticket, int solver, string redirectMessage, string department);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/MyQuestions", ReplyAction="http://tempuri.org/ITTServ/MyQuestionsResponse")]
         DepartmentGUI.TTSvc.SecondaryQuestion[] MyQuestions(int idSolver, bool type);
@@ -562,11 +562,17 @@ namespace DepartmentGUI.TTSvc {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/CheckDepartment", ReplyAction="http://tempuri.org/ITTServ/CheckDepartmentResponse")]
         System.Threading.Tasks.Task<bool> CheckDepartmentAsync(string name);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetQuestions", ReplyAction="http://tempuri.org/ITTServ/GetQuestionsResponse")]
-        DepartmentGUI.TTSvc.SecondaryQuestion[] GetQuestions();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetDepartments", ReplyAction="http://tempuri.org/ITTServ/GetDepartmentsResponse")]
+        string[] GetDepartments();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetDepartments", ReplyAction="http://tempuri.org/ITTServ/GetDepartmentsResponse")]
+        System.Threading.Tasks.Task<string[]> GetDepartmentsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetQuestions", ReplyAction="http://tempuri.org/ITTServ/GetQuestionsResponse")]
-        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.SecondaryQuestion[]> GetQuestionsAsync();
+        DepartmentGUI.TTSvc.SecondaryQuestion[] GetQuestions(int idDepartment);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetQuestions", ReplyAction="http://tempuri.org/ITTServ/GetQuestionsResponse")]
+        System.Threading.Tasks.Task<DepartmentGUI.TTSvc.SecondaryQuestion[]> GetQuestionsAsync(int idDepartment);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetQuestion", ReplyAction="http://tempuri.org/ITTServ/GetQuestionResponse")]
         DepartmentGUI.TTSvc.SecondaryQuestion GetQuestion(int id);
@@ -784,12 +790,12 @@ namespace DepartmentGUI.TTSvc {
             return base.Channel.AnswerTicketAsync(solver, senderTicket, ticket, email);
         }
         
-        public bool RedirectTicket(int ticket, int solver, string redirectMessage) {
-            return base.Channel.RedirectTicket(ticket, solver, redirectMessage);
+        public bool RedirectTicket(int ticket, int solver, string redirectMessage, string department) {
+            return base.Channel.RedirectTicket(ticket, solver, redirectMessage, department);
         }
         
-        public System.Threading.Tasks.Task<bool> RedirectTicketAsync(int ticket, int solver, string redirectMessage) {
-            return base.Channel.RedirectTicketAsync(ticket, solver, redirectMessage);
+        public System.Threading.Tasks.Task<bool> RedirectTicketAsync(int ticket, int solver, string redirectMessage, string department) {
+            return base.Channel.RedirectTicketAsync(ticket, solver, redirectMessage, department);
         }
         
         public DepartmentGUI.TTSvc.SecondaryQuestion[] MyQuestions(int idSolver, bool type) {
@@ -816,12 +822,20 @@ namespace DepartmentGUI.TTSvc {
             return base.Channel.CheckDepartmentAsync(name);
         }
         
-        public DepartmentGUI.TTSvc.SecondaryQuestion[] GetQuestions() {
-            return base.Channel.GetQuestions();
+        public string[] GetDepartments() {
+            return base.Channel.GetDepartments();
         }
         
-        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.SecondaryQuestion[]> GetQuestionsAsync() {
-            return base.Channel.GetQuestionsAsync();
+        public System.Threading.Tasks.Task<string[]> GetDepartmentsAsync() {
+            return base.Channel.GetDepartmentsAsync();
+        }
+        
+        public DepartmentGUI.TTSvc.SecondaryQuestion[] GetQuestions(int idDepartment) {
+            return base.Channel.GetQuestions(idDepartment);
+        }
+        
+        public System.Threading.Tasks.Task<DepartmentGUI.TTSvc.SecondaryQuestion[]> GetQuestionsAsync(int idDepartment) {
+            return base.Channel.GetQuestionsAsync(idDepartment);
         }
         
         public DepartmentGUI.TTSvc.SecondaryQuestion GetQuestion(int id) {

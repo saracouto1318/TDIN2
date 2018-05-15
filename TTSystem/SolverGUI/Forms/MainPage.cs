@@ -2,23 +2,17 @@
 using MaterialSkin;
 using MaterialSkin.Controls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SolverGUI
 {
     public partial class MainPage : MaterialForm
     {
-        public TTServClient proxy;
+        private Client client;
+
         public MainPage()
         {
-            proxy = new TTServClient();
+            client = Client.Instance;
+
             InitializeComponent();
 
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -32,10 +26,10 @@ namespace SolverGUI
             string email = emailLogin.Text;
             string password = passwordLogin.Text;
 
-            if (proxy.LoginSolver(email, password))
+            if (client.Proxy.LoginSolver(email, password))
             {
-                User user = proxy.GetUserByEmail(email);
-                proxy.Login(user.ID);
+                User user = client.Proxy.GetUserByEmail(email);
+                client.Proxy.Login(user.ID);
                 Hide();
                 new PersonalPage(user.ID).ShowDialog();
                 Show();
@@ -51,12 +45,12 @@ namespace SolverGUI
             string email = emailRegister.Text;
             string password = passwordRegister.Text;
 
-            if (!proxy.RegisterSolver(name, email, password))
+            if (!client.Proxy.RegisterSolver(name, email, password))
                 labelRegister.Visible = true;
             else
             {
-                User user = proxy.GetUserByEmail(email);
-                proxy.Login(user.ID);
+                User user = client.Proxy.GetUserByEmail(email);
+                client.Proxy.Login(user.ID);
                 Hide();
                 new PersonalPage(user.ID).ShowDialog();
                 Show();

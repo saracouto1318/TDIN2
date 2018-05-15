@@ -5,7 +5,7 @@ using System.ServiceModel;
 using TTService;
 
 namespace TTService {
-    [ServiceContract/*(Namespace = "http://fe.up.pt/apm", CallbackContract = typeof(ITTChanged))*/]
+    [ServiceContract(/*Namespace = "http://fe.up.pt/apm", */CallbackContract = typeof(ITTChanged))]
     public interface ITTServ {
         #region WebApp
         [OperationContract]
