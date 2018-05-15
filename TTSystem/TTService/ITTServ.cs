@@ -5,7 +5,7 @@ using System.ServiceModel;
 using TTService;
 
 namespace TTService {
-    [ServiceContract(/*Namespace = "http://fe.up.pt/apm", */CallbackContract = typeof(ITTChanged))]
+    [ServiceContract/*(Namespace = "http://fe.up.pt/apm", CallbackContract = typeof(ITTChanged))*/]
     public interface ITTServ {
         #region WebApp
         [OperationContract]
@@ -45,7 +45,7 @@ namespace TTService {
         User GetUserLogged(string session);
 
         #endregion
-
+        /*
         #region SolverGUI
         [OperationContract]
         void Subscribe();
@@ -83,7 +83,7 @@ namespace TTService {
         [OperationContract]
         List<SecondaryQuestion> MyQuestions(int idSolver, bool type);
         #endregion
-
+        */
         #region DepartmentGUI
         [OperationContract]
         bool AddDepartment(string name);

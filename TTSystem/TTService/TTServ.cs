@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Mail;
 using System.ServiceModel;
 using System.Configuration;
-using System.Data;
+using TTService.Database;
 using System.Data.SqlClient;
 
 namespace TTService {
@@ -14,398 +14,68 @@ namespace TTService {
         #region WebApp
         public bool AddUser(string name, string email, string password)
         {
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "INSERT INTO Users (name, email, password) VALUES ('" + name + "', '" + email + "', '" + password + "')";
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    int rowCount = cmd.ExecuteNonQuery();
-                    return rowCount >= 1;
-                }
-                catch (SqlException)
-                {
-                    return false;
-                }
-                finally
-                {
-                    c.Close();
-                }
-            }
+            return UserDao.AddUser(name, email, password);
         }
         public bool CheckUser(string email, string password)
         {
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "SELECT * FROM Users WHERE email='" + email + "' AND password='" + password + "'";
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    bool exists = reader.Read();
-                    reader.Close();
-                    return exists;
-                }
-                catch (SqlException)
-                {
-                    return false;
-                }
-                finally
-                {
-                    c.Close();
-                }
-            }
+            return UserDao.CheckUser(email, password);
         }
         public User GetUser(int id)
         {
-            User userInfo = new User();
-
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "SELECT * FROM Users WHERE idUser =" + id;
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        userInfo.Name = reader.GetString(1);
-                        userInfo.ID = reader.GetInt32(0);
-                        userInfo.Email = reader.GetString(2);
-                        userInfo.Password = reader.GetString(3);
-                    }
-
-                    List<Ticket> tickets = GetTickets(userInfo);
-                    userInfo.Tickets = tickets;
-
-                    reader.Close();
-                    return userInfo;
-                }
-                catch (SqlException)
-                {
-                    return userInfo;
-                }
-                finally
-                {
-                    c.Close();
-                }
-            }
+            User userInfo = UserDao.SelectUser(id);
+            List<Ticket> tickets = GetTickets(userInfo);
+            userInfo.Tickets = tickets;
+            return userInfo;
+            //}
         }
         public User GetUserByEmail(string email)
         {
-            User userInfo = new User();
-
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "SELECT * FROM Users WHERE email = '" + email + "'";
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        userInfo.Name = reader.GetString(1);
-                        userInfo.ID = reader.GetInt32(0);
-                        userInfo.Email = reader.GetString(2);
-                        userInfo.Password = reader.GetString(3);
-                    }
-
-                    List<Ticket> tickets = GetTickets(userInfo);
-                    userInfo.Tickets = tickets;
-
-                    reader.Close();
-                    return userInfo;
-                }
-                catch (SqlException)
-                {
-                    return userInfo;
-                }
-                finally
-                {
-                    c.Close();
-                }
-            }
+            User userInfo = UserDao.SelectUserByEmail(email);
+            List<Ticket> tickets = GetTickets(userInfo);
+            userInfo.Tickets = tickets;
+            return userInfo;
+            //}
         }
         public bool UpdateUser(string name, string email, string password, int idUser)
         {
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "UPDATE Users SET name ='" + name + "', password = '" + password + "', email = '" + email + "' WHERE idUser = " + idUser;
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    int rowCount = cmd.ExecuteNonQuery();
-                    return rowCount >= 1;
-                }
-                catch (SqlException)
-                {
-                    return false;
-                }
-                finally
-                {
-                    c.Close();
-                }
-            }
+            return UserDao.UpdateUser(name, email, password, idUser);
         }
+
         public bool AddTicket(int idUser, string title, string description)
         {
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "INSERT INTO Ticket(idSender, idSolver, title, description, dateTime, status) VALUES (" + idUser + ", null, '" + title + "', '" + description + "', GetDate(), 'unassigned')";
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    int rowCount = cmd.ExecuteNonQuery();
-                    return rowCount >= 1;
-                }
-                catch (SqlException)
-                {
-                    return false;
-                }
-                finally
-                {
-                    c.Close();
-                }
-            }
+            return UserDao.AddTicket(idUser, title, description);
         }
         public List<Ticket> GetTickets(User user)
         {
-            List<Ticket> tickets = new List<Ticket>();
-
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "SELECT * FROM Ticket WHERE idSender = " + user.ID;
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        Ticket ticket = new Ticket();
-                        ticket.ID = reader.GetInt32(0);
-                        ticket.Date = reader.GetDateTime(5);
-                        ticket.Description = reader.GetString(4);
-                        ticket.Title = reader.GetString(3);
-
-                        string status = reader.GetString(6);
-
-                        switch (status)
-                        {
-                            case "unassigned":
-                                ticket.Status = TicketStatus.UNASSIGNED;
-                                break;
-                            case "assigned":
-                                ticket.Status = TicketStatus.ASSIGNED;
-                                break;
-                            case "closed":
-                                ticket.Status = TicketStatus.CLOSED;
-                                break;
-                        }
-
-                        tickets.Add(ticket);
-                    }
-
-                    reader.Close();   
-                }
-                catch (SqlException)
-                {
-                }
-                finally
-                {
-                    c.Close();
-                }
-
-                return tickets;
-            }
+            return UserDao.GetTickets(user);
         }
         public List<Ticket> GetTicketsByType(User user, TicketStatus status)
         {
-            List<Ticket> tickets = new List<Ticket>();
-
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "SELECT * FROM Ticket WHERE idSender = " + user.ID + "AND status = ";
-
-                    if (status == TicketStatus.UNASSIGNED)
-                        sql += "'unassigned'";
-                    else if (status == TicketStatus.ASSIGNED)
-                        sql += "'assigned'";
-                    else if (status == TicketStatus.CLOSED)
-                        sql += "'closed'";
-
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        Ticket ticket = new Ticket();
-                        ticket.ID = reader.GetInt32(0);
-                        ticket.Date = reader.GetDateTime(5);
-                        ticket.Description = reader.GetString(4);
-                        ticket.Title = reader.GetString(3);
-                        ticket.Status = status;
-
-                        tickets.Add(ticket);
-                    }
-
-                    reader.Close();
-                }
-                catch (SqlException)
-                {
-                }
-                finally
-                {
-                    c.Close();
-                }
-
-                return tickets;
-            }
+            return UserDao.GetTicketsByType(user, status);
         }
         public Ticket GetTicket(int id)
         {
-            Ticket ticket = new Ticket();
-
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "SELECT * FROM Ticket WHERE idTicket = " + id;
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        ticket.ID = reader.GetInt32(0);
-                        ticket.Author = GetUser(reader.GetInt32(1));
-                        ticket.Title = reader.GetString(3);
-                        ticket.Description = reader.GetString(4);
-                        ticket.Date = reader.GetDateTime(5);
-
-                        string status = reader.GetString(6);
-
-                        switch (status)
-                        {
-                            case "unassigned":
-                                ticket.Status = TicketStatus.UNASSIGNED;
-                                break;
-                            case "assigned":
-                                ticket.Status = TicketStatus.ASSIGNED;
-                                break;
-                            case "closed":
-                                ticket.Status = TicketStatus.CLOSED;
-                                break;
-                        }
-                    }
-
-                    reader.Close();
-                    return ticket;
-                }
-                catch (SqlException)
-                {
-                    return ticket;
-                }
-                finally
-                {
-                    c.Close();
-                }
-            }
+            Ticket ticket = UserDao.GetTicket(id);
+            ticket.Author = GetUser(ticket.AuthorID);
+            return ticket;
         }
+
         public bool Login(int idUser)
         {
-            string userSession = System.Guid.NewGuid().ToString();
-
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "INSERT INTO Session(userID, session) VALUES (" + idUser + ",'" + userSession + "')";
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    int rowCount = cmd.ExecuteNonQuery();
-
-                    return rowCount >= 1;
-                }
-                catch (SqlException)
-                {
-                    return false;
-                }
-                finally
-                {
-                    c.Close();
-                }
-            }
+            return UserDao.AddSession(idUser);
         }
         public void Logout(int idUser)
         {
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "DELETE FROM Session WHERE userID=" + idUser;
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    cmd.ExecuteNonQuery();
-                }
-                catch (SqlException)
-                {
-                }
-                finally
-                {
-                    c.Close();
-                }
-            }
+            UserDao.DeleteSession(idUser);
         }
         public User GetUserLogged(string session)
         {
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "SELECT userID FROM Session WHERE session = '" + session + "'";
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    int ID = 0;
-
-                    if (reader.Read())
-                        ID = reader.GetInt32(0);
-
-                    reader.Close();
-
-                    if (ID != 0)
-                        return GetUser(ID);
-                    return new User();
-                }
-                catch (SqlException)
-                {
-                    return new User();
-                }
-                finally
-                {
-                    c.Close();
-                }
-            }
-            
+            int ID = UserDao.SelectUserIDBySession(session);
+            return ID != 0 ? GetUser(ID) : new User();
         }
         #endregion
-
-        #region SolverGUI
+        
+        /* #region SolverGUI
         public void Subscribe()
         {
             ITTChanged callback = OperationContext.Current.GetCallbackChannel<ITTChanged>();
@@ -762,217 +432,41 @@ namespace TTService {
             }
         }
         #endregion
-
+        */
+        
         #region DepartmentGUI
-        public bool AddDepartment(string name)
-        {
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "INSERT INTO Department(name) VALUES ('" + name + "')";
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    int rowCount = cmd.ExecuteNonQuery();
-                    return rowCount >= 1;
-                }
-                catch (SqlException)
-                {
-                    return false;
-                }
-                finally
-                {
-                    c.Close();
-                }
-            }
-        }
         public bool CheckDepartment(string name)
         {
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "SELECT * FROM Department WHERE name='" + name + "'";
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    bool exists = reader.Read();
-                    reader.Close();
-                    return exists;
-                }
-                catch (SqlException)
-                {
-                    return false;
-                }
-                finally
-                {
-                    c.Close();
-                }
-            }
+            return UserDao.SelectDepartment(name);
+        }
+        public bool AddDepartment(string name)
+        {
+            return UserDao.AddDepartment(name);
         }
         public List<string> GetDepartments()
         {
-            List<string> departments = new List<string>();
-
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "SELECT name FROM Department";
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        string department = reader.GetString(0);
-                        departments.Add(department);
-                    }
-
-                    reader.Close();
-                }
-                catch (SqlException)
-                {
-                }
-                finally
-                {
-                    c.Close();
-                }
-
-                return departments;
-            }
-        }
-        public List<SecondaryQuestion> GetQuestions(int idDepartment)
-        {
-            List<SecondaryQuestion> questions = new List<SecondaryQuestion>();
-
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "SELECT * FROM SecondaryQuestions WHERE idDepartment =" + idDepartment + " AND response IS NULL";
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        SecondaryQuestion question = new SecondaryQuestion();
-                        question.ID = reader.GetInt32(0);
-                        question.Date = reader.GetDateTime(6);
-                        question.SenderID = reader.GetInt32(2);
-                        question.TicketID = reader.GetInt32(1);
-                        question.Question = reader.GetString(4);
-
-                        questions.Add(question);
-                    }
-
-                    reader.Close();
-                }
-                catch (SqlException)
-                {
-                }
-                finally
-                {
-                    c.Close();
-                }
-
-                return questions;
-            }
-        }
-        public SecondaryQuestion GetQuestion(int id)
-        {
-            SecondaryQuestion question = new SecondaryQuestion();
-
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "SELECT * FROM SecondaryQuestions WHERE idQuestion=" + id;
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        question.ID = id;
-                        question.TicketID = reader.GetInt32(1);
-                        question.SenderID = reader.GetInt32(2);
-                        question.Department = reader.GetInt32(3);
-                        question.Question = reader.GetString(4);
-                        question.Response = reader.GetString(5);
-                        question.Date = reader.GetDateTime(6);
-                    }
-
-                    reader.Close();
-                    return question;
-                }
-                catch (SqlException)
-                {
-                    return question;
-                }
-                finally
-                {
-                    c.Close();
-                }
-            }
+            return UserDao.GetDepartments();
         }
         public int GetDepartmentID(string departmentName)
         {
-            int id = 0;
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "SELECT idDepartment FROM Department WHERE name='" + departmentName + "'";
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    SqlDataReader reader = cmd.ExecuteReader();
+            return UserDao.GetDepartmentID(departmentName);
+        }
 
-                    if (reader.Read())
-                        id = reader.GetInt32(0);
-
-                    reader.Close();
-                    return id;
-                }
-                catch (SqlException)
-                {
-                    return id;
-                }
-                finally
-                {
-                    c.Close();
-                }
-            }
+        public List<SecondaryQuestion> GetQuestions(int idDepartment)
+        {
+            return UserDao.GetQuestions(idDepartment);
+        }
+        public SecondaryQuestion GetQuestion(int id)
+        {
+            return UserDao.GetQuestion(id);
         }
         public bool AnswerQuestion(SecondaryQuestion question, string department, string responseMessage)
         {
             int id = GetDepartmentID(department);
             question.Department = id;
             question.Response = responseMessage;
-
-            using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            {
-                try
-                {
-                    c.Open();
-                    string sql = "UPDATE SecondaryQuestions SET idDepartment = " + id + ", response = '" + responseMessage + "' WHERE idQuestion = " + question.ID;
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    int rowCount = cmd.ExecuteNonQuery();
-                    return rowCount >= 1;
-                }
-                catch (SqlException)
-                {
-                    return false;
-                }
-                finally
-                {
-                    c.Close();
-                }
-            }
+            return UserDao.UpdateQuestion(question);
         }
         #endregion
     }
-    
 }

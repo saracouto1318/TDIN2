@@ -22,11 +22,12 @@
     <MetadataSource Address="http://localhost:63756/Service.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
+    <MetadataFile FileName="Service2.xsd" MetadataType="Schema" ID="ea7e3d68-093d-4d5e-a6b7-699168495c0a" SourceId="1" SourceUrl="http://localhost:63756/Service.svc?xsd=xsd0" />
     <MetadataFile FileName="TTServ.wsdl" MetadataType="Wsdl" ID="64b010fe-f3ba-49d5-827c-7445227582ed" SourceId="1" SourceUrl="http://localhost:63756/Service.svc?wsdl" />
+    <MetadataFile FileName="Service3.xsd" MetadataType="Schema" ID="f9ade841-4b7e-4e99-aab1-009bde31bb56" SourceId="1" SourceUrl="http://localhost:63756/Service.svc?xsd=xsd3" />
+    <MetadataFile FileName="Service1.xsd" MetadataType="Schema" ID="f91c7b35-f0de-43e1-b136-b26068fab4e5" SourceId="1" SourceUrl="http://localhost:63756/Service.svc?xsd=xsd2" />
     <MetadataFile FileName="Service.disco" MetadataType="Disco" ID="2d3f66e3-5b27-43ce-bed6-c61da83d17bf" SourceId="1" SourceUrl="http://localhost:63756/Service.svc?disco" />
     <MetadataFile FileName="Service.xsd" MetadataType="Schema" ID="481420c1-5001-488b-bd12-758bdd3249f2" SourceId="1" SourceUrl="http://localhost:63756/Service.svc?xsd=xsd1" />
-    <MetadataFile FileName="Service1.xsd" MetadataType="Schema" ID="f91c7b35-f0de-43e1-b136-b26068fab4e5" SourceId="1" SourceUrl="http://localhost:63756/Service.svc?xsd=xsd2" />
-    <MetadataFile FileName="Service2.xsd" MetadataType="Schema" ID="ea7e3d68-093d-4d5e-a6b7-699168495c0a" SourceId="1" SourceUrl="http://localhost:63756/Service.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

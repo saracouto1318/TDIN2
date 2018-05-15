@@ -12,6 +12,7 @@ namespace TTService
     public class Ticket
     {
         public int ID { get; set; }
+        public int AuthorID { get; set; }
         public User Author { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
