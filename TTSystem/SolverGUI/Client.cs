@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
-using GUI.TTSolverSvcClient;
 using GUI.TTSvcClient;
 using TTService;
 
@@ -33,6 +32,7 @@ namespace SolverGUI
         private Client()
         {
             SolverProxy = new TTSolverSvcClient(/*new InstanceContext(this)*/);
+            String str = SolverProxy.Hello();
             Proxy = new TTServClient();
         }
 

@@ -116,6 +116,84 @@
   <wsdl:message name="ITTServ_AnswerQuestion_OutputMessage">
     <wsdl:part name="parameters" element="tns:AnswerQuestionResponse" />
   </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_Hello_InputMessage">
+    <wsdl:part name="parameters" element="tns:Hello" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_Hello_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HelloResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_Subscribe_InputMessage">
+    <wsdl:part name="parameters" element="tns:Subscribe" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_Subscribe_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubscribeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_Unsubscribe_InputMessage">
+    <wsdl:part name="parameters" element="tns:Unsubscribe" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_Unsubscribe_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnsubscribeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_RegisterSolver_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterSolver" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_RegisterSolver_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterSolverResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_LoginSolver_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoginSolver" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_LoginSolver_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginSolverResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_GetSolver_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSolver" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_GetSolver_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSolverResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_GetUnassignedTT_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUnassignedTT" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_GetUnassignedTT_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUnassignedTTResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_GetSolverTT_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSolverTT" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_GetSolverTT_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSolverTTResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_GetSolverTTByType_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSolverTTByType" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_GetSolverTTByType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSolverTTByTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_AssignTicket_InputMessage">
+    <wsdl:part name="parameters" element="tns:AssignTicket" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_AssignTicket_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AssignTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_AnswerTicket_InputMessage">
+    <wsdl:part name="parameters" element="tns:AnswerTicket" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_AnswerTicket_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AnswerTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_RedirectTicket_InputMessage">
+    <wsdl:part name="parameters" element="tns:RedirectTicket" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_RedirectTicket_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RedirectTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_MyQuestions_InputMessage">
+    <wsdl:part name="parameters" element="tns:MyQuestions" />
+  </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_MyQuestions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MyQuestionsResponse" />
+  </wsdl:message>
   <wsdl:portType name="ITTServ">
     <wsdl:operation name="AddUser">
       <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/AddUser" message="tns:ITTServ_AddUser_InputMessage" />
@@ -188,6 +266,60 @@
     <wsdl:operation name="AnswerQuestion">
       <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/AnswerQuestion" message="tns:ITTServ_AnswerQuestion_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/AnswerQuestionResponse" message="tns:ITTServ_AnswerQuestion_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ITTSolverSvc">
+    <wsdl:operation name="Hello">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTSolverSvc/Hello" message="tns:ITTSolverSvc_Hello_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTSolverSvc/HelloResponse" message="tns:ITTSolverSvc_Hello_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Subscribe">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTSolverSvc/Subscribe" message="tns:ITTSolverSvc_Subscribe_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTSolverSvc/SubscribeResponse" message="tns:ITTSolverSvc_Subscribe_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Unsubscribe">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTSolverSvc/Unsubscribe" message="tns:ITTSolverSvc_Unsubscribe_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTSolverSvc/UnsubscribeResponse" message="tns:ITTSolverSvc_Unsubscribe_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterSolver">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTSolverSvc/RegisterSolver" message="tns:ITTSolverSvc_RegisterSolver_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTSolverSvc/RegisterSolverResponse" message="tns:ITTSolverSvc_RegisterSolver_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoginSolver">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTSolverSvc/LoginSolver" message="tns:ITTSolverSvc_LoginSolver_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTSolverSvc/LoginSolverResponse" message="tns:ITTSolverSvc_LoginSolver_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSolver">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTSolverSvc/GetSolver" message="tns:ITTSolverSvc_GetSolver_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTSolverSvc/GetSolverResponse" message="tns:ITTSolverSvc_GetSolver_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUnassignedTT">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTSolverSvc/GetUnassignedTT" message="tns:ITTSolverSvc_GetUnassignedTT_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTSolverSvc/GetUnassignedTTResponse" message="tns:ITTSolverSvc_GetUnassignedTT_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSolverTT">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTSolverSvc/GetSolverTT" message="tns:ITTSolverSvc_GetSolverTT_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTSolverSvc/GetSolverTTResponse" message="tns:ITTSolverSvc_GetSolverTT_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSolverTTByType">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTSolverSvc/GetSolverTTByType" message="tns:ITTSolverSvc_GetSolverTTByType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTSolverSvc/GetSolverTTByTypeResponse" message="tns:ITTSolverSvc_GetSolverTTByType_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AssignTicket">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTSolverSvc/AssignTicket" message="tns:ITTSolverSvc_AssignTicket_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTSolverSvc/AssignTicketResponse" message="tns:ITTSolverSvc_AssignTicket_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AnswerTicket">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTSolverSvc/AnswerTicket" message="tns:ITTSolverSvc_AnswerTicket_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTSolverSvc/AnswerTicketResponse" message="tns:ITTSolverSvc_AnswerTicket_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RedirectTicket">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTSolverSvc/RedirectTicket" message="tns:ITTSolverSvc_RedirectTicket_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTSolverSvc/RedirectTicketResponse" message="tns:ITTSolverSvc_RedirectTicket_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MyQuestions">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTSolverSvc/MyQuestions" message="tns:ITTSolverSvc_MyQuestions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTSolverSvc/MyQuestionsResponse" message="tns:ITTSolverSvc_MyQuestions_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ITTServ" type="tns:ITTServ">
@@ -355,8 +487,131 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
+  <wsdl:binding name="BasicHttpBinding_ITTSolverSvc" type="tns:ITTSolverSvc">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Hello">
+      <soap:operation soapAction="http://tempuri.org/ITTSolverSvc/Hello" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Subscribe">
+      <soap:operation soapAction="http://tempuri.org/ITTSolverSvc/Subscribe" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Unsubscribe">
+      <soap:operation soapAction="http://tempuri.org/ITTSolverSvc/Unsubscribe" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterSolver">
+      <soap:operation soapAction="http://tempuri.org/ITTSolverSvc/RegisterSolver" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginSolver">
+      <soap:operation soapAction="http://tempuri.org/ITTSolverSvc/LoginSolver" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSolver">
+      <soap:operation soapAction="http://tempuri.org/ITTSolverSvc/GetSolver" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUnassignedTT">
+      <soap:operation soapAction="http://tempuri.org/ITTSolverSvc/GetUnassignedTT" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSolverTT">
+      <soap:operation soapAction="http://tempuri.org/ITTSolverSvc/GetSolverTT" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSolverTTByType">
+      <soap:operation soapAction="http://tempuri.org/ITTSolverSvc/GetSolverTTByType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AssignTicket">
+      <soap:operation soapAction="http://tempuri.org/ITTSolverSvc/AssignTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AnswerTicket">
+      <soap:operation soapAction="http://tempuri.org/ITTSolverSvc/AnswerTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RedirectTicket">
+      <soap:operation soapAction="http://tempuri.org/ITTSolverSvc/RedirectTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MyQuestions">
+      <soap:operation soapAction="http://tempuri.org/ITTSolverSvc/MyQuestions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
   <wsdl:service name="TTServ">
     <wsdl:port name="BasicHttpBinding_ITTServ" binding="tns:BasicHttpBinding_ITTServ">
+      <soap:address location="http://localhost:63756/Service.svc" />
+    </wsdl:port>
+    <wsdl:port name="BasicHttpBinding_ITTSolverSvc" binding="tns:BasicHttpBinding_ITTSolverSvc">
       <soap:address location="http://localhost:63756/Service.svc" />
     </wsdl:port>
   </wsdl:service>

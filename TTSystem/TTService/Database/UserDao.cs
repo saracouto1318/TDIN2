@@ -266,7 +266,8 @@ namespace TTService.Database
                     "AND password = '" + password + "')";
                 SqlCommand cmd = new SqlCommand(sql, c);
                 reader = cmd.ExecuteReader();
-                return reader.GetInt32(0);
+                if(reader.Read())
+                    return reader.GetInt32(0);
             }
             catch (SqlException)
             {

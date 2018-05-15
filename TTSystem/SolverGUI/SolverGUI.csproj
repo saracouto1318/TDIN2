@@ -51,16 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
-    <Compile Include="Connected Services\TTSolverSvcClient\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Connected Services\TTSvcClient\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Forms\MainPage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,29 +104,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Connected Services\TTSolverSvcClient\service.wsdl" />
-    <None Include="Connected Services\TTSolverSvcClient\service.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\TTSolverSvcClient\service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\TTSolverSvcClient\TTService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\TTSvcClient\Service.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\TTSvcClient\Service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\TTSvcClient\Service2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\TTSvcClient\Service3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\TTSvcClient\TTServ.wsdl" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\TTService.SecondaryQuestion.datasource" />
     <None Include="Properties\DataSources\TTService.Ticket.datasource" />
@@ -176,37 +143,6 @@
       <Project>{15B3E0D2-6217-493A-A690-158C497F5318}</Project>
       <Name>TTService</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\TTSolverSvcClient\" />
-    <WCFMetadataStorage Include="Connected Services\TTSvcClient\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\TTSolverSvcClient\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\TTSolverSvcClient\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\TTSolverSvcClient\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\TTSvcClient\Service.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\TTSvcClient\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\TTSvcClient\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\TTSvcClient\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

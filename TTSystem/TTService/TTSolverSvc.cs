@@ -14,6 +14,10 @@ namespace TTService
         public static List<ITTUpdateCallback> subscribers = new List<ITTUpdateCallback>();
 
         #region SolverGUI
+        public String Hello()
+        {
+            return "Hello solver";
+        }
         public void Subscribe()
         {
             ITTUpdateCallback callback = OperationContext.Current.GetCallbackChannel<ITTUpdateCallback>();

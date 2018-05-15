@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace TTService
 {
-    [ServiceContract]
+    [ServiceContract/*(Namespace = "http://fe.up.pt/apm", CallbackContract = typeof(ITTUpdateCallback))*/]
     public interface ITTSolverSvc
     {
         #region SolverGUI
+        [OperationContract]
+        String Hello();
+
         [OperationContract]
         void Subscribe();
 
