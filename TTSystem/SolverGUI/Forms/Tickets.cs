@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using GUI.TTSvc;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using SolverGUI;
+using TTService;
 
 namespace GUI.Forms
 {
@@ -94,11 +94,11 @@ namespace GUI.Forms
         {
             if (status == TicketStatus.UNASSIGNED)
             {
-                if (client.Proxy.GetUnassignedTT().Length > 0)
+                if (client.SolverProxy.GetUnassignedTT().Length > 0)
                     return true;
             }
             else
-                if (client.Proxy.GetSolverTTByType(this.user, status).Length > 0)
+                if (client.SolverProxy.GetSolverTTByType(this.user, status).Length > 0)
                     return true;
             return false;
         }
@@ -108,9 +108,9 @@ namespace GUI.Forms
             Ticket[] tickets;
 
             if (status == TicketStatus.UNASSIGNED)
-                tickets = client.Proxy.GetUnassignedTT();
+                tickets = client.SolverProxy.GetUnassignedTT();
             else
-                tickets = client.Proxy.GetSolverTTByType(this.user, status);
+                tickets = client.SolverProxy.GetSolverTTByType(this.user, status);
 
 
             panel.Visible = true;

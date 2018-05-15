@@ -1,5 +1,4 @@
-﻿using GUI.TTSvc;
-using MaterialSkin;
+﻿using MaterialSkin;
 using MaterialSkin.Controls;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TTService;
 
 namespace SolverGUI
 {
@@ -78,7 +78,7 @@ namespace SolverGUI
 
             Hide();
             string redirect = message.Text;
-            client.Proxy.RedirectTicket(ticket.ID, user.ID, redirect, department);
+            client.SolverProxy.RedirectTicket(ticket.ID, user.ID, redirect, department);
             new TicketPage(user, ticket.ID).ShowDialog();
             Show();
         }

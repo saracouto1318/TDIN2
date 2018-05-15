@@ -1,7 +1,7 @@
-﻿using GUI.TTSvc;
-using MaterialSkin;
+﻿using MaterialSkin;
 using MaterialSkin.Controls;
 using System;
+using TTService;
 
 namespace SolverGUI
 {
@@ -26,10 +26,10 @@ namespace SolverGUI
             string email = emailLogin.Text;
             string password = passwordLogin.Text;
 
-            if (client.Proxy.LoginSolver(email, password))
+            if (client.SolverProxy.LoginSolver(email, password))
             {
                 User user = client.Proxy.GetUserByEmail(email);
-                client.Proxy.Login(user.ID);
+                //client.Proxy.LoginSolver(email, password);
                 Hide();
                 new PersonalPage(user.ID).ShowDialog();
                 Show();
@@ -45,12 +45,12 @@ namespace SolverGUI
             string email = emailRegister.Text;
             string password = passwordRegister.Text;
 
-            if (!client.Proxy.RegisterSolver(name, email, password))
+            if (!client.SolverProxy.RegisterSolver(name, email, password))
                 labelRegister.Visible = true;
             else
             {
+                client.SolverProxy.LoginSolver(email, password);
                 User user = client.Proxy.GetUserByEmail(email);
-                client.Proxy.Login(user.ID);
                 Hide();
                 new PersonalPage(user.ID).ShowDialog();
                 Show();

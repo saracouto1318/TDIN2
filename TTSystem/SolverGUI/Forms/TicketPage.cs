@@ -1,5 +1,4 @@
-﻿using GUI.TTSvc;
-using MaterialSkin;
+﻿using MaterialSkin;
 using MaterialSkin.Controls;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TTService;
 
 namespace SolverGUI
 {
@@ -73,7 +73,7 @@ namespace SolverGUI
         private void SolveBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            client.Proxy.AssignTicket(ticketInfo.ID, user.ID);
+            client.SolverProxy.AssignTicket(ticketInfo.ID, user.ID);
             new SolvePage(user, ticketInfo).ShowDialog();
             Show();
         }
@@ -82,14 +82,14 @@ namespace SolverGUI
         {
             redirectBtn.Visible = false;
             Hide();
-            client.Proxy.AssignTicket(ticketInfo.ID, user.ID);
+            client.SolverProxy.AssignTicket(ticketInfo.ID, user.ID);
             new RedirectPage(user, ticketInfo).ShowDialog();
             Show();
         }
 
         private void AssignBtn_Click(object sender, EventArgs e)
         {
-            client.Proxy.AssignTicket(ticketInfo.ID, user.ID);
+            client.SolverProxy.AssignTicket(ticketInfo.ID, user.ID);
             MessageBox.Show("Ticket " + ticketInfo.ID.ToString() + " was assigned to you");
         }
     }

@@ -29,9 +29,6 @@ namespace TTService.Database
         public AccessDao()
         {
             Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString);
-            //if(Conn != null)
-                Conn.Close();
-            //Conn.Open();
         }
     }
 }

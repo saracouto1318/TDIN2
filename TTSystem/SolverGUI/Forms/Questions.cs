@@ -1,5 +1,4 @@
-﻿using GUI.TTSvc;
-using MaterialSkin;
+﻿using MaterialSkin;
 using MaterialSkin.Controls;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SolverGUI;
+using TTService;
 
 namespace GUI.Forms
 {
@@ -44,14 +44,14 @@ namespace GUI.Forms
 
         private bool CheckExist(bool value)
         {
-            return client.Proxy.MyQuestions(this.user.ID, value).Length > 0;
+            return client.SolverProxy.MyQuestions(this.user.ID, value).Length > 0;
         }
 
         private void CreateTable(bool value)
         {
             SecondaryQuestion[] questions;
 
-            questions = client.Proxy.MyQuestions(this.user.ID, value);
+            questions = client.SolverProxy.MyQuestions(this.user.ID, value);
 
 
             panel.Visible = true;

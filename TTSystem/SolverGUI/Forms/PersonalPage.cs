@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GUI.Forms;
-using GUI.TTSvc;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using TTService;
 
 namespace SolverGUI
 {
@@ -41,9 +41,9 @@ namespace SolverGUI
             this.user = client.Proxy.GetUser(idUser);
             name.Text = this.user.Name;
             email.Text = this.user.Email;
-            ticketsOpen.Text = client.Proxy.GetUnassignedTT().Length.ToString();
-            tickets.Text = client.Proxy.GetSolverTT(this.user).Length.ToString();
-            questionsOpen.Text = ((client.Proxy.MyQuestions(this.user.ID, true).Length) + (client.Proxy.MyQuestions(this.user.ID, false).Length)).ToString();
+            ticketsOpen.Text = client.SolverProxy.GetUnassignedTT().Length.ToString();
+            tickets.Text = client.SolverProxy.GetSolverTT(this.user).Length.ToString();
+            questionsOpen.Text = ((client.SolverProxy.MyQuestions(this.user.ID, true).Length) + (client.SolverProxy.MyQuestions(this.user.ID, false).Length)).ToString();
         }
 
         private void LogoutBtn_Click(object sender, EventArgs e)

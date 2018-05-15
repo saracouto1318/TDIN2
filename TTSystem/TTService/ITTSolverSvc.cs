@@ -25,7 +25,7 @@ namespace TTService
 
         [OperationContract]
         User GetSolver(int id);
-
+        
         [OperationContract]
         List<Ticket> GetUnassignedTT();
 

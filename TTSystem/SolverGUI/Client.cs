@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
 using GUI.TTSolverSvcClient;
+using GUI.TTSvcClient;
 using TTService;
 
 namespace SolverGUI
@@ -25,11 +26,14 @@ namespace SolverGUI
             }
         }
 
-        public TTSolverSvcClient Proxy { get; }
+        public TTSolverSvcClient SolverProxy { get; }
+
+        public TTServClient Proxy { get; }
 
         private Client()
         {
-            Proxy = new TTSolverSvcClient(/*new InstanceContext(this)*/);
+            SolverProxy = new TTSolverSvcClient(/*new InstanceContext(this)*/);
+            Proxy = new TTServClient();
         }
 
         public void AssignedTT(Ticket ticket)

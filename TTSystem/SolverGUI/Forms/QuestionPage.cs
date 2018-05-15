@@ -1,5 +1,4 @@
-﻿using GUI.TTSvc;
-using MaterialSkin;
+﻿using MaterialSkin;
 using MaterialSkin.Controls;
 using SolverGUI;
 using System;
@@ -11,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TTService;
 
 namespace GUI.Forms
 {

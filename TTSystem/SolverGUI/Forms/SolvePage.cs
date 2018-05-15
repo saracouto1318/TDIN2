@@ -1,5 +1,4 @@
-﻿using GUI.TTSvc;
-using MaterialSkin;
+﻿using MaterialSkin;
 using MaterialSkin.Controls;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TTService;
 
 namespace SolverGUI
 {
@@ -65,7 +65,7 @@ namespace SolverGUI
         private void SendBtn_Click(object sender, EventArgs e)
         {
             string emailText = email.Text;
-            client.Proxy.AnswerTicket(user.ID, ticket.Author.ID, ticket.ID, emailText);
+            client.SolverProxy.AnswerTicket(user.ID, ticket.Author.ID, ticket.ID, emailText);
             new TicketPage(user, ticket.ID).ShowDialog();
             Show();
         }
