@@ -16,15 +16,20 @@ namespace DepartmentGUI
     public partial class DepartmentPage : MaterialForm
     {
         public TTServClient proxy;
-        private TableLayoutPanel panel = new TableLayoutPanel();
         public string name;
+
+        private MessageQueueReceiver mqr;
+        private TableLayoutPanel panel = new TableLayoutPanel();
+        
         public DepartmentPage(string name)
         {
+            this.name = name;
+
             proxy = new TTServClient();
+            mqr = MessageQueueReceiver.InitializeInstance(name);
 
             InitializeComponent();
 
-            this.name = name;
             departmentName.Text = "Department " + this.name;
 
             var materialSkinManager = MaterialSkinManager.Instance;

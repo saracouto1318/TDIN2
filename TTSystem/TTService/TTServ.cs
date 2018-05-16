@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.ServiceModel;
-using System.Configuration;
 using TTService.Database;
-using System.Data.SqlClient;
+using TTService.Models;
 
 namespace TTService
 {
@@ -174,7 +173,7 @@ namespace TTService
                 sender = MessageQueueManager.Instance.AddMessageQueue(department);
             }
 
-            sender.Send(new SecondaryQuestion()
+            sender.Send(new SerializedSecondaryQuestion()
             {
                 TicketID = ticket,
                 SenderID = solver,
@@ -195,12 +194,7 @@ namespace TTService
         #region DepartmentGUI
         public bool CheckDepartment(string name)
         {
-            bool exists = UserDao.SelectDepartment(name);
-            if(exists)
-            {
-                MessageQueueManager.Instance.AddMessageQueue(name);
-            }
-            return exists;
+            return UserDao.SelectDepartment(name);
         }
         public bool AddDepartment(string name)
         {

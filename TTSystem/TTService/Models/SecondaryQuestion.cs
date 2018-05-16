@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace TTService
 {
-    [Serializable]
     public class SecondaryQuestion
     {
         public int ID { get; set; }

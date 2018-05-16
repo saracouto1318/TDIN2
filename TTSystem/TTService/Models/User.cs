@@ -5,7 +5,6 @@ using System.Web;
 
 namespace TTService
 {
-    [Serializable]
     public class User
     {
         public int ID { get; set; }

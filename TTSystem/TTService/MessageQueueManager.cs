@@ -4,13 +4,16 @@ using System.Linq;
 using System.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using TTService.Database;
 
 namespace TTService
 {
     public class MessageQueueManager
     {
+        #region Singleton
         private static MessageQueueManager instance;
 
+        //Enforce singleton pattern
         public static MessageQueueManager Instance {
             get
             {
@@ -21,12 +24,25 @@ namespace TTService
                 return instance;
             }
         }
+        #endregion
 
+        // Dictionary containing all active messagequeues
         private Dictionary<string, MessageQueueSender> ActiveMessageQueues;
 
         private MessageQueueManager()
         {
             ActiveMessageQueues = new Dictionary<string, MessageQueueSender>();
+            FillActiveMessageQueues();
+        }
+
+        // On intialisation, get all stored departments and create the MessageQueues
+        private void FillActiveMessageQueues()
+        {
+            List<string> departments = UserDao.GetDepartments();
+            foreach(string department in departments)
+            {
+                AddMessageQueue(department);
+            }
         }
 
         public MessageQueueSender AddMessageQueue(string name)

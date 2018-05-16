@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Messaging;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Messaging;
+using TTService.Models;
 
 namespace TTService
 {
@@ -20,7 +16,7 @@ namespace TTService
             };
         }
 
-        public void Send(SecondaryQuestion sq)
+        public void Send(SerializedSecondaryQuestion sq)
         {
             MQueue.Send(sq, "Question");
         }

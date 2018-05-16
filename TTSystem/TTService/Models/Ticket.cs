@@ -9,8 +9,7 @@ namespace TTService
     {
         UNASSIGNED, ASSIGNED, CLOSED
     }
-
-    [Serializable]
+    
     public class Ticket
     {
         public int ID { get; set; }

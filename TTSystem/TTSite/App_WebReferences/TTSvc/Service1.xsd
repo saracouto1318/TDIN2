@@ -19,6 +19,7 @@
   <xs:complexType name="Ticket">
     <xs:sequence>
       <xs:element minOccurs="0" name="Author" nillable="true" type="tns:User" />
+      <xs:element minOccurs="0" name="AuthorID" type="xs:int" />
       <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ID" type="xs:int" />
