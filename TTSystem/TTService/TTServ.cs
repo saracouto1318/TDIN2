@@ -162,8 +162,28 @@ namespace TTService
         public bool RedirectTicket(int ticket, int solver, string redirectMessage, string department)
         {
             int id = UserDao.GetDepartmentID(department);
-            return UserDao.AddQuestion(ticket, solver, redirectMessage, id);
+            MessageQueueSender sender = MessageQueueManager.Instance.GetMessageQueue(department);
 
+            if(id <= 0)
+            {
+                UserDao.AddDepartment(department);
+                id = UserDao.GetDepartmentID(department);
+            }
+            if (sender == null)
+            {
+                sender = MessageQueueManager.Instance.AddMessageQueue(department);
+            }
+
+            sender.Send(new SecondaryQuestion()
+            {
+                TicketID = ticket,
+                SenderID = solver,
+                Date = DateTime.Now,
+                Department = id,
+                Question = redirectMessage
+            });
+
+            return UserDao.AddQuestion(ticket, solver, redirectMessage, id);
         }
 
         public List<SecondaryQuestion> MyQuestions(int idSolver, bool type)
@@ -175,11 +195,20 @@ namespace TTService
         #region DepartmentGUI
         public bool CheckDepartment(string name)
         {
-            return UserDao.SelectDepartment(name);
+            bool exists = UserDao.SelectDepartment(name);
+            if(exists)
+            {
+                MessageQueueManager.Instance.AddMessageQueue(name);
+            }
+            return exists;
         }
         public bool AddDepartment(string name)
         {
-            return UserDao.AddDepartment(name);
+            bool success = UserDao.AddDepartment(name);
+            // If it fails to add to the database then it already exists
+            // So try add it to the queue manager anyway
+            MessageQueueManager.Instance.AddMessageQueue(name);
+            return success;
         }
         public List<string> GetDepartments()
         {
