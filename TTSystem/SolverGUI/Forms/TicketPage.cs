@@ -90,8 +90,11 @@ namespace SolverGUI
 
         private void AssignBtn_Click(object sender, EventArgs e)
         {
-            client.SolverProxy.AssignTicket(ticketInfo.ID, user.ID);
-            MessageBox.Show("Ticket " + ticketInfo.ID.ToString() + " was assigned to you");
+            Task.Run(() =>
+            {
+                client.SolverProxy.AssignTicket(ticketInfo.ID, user.ID);
+            });
+            //MessageBox.Show("Ticket " + ticketInfo.ID.ToString() + " was assigned to you");
         }
     }
 }
