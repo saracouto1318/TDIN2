@@ -6,14 +6,16 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using TTService;
 using TTSvc;
+using TTSolver;
 
 public partial class Authentication : System.Web.UI.Page
 {
-    TTServClient proxy;
+    private TTServClient proxy;
     public User user;
     protected void Page_Load(object sender, EventArgs e)
     {
         proxy = new TTServClient();
+
         user = new User();
         loginError.Visible = false;
         registerError.Visible = false;

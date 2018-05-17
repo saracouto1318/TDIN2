@@ -4,12 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TTService;
 using TTSvc;
+
 public partial class _Ticket : Page
 {
-    TTServClient proxy;
-    TTService.User user;
-    TTService.Ticket ticket;
+    private TTServClient proxy;
+    private User user;
+    private Ticket ticket;
     protected void Page_Load(object sender, EventArgs e)
     {
         proxy = new TTServClient();

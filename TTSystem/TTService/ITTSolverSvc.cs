@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TTService
 {
-    [ServiceContract/*(Namespace = "http://fe.up.pt/apm", CallbackContract = typeof(ITTUpdateCallback))*/]
+    [ServiceContract(CallbackContract = typeof(ITTUpdateCallback))]
     public interface ITTSolverSvc
     {
         #region SolverGUI
@@ -54,9 +54,9 @@ namespace TTService
     public interface ITTUpdateCallback
     {
         [OperationContract(IsOneWay = true)]
-        void NewTT(Ticket ticket);
+        void NewTT(int idTicket);
 
         [OperationContract(IsOneWay = true)]
-        void AssignedTT(Ticket ticket);
+        void AssignedTT(int idTicket, int idSolver);
     }
 }

@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
-using GUI.TTSvcClient;
 using TTService;
+using GUI.TTSvc;
+using GUI.TTSolver;
 
 namespace SolverGUI
 {
-    public class Client
+    public class Client : ITTSolverSvcCallback
     {
         private static Client instance;
         
@@ -31,19 +32,21 @@ namespace SolverGUI
 
         private Client()
         {
-            SolverProxy = new TTSolverSvcClient(/*new InstanceContext(this)*/);
-            String str = SolverProxy.Hello();
+            SolverProxy = new TTSolverSvcClient(new InstanceContext(this));
+            SolverProxy.Subscribe();
             Proxy = new TTServClient();
         }
-
-        public void AssignedTT(Ticket ticket)
-        {
-            // TODO: Remove tt from list
-        }
-
-        public void NewTT(Ticket ticket)
+        
+        public void NewTT(int idTicket)
         {
             // TODO: Add tt to list
+            Console.WriteLine("Hello");
+        }
+
+        public void AssignedTT(int idTicket, int idSolver)
+        {
+            // TODO: Remove tt from list
+            Console.WriteLine("Hello");
         }
     }
 }

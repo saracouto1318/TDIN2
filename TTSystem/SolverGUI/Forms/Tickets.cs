@@ -276,6 +276,7 @@ namespace GUI.Forms
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
+            client.SolverProxy.Unsubscribe();
             client.Proxy.Logout(user.ID);
             Hide();
             new MainPage().ShowDialog();

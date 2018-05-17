@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Service="TTService.TTServ" %>
+﻿<%@ ServiceHost Service="TTService.TTSolverSvc" %>

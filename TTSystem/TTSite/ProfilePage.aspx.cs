@@ -9,7 +9,7 @@ using TTSvc;
 
 public partial class _ProfilePage : Page
 {
-    TTServClient proxy;
+    private TTServClient proxy;
     public User user;
     public TTService.Ticket[] tickets;
     protected void Page_Load(object sender, EventArgs e)

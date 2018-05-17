@@ -48,8 +48,9 @@ namespace SolverGUI
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
-            client.Proxy.Logout(user.ID);
             Hide();
+            client.SolverProxy.Unsubscribe();
+            client.Proxy.Logout(user.ID); 
             new MainPage().ShowDialog();
             Show();
         }

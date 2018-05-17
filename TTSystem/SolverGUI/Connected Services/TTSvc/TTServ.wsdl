@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="TTServ" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:63756/ServiceTT.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:63756/ServiceTT.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:63756/ServiceTT.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/TTService" />
+      <xsd:import schemaLocation="http://localhost:63756/ServiceTT.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ITTServ_AddUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddUser" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_AddUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_CheckUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckUser" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_CheckUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUser" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetUserByEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserByEmail" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetUserByEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserByEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_UpdateUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUser" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_UpdateUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_AddTicket_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddTicket" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_AddTicket_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetTickets_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTickets" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetTickets_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTicketsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetTicketsByType_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTicketsByType" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetTicketsByType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTicketsByTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetTicket_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTicket" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetTicket_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_Logout_InputMessage">
+    <wsdl:part name="parameters" element="tns:Logout" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_Logout_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetUserLogged_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserLogged" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetUserLogged_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserLoggedResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_AddDepartment_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddDepartment" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_AddDepartment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddDepartmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_CheckDepartment_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckDepartment" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_CheckDepartment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckDepartmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetDepartments_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDepartments" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetDepartments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDepartmentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetQuestions_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetQuestions" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetQuestions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetQuestionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetQuestion_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetQuestion" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetQuestion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetQuestionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_AnswerQuestion_InputMessage">
+    <wsdl:part name="parameters" element="tns:AnswerQuestion" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_AnswerQuestion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AnswerQuestionResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ITTServ">
+    <wsdl:operation name="AddUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/AddUser" message="tns:ITTServ_AddUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/AddUserResponse" message="tns:ITTServ_AddUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/CheckUser" message="tns:ITTServ_CheckUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/CheckUserResponse" message="tns:ITTServ_CheckUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetUser" message="tns:ITTServ_GetUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetUserResponse" message="tns:ITTServ_GetUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserByEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetUserByEmail" message="tns:ITTServ_GetUserByEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetUserByEmailResponse" message="tns:ITTServ_GetUserByEmail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/UpdateUser" message="tns:ITTServ_UpdateUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/UpdateUserResponse" message="tns:ITTServ_UpdateUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddTicket">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/AddTicket" message="tns:ITTServ_AddTicket_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/AddTicketResponse" message="tns:ITTServ_AddTicket_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTickets">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetTickets" message="tns:ITTServ_GetTickets_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetTicketsResponse" message="tns:ITTServ_GetTickets_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTicketsByType">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetTicketsByType" message="tns:ITTServ_GetTicketsByType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetTicketsByTypeResponse" message="tns:ITTServ_GetTicketsByType_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTicket">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetTicket" message="tns:ITTServ_GetTicket_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetTicketResponse" message="tns:ITTServ_GetTicket_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/Login" message="tns:ITTServ_Login_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/LoginResponse" message="tns:ITTServ_Login_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/Logout" message="tns:ITTServ_Logout_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/LogoutResponse" message="tns:ITTServ_Logout_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserLogged">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetUserLogged" message="tns:ITTServ_GetUserLogged_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetUserLoggedResponse" message="tns:ITTServ_GetUserLogged_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddDepartment">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/AddDepartment" message="tns:ITTServ_AddDepartment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/AddDepartmentResponse" message="tns:ITTServ_AddDepartment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckDepartment">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/CheckDepartment" message="tns:ITTServ_CheckDepartment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/CheckDepartmentResponse" message="tns:ITTServ_CheckDepartment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartments">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetDepartments" message="tns:ITTServ_GetDepartments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetDepartmentsResponse" message="tns:ITTServ_GetDepartments_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetQuestions">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetQuestions" message="tns:ITTServ_GetQuestions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetQuestionsResponse" message="tns:ITTServ_GetQuestions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetQuestion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetQuestion" message="tns:ITTServ_GetQuestion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetQuestionResponse" message="tns:ITTServ_GetQuestion_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AnswerQuestion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/AnswerQuestion" message="tns:ITTServ_AnswerQuestion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/AnswerQuestionResponse" message="tns:ITTServ_AnswerQuestion_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicEndpoint_ITTServ" type="tns:ITTServ">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddUser">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/AddUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUser">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/CheckUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/GetUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserByEmail">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/GetUserByEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/UpdateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTicket">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/AddTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTickets">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/GetTickets" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTicketsByType">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/GetTicketsByType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTicket">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/GetTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/Logout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserLogged">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/GetUserLogged" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddDepartment">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/AddDepartment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckDepartment">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/CheckDepartment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartments">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/GetDepartments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetQuestions">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/GetQuestions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetQuestion">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/GetQuestion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AnswerQuestion">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/AnswerQuestion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TTServ">
+    <wsdl:port name="BasicEndpoint_ITTServ" binding="tns:BasicEndpoint_ITTServ">
+      <soap:address location="http://localhost:63756/ServiceTT.svc/ServiceTT.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b38ce839-84b0-4a4b-b824-b9d5e279245b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:63756/ServiceTT.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ServiceTT.xsd" MetadataType="Schema" ID="c7e58d28-0104-477f-bccf-8f58f48fd7ff" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?xsd=xsd3" />
+    <MetadataFile FileName="ServiceTT1.xsd" MetadataType="Schema" ID="e36a91ca-0c90-45a7-a2c2-53d90b5f1bda" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?xsd=xsd2" />
+    <MetadataFile FileName="ServiceTT2.xsd" MetadataType="Schema" ID="a96b1525-429e-4c16-8f69-2fd279ded3a5" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?xsd=xsd1" />
+    <MetadataFile FileName="ServiceTT3.xsd" MetadataType="Schema" ID="2a02c6e3-b346-4c23-8f91-86eb5459eb5b" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?xsd=xsd0" />
+    <MetadataFile FileName="TTServ.wsdl" MetadataType="Wsdl" ID="64629b73-4c85-46c5-887f-9f11cb0cdbbc" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?wsdl" />
+    <MetadataFile FileName="ServiceTT.disco" MetadataType="Disco" ID="8c3a21fe-bdea-4fa5-8cf2-1d31470ea710" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
