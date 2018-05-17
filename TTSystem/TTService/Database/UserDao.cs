@@ -340,6 +340,9 @@ namespace TTService.Database
                         case "closed":
                             ticket.Status = TicketStatus.CLOSED;
                             break;
+                        case "wait":
+                            ticket.Status = TicketStatus.WAITING;
+                            break;
                     }
 
                     tickets.Add(ticket);
@@ -374,6 +377,8 @@ namespace TTService.Database
                     sql += "'assigned'";
                 else if (status == TicketStatus.CLOSED)
                     sql += "'closed'";
+                else if (status == TicketStatus.WAITING)
+                    sql += "'wait'";
 
                 SqlCommand cmd = new SqlCommand(sql, c);
                 reader = cmd.ExecuteReader();
@@ -437,6 +442,9 @@ namespace TTService.Database
                             break;
                         case "closed":
                             ticket.Status = TicketStatus.CLOSED;
+                            break;
+                        case "wait":
+                            ticket.Status = TicketStatus.WAITING;
                             break;
                     }
                 }
@@ -521,6 +529,9 @@ namespace TTService.Database
                         case "assigned":
                             ticket.Status = TicketStatus.ASSIGNED;
                             break;
+                        case "wait":
+                            ticket.Status = TicketStatus.WAITING;
+                            break;
                         case "closed":
                             ticket.Status = TicketStatus.CLOSED;
                             break;
@@ -558,6 +569,8 @@ namespace TTService.Database
                     sql += "'assigned'";
                 else if (status == TicketStatus.CLOSED)
                     sql += "'closed'";
+                else if (status == TicketStatus.WAITING)
+                    sql += "'wait'";
 
                 SqlCommand cmd = new SqlCommand(sql, c);
                 reader = cmd.ExecuteReader();
@@ -765,6 +778,7 @@ namespace TTService.Database
         #region SecondaryQuestionTable        
         public static bool AddQuestion(int ticket, int solver, string redirectMessage, int id)
         {
+
             SqlConnection c = AccessDao.Instance.Conn;
             try
             {
@@ -786,6 +800,29 @@ namespace TTService.Database
             }
             return false;
         }
+
+        public static bool UpdateTicketQuestion(int idTicket)
+        {
+            SqlConnection c = AccessDao.Instance.Conn;
+            try
+            {
+                c.Open();
+                string sql = "UPDATE Ticket UPDATE Ticket SET status='wait' WHERE idTicket=" + idTicket;
+                SqlCommand cmd = new SqlCommand(sql, c);
+                int rowCount = cmd.ExecuteNonQuery();
+                return rowCount >= 1;
+            }
+            catch (SqlException)
+            {
+            }
+            finally
+            {
+                if (c != null)
+                    c.Close();
+            }
+            return false;
+        }
+
         public static List<SecondaryQuestion> GetQuestions(int idDepartment)
         {
             List<SecondaryQuestion> questions = new List<SecondaryQuestion>();

@@ -36,6 +36,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.profileBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.questionsOpen = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // logoutBtn
@@ -54,24 +56,24 @@
             // myTicketsBtn
             // 
             this.myTicketsBtn.Depth = 0;
-            this.myTicketsBtn.Location = new System.Drawing.Point(653, 253);
+            this.myTicketsBtn.Location = new System.Drawing.Point(615, 253);
             this.myTicketsBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.myTicketsBtn.Name = "myTicketsBtn";
             this.myTicketsBtn.Primary = true;
-            this.myTicketsBtn.Size = new System.Drawing.Size(121, 39);
+            this.myTicketsBtn.Size = new System.Drawing.Size(159, 39);
             this.myTicketsBtn.TabIndex = 42;
-            this.myTicketsBtn.Text = "My Tickets";
+            this.myTicketsBtn.Text = "My Tickets Without Questions";
             this.myTicketsBtn.UseVisualStyleBackColor = true;
             this.myTicketsBtn.Click += new System.EventHandler(this.MyTicketsBtn_Click);
             // 
             // closeBtn
             // 
             this.closeBtn.Depth = 0;
-            this.closeBtn.Location = new System.Drawing.Point(653, 310);
+            this.closeBtn.Location = new System.Drawing.Point(615, 364);
             this.closeBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Primary = true;
-            this.closeBtn.Size = new System.Drawing.Size(121, 40);
+            this.closeBtn.Size = new System.Drawing.Size(159, 40);
             this.closeBtn.TabIndex = 41;
             this.closeBtn.Text = "Tickets Closed";
             this.closeBtn.UseVisualStyleBackColor = true;
@@ -80,11 +82,11 @@
             // openBtn
             // 
             this.openBtn.Depth = 0;
-            this.openBtn.Location = new System.Drawing.Point(653, 199);
+            this.openBtn.Location = new System.Drawing.Point(615, 199);
             this.openBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.openBtn.Name = "openBtn";
             this.openBtn.Primary = true;
-            this.openBtn.Size = new System.Drawing.Size(121, 39);
+            this.openBtn.Size = new System.Drawing.Size(159, 39);
             this.openBtn.TabIndex = 40;
             this.openBtn.Text = "Tickets Unassigned";
             this.openBtn.UseVisualStyleBackColor = true;
@@ -96,7 +98,7 @@
             this.label3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(155, 261);
+            this.label3.Location = new System.Drawing.Point(155, 262);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(380, 18);
             this.label3.TabIndex = 37;
@@ -142,11 +144,39 @@
             this.profileBtn.UseVisualStyleBackColor = true;
             this.profileBtn.Click += new System.EventHandler(this.ProfileBtn_Click);
             // 
+            // questionsOpen
+            // 
+            this.questionsOpen.Depth = 0;
+            this.questionsOpen.Location = new System.Drawing.Point(615, 309);
+            this.questionsOpen.MouseState = MaterialSkin.MouseState.HOVER;
+            this.questionsOpen.Name = "questionsOpen";
+            this.questionsOpen.Primary = true;
+            this.questionsOpen.Size = new System.Drawing.Size(159, 39);
+            this.questionsOpen.TabIndex = 48;
+            this.questionsOpen.Text = "My Tickets With Questions Open";
+            this.questionsOpen.UseVisualStyleBackColor = true;
+            this.questionsOpen.Click += new System.EventHandler(this.questionsOpen_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Red;
+            this.label4.Location = new System.Drawing.Point(81, 262);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(476, 18);
+            this.label4.TabIndex = 49;
+            this.label4.Text = "You don\'t have any tickets with questions waiting for response";
+            this.label4.Visible = false;
+            // 
             // Tickets
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.questionsOpen);
             this.Controls.Add(this.profileBtn);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -172,5 +202,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private MaterialSkin.Controls.MaterialRaisedButton profileBtn;
+        private MaterialSkin.Controls.MaterialRaisedButton questionsOpen;
+        private System.Windows.Forms.Label label4;
     }
 }

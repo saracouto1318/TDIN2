@@ -226,7 +226,9 @@ namespace TTService
             int id = GetDepartmentID(department);
             question.Department = id;
             question.Response = responseMessage;
-            return UserDao.UpdateQuestion(question);
+            if(UserDao.UpdateQuestion(question))
+                return UserDao.AssignTicket(question.TicketID, question.SenderID);
+            return false;
         }
         #endregion
     }

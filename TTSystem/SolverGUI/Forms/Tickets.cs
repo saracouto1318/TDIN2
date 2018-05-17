@@ -288,5 +288,24 @@ namespace GUI.Forms
             new PersonalPage(this.user.ID).ShowDialog();
             Show();
         }
+
+        private void questionsOpen_Click(object sender, EventArgs e)
+        {
+            label1.Visible = false;
+            label2.Visible = false;
+            label3.Visible = false;
+
+            if (!CheckExist(TicketStatus.WAITING))
+            {
+                label4.Visible = true;
+                panel.Visible = false;
+            }
+            else
+            {
+                label4.Visible = false;
+                CreateTable(TicketStatus.WAITING);
+                panel.Visible = true;
+            }
+        }
     }
 }

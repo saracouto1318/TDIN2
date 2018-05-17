@@ -98,7 +98,9 @@ namespace TTService
         public bool RedirectTicket(int ticket, int solver, string redirectMessage, string department)
         {
             int id = UserDao.GetDepartmentID(department);
-            return UserDao.AddQuestion(ticket, solver, redirectMessage, id);
+            if(UserDao.AddQuestion(ticket, solver, redirectMessage, id))
+                return UserDao.UpdateTicketQuestion(ticket);
+            return false;
 
         }
 

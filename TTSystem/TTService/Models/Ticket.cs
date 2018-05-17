@@ -7,7 +7,7 @@ namespace TTService
 {
     public enum TicketStatus
     {
-        UNASSIGNED, ASSIGNED, CLOSED
+        UNASSIGNED, ASSIGNED, CLOSED, WAITING
     }
     
     public class Ticket
