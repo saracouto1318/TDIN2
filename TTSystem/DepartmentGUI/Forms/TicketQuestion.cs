@@ -57,5 +57,16 @@ namespace DepartmentGUI
             new DepartmentPage(this.name).ShowDialog();
             Show();
         }
+
+        private void TicketQuestion_Load(object sender, EventArgs e)
+        {
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+
+            // no larger than screen size
+            MaximumSize = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        }
     }
 }

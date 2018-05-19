@@ -33,6 +33,7 @@
             this.ticketID = new System.Windows.Forms.Label();
             this.question = new MaterialSkin.Controls.MaterialLabel();
             this.departmentBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.Load += new System.EventHandler(this.TicketQuestion_Load);
             this.SuspendLayout();
             // 
             // label3

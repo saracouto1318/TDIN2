@@ -31,6 +31,7 @@
             this.departmentName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.Load += new System.EventHandler(this.DepartmentPage_Load);
             this.SuspendLayout();
             // 
             // departmentName

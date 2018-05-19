@@ -71,13 +71,6 @@ namespace DepartmentGUI
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
             }, 1, 0);
-            panel.Controls.Add(new Label()
-            {
-                Text = "Question",
-                TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.Black,
-                Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
-            }, 2, 0);
 
             int index = 0;
             foreach (SecondaryQuestion question in questions)
@@ -114,21 +107,6 @@ namespace DepartmentGUI
                     Show();
                 };
 
-                labelTmp = new Label()
-                {
-                    Text = question.Question,
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    ForeColor = Color.Gray,
-                    Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
-                };
-                panel.Controls.Add(labelTmp, 2, index + 1);
-                labelTmp.Click += (object sender, EventArgs e) =>
-                {
-                    Hide();
-                    new TicketQuestion(question.ID, this.name).ShowDialog();
-                    Show();
-                };
-
                 index++;
             }
         }
@@ -141,18 +119,29 @@ namespace DepartmentGUI
                 BackColor = SystemColors.ButtonHighlight,
                 BackgroundImageLayout = ImageLayout.Center,
                 CellBorderStyle = TableLayoutPanelCellBorderStyle.Single,
-                ColumnCount = 3
+                ColumnCount = 2
             };
 
             panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             panel.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (0));
-            panel.Location = new Point(290, 228);
+            panel.Location = new Point(300, 228);
             panel.Name = "tableLayoutPanel1";
             panel.Size = new Size(100, 40);
             panel.AutoSize = true;
 
             Controls.Add(panel);
         }
-        
+
+        private void DepartmentPage_Load(object sender, EventArgs e)
+        {
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+
+            // no larger than screen size
+            MaximumSize = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        }
+
     }
 }
