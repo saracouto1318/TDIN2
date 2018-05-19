@@ -82,7 +82,10 @@ namespace SolverGUI
 
             Hide();
             string redirect = message.Text;
-            client.SolverProxy.RedirectTicket(ticket.ID, user.ID, redirect, department);
+            Task.Run(() =>
+            {
+                client.SolverProxy.RedirectTicket(ticket.ID, user.ID, redirect, department);
+            });
             new TicketPage(user, ticket.ID).ShowDialog();
             Show();
         }

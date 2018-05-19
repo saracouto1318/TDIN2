@@ -110,6 +110,12 @@
   <wsdl:message name="ITTServ_GetQuestion_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetQuestionResponse" />
   </wsdl:message>
+  <wsdl:message name="ITTServ_GetDepartmentID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDepartmentID" />
+  </wsdl:message>
+  <wsdl:message name="ITTServ_GetDepartmentID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDepartmentIDResponse" />
+  </wsdl:message>
   <wsdl:message name="ITTServ_AnswerQuestion_InputMessage">
     <wsdl:part name="parameters" element="tns:AnswerQuestion" />
   </wsdl:message>
@@ -184,6 +190,10 @@
     <wsdl:operation name="GetQuestion">
       <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetQuestion" message="tns:ITTServ_GetQuestion_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetQuestionResponse" message="tns:ITTServ_GetQuestion_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartmentID">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/GetDepartmentID" message="tns:ITTServ_GetDepartmentID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTServ/GetDepartmentIDResponse" message="tns:ITTServ_GetDepartmentID_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AnswerQuestion">
       <wsdl:input wsaw:Action="http://tempuri.org/ITTServ/AnswerQuestion" message="tns:ITTServ_AnswerQuestion_InputMessage" />
@@ -338,6 +348,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetQuestion">
       <soap:operation soapAction="http://tempuri.org/ITTServ/GetQuestion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartmentID">
+      <soap:operation soapAction="http://tempuri.org/ITTServ/GetDepartmentID" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

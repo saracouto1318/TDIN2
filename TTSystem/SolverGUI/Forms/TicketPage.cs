@@ -74,7 +74,6 @@ namespace SolverGUI
         private void SolveBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            client.SolverProxy.AssignTicket(ticketInfo.ID, user.ID);
             new SolvePage(user, ticketInfo).ShowDialog();
             Show();
         }
@@ -83,7 +82,6 @@ namespace SolverGUI
         {
             redirectBtn.Visible = false;
             Hide();
-            client.SolverProxy.AssignTicket(ticketInfo.ID, user.ID);
             new RedirectPage(user, ticketInfo).ShowDialog();
             Show();
         }

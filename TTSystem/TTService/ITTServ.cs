@@ -101,6 +101,9 @@ namespace TTService {
         SecondaryQuestion GetQuestion(int id);
 
         [OperationContract]
+        int GetDepartmentID(string departmentName);
+
+        [OperationContract]
         bool AnswerQuestion(SecondaryQuestion question, string department, string responseMessage);
         #endregion
     }

@@ -42,7 +42,8 @@ namespace DepartmentGUI
         
         private void CheckQuestions()
         {
-            SecondaryQuestion[] questions = proxy.GetQuestions(0);
+            int id = proxy.GetDepartmentID(name);
+            SecondaryQuestion[] questions = proxy.GetQuestions(id);
             if (questions.Length != 0)
                 CreateTable(questions);
             else
