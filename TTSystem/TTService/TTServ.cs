@@ -106,6 +106,11 @@ namespace TTService
             return UserDao.GetDepartmentID(departmentName);
         }
 
+        public string GetDepartment(int id)
+        {
+            return UserDao.GetDepartment(id);
+        }
+
         public List<SecondaryQuestion> GetQuestions(int idDepartment)
         {
             return UserDao.GetQuestions(idDepartment);

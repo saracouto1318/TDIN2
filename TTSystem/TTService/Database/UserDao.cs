@@ -773,6 +773,34 @@ namespace TTService.Database
             }
             return ID;
         }
+
+        public static string GetDepartment(int id)
+        {
+            string name = "";
+            SqlConnection c = AccessDao.Instance.Conn;
+            SqlDataReader reader = null;
+            try
+            {
+                c.Open();
+                string sql = "SELECT name FROM Department WHERE idDepartment=" + id;
+                SqlCommand cmd = new SqlCommand(sql, c);
+                reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                    name = reader.GetString(0);
+            }
+            catch (SqlException)
+            {
+            }
+            finally
+            {
+                if (reader != null)
+                    reader.Close();
+                if (c != null)
+                    c.Close();
+            }
+            return name;
+        }
         #endregion
 
         #region SecondaryQuestionTable        
@@ -881,7 +909,8 @@ namespace TTService.Database
                     question.SenderID = reader.GetInt32(2);
                     question.Department = reader.GetInt32(3);
                     question.Question = reader.GetString(4);
-                    question.Response = reader.GetString(5);
+                    if (!reader.IsDBNull(5))
+                        question.Response = reader.GetString(5);
                     question.Date = reader.GetDateTime(6);
                 }
             }

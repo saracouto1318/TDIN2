@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c914fe7a-5178-43e3-b4ed-7d3a8a643d1e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="7b03815b-6e83-40d1-9bc8-9f618e41b3ba" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,12 +22,12 @@
     <MetadataSource Address="http://localhost:63756/ServiceTT.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ServiceTT.xsd" MetadataType="Schema" ID="463280ee-b8b0-45d3-922e-b8110fe52946" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?xsd=xsd3" />
-    <MetadataFile FileName="ServiceTT1.xsd" MetadataType="Schema" ID="d5a94c28-0222-4389-a6ac-2efae820e00e" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?xsd=xsd2" />
-    <MetadataFile FileName="ServiceTT2.xsd" MetadataType="Schema" ID="ce315434-5631-4aac-9306-68c1abab68ad" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?xsd=xsd1" />
-    <MetadataFile FileName="ServiceTT3.xsd" MetadataType="Schema" ID="64130df8-47e5-4e36-ade7-5356ae6a93c7" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?xsd=xsd0" />
-    <MetadataFile FileName="TTServ.wsdl" MetadataType="Wsdl" ID="2c3fe15a-7638-497f-9c1f-79322965e19e" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?wsdl" />
-    <MetadataFile FileName="ServiceTT.disco" MetadataType="Disco" ID="70721b7e-4ec6-4e0a-b5f6-2910ca358797" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?disco" />
+    <MetadataFile FileName="ServiceTT.xsd" MetadataType="Schema" ID="831168ab-d123-4ded-a235-cfbae492ad5d" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?xsd=xsd3" />
+    <MetadataFile FileName="ServiceTT1.xsd" MetadataType="Schema" ID="7f9e806a-4c76-49dd-b040-2ee4cc276ec6" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?xsd=xsd2" />
+    <MetadataFile FileName="ServiceTT2.xsd" MetadataType="Schema" ID="30183862-d593-4efc-a397-d1a83f5678ec" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?xsd=xsd1" />
+    <MetadataFile FileName="ServiceTT3.xsd" MetadataType="Schema" ID="5ba87d23-fff5-49e5-823c-68178d6b7a58" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?xsd=xsd0" />
+    <MetadataFile FileName="TTServ.wsdl" MetadataType="Wsdl" ID="d11bd160-711f-4d2e-b48a-27cf8f09864e" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?wsdl" />
+    <MetadataFile FileName="ServiceTT.disco" MetadataType="Disco" ID="2e2fc5e1-90c2-43e3-b85a-4664738de223" SourceId="1" SourceUrl="http://localhost:63756/ServiceTT.svc?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

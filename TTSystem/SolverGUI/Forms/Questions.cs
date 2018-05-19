@@ -70,18 +70,25 @@ namespace GUI.Forms
             }, 0, 0);
             panel.Controls.Add(new Label()
             {
-                Text = "Ticket ID",
+                Text = "Department",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
             }, 1, 0);
             panel.Controls.Add(new Label()
             {
-                Text = "Date",
+                Text = "Ticket ID",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
             }, 2, 0);
+            panel.Controls.Add(new Label()
+            {
+                Text = "Date",
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.Black,
+                Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
+            }, 3, 0);
 
             int index = 0;
             foreach (SecondaryQuestion q in questions)
@@ -122,7 +129,7 @@ namespace GUI.Forms
 
                 labelTmp = new Label()
                 {
-                    Text = q.Date.ToString(),
+                    Text = client.Proxy.GetDepartment(q.Department),
                     TextAlign = ContentAlignment.MiddleCenter,
                     Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
                 };
@@ -136,6 +143,22 @@ namespace GUI.Forms
 
                 panel.Controls.Add(labelTmp, 2, index + 1);
 
+                labelTmp = new Label()
+                {
+                    Text = q.Date.ToString(),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
+                };
+
+                labelTmp.Click += (object sender, EventArgs e) =>
+                {
+                    Hide();
+                    new QuestionPage(user.ID, q.ID).ShowDialog();
+                    Show();
+                };
+
+                panel.Controls.Add(labelTmp, 3, index + 1);
+
                 index++;
             }
         }
@@ -148,12 +171,13 @@ namespace GUI.Forms
                 BackColor = SystemColors.ButtonHighlight,
                 BackgroundImageLayout = ImageLayout.Center,
                 CellBorderStyle = TableLayoutPanelCellBorderStyle.Single,
-                ColumnCount = 3
+                ColumnCount = 4
             };
 
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
             panel.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (0));
             panel.Location = new Point(120, 221);
             panel.Name = "tableLayoutPanel1";

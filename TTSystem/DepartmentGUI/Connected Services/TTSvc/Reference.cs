@@ -123,6 +123,12 @@ namespace DepartmentGUI.TTSvc {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetDepartmentID", ReplyAction="http://tempuri.org/ITTServ/GetDepartmentIDResponse")]
         System.Threading.Tasks.Task<int> GetDepartmentIDAsync(string departmentName);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetDepartment", ReplyAction="http://tempuri.org/ITTServ/GetDepartmentResponse")]
+        string GetDepartment(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/GetDepartment", ReplyAction="http://tempuri.org/ITTServ/GetDepartmentResponse")]
+        System.Threading.Tasks.Task<string> GetDepartmentAsync(int id);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTServ/AnswerQuestion", ReplyAction="http://tempuri.org/ITTServ/AnswerQuestionResponse")]
         bool AnswerQuestion(TTService.SecondaryQuestion question, string department, string responseMessage);
         
@@ -299,6 +305,14 @@ namespace DepartmentGUI.TTSvc {
         
         public System.Threading.Tasks.Task<int> GetDepartmentIDAsync(string departmentName) {
             return base.Channel.GetDepartmentIDAsync(departmentName);
+        }
+        
+        public string GetDepartment(int id) {
+            return base.Channel.GetDepartment(id);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetDepartmentAsync(int id) {
+            return base.Channel.GetDepartmentAsync(id);
         }
         
         public bool AnswerQuestion(TTService.SecondaryQuestion question, string department, string responseMessage) {
