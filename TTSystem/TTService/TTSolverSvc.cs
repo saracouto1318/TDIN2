@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.ServiceModel;
 using System.Text;
@@ -90,19 +91,28 @@ namespace TTService
                 User to = UserDao.SelectUser(senderTicket);
                 Ticket ticketInfo = UserDao.GetTicket(ticket);
 
-                MailMessage mail = new MailMessage();
-                SmtpClient client = new SmtpClient("smtp.gmail.com");
+                SmtpClient MyServer = new SmtpClient();
+                MyServer.Host = "";
+                MyServer.Port = 81;
 
-                mail.From = new MailAddress("trouble_tickets@gmail.com");
-                mail.To.Add(to.Email.ToString());
-                mail.Subject = "Ticket #" + ticketInfo.ID + " - " + ticketInfo.Title;
-                mail.Body = email;
+                //Server Credentials
+                NetworkCredential NC = new NetworkCredential();
+                NC.UserName = "";
+                NC.Password = "";
+                //assigned credetial details to server
+                MyServer.Credentials = NC;
 
-                client.Port = 25;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-                client.EnableSsl = true;
-                client.Send(mail);
+                //create sender address
+                MailAddress from = new MailAddress("trouble_ticket@gmail.com", "IT Trouble Tickets");
+
+                //create receiver address
+                MailAddress receiver = new MailAddress(to.Email.Trim(), to.Name.ToString());
+
+                MailMessage Mymessage = new MailMessage(from, receiver);
+                Mymessage.Subject = "Ticket #" + ticketInfo.ID.ToString() + " - " + ticketInfo.Title.ToString();
+                Mymessage.Body = email.Trim();
+                //sends the email
+                MyServer.Send(Mymessage);
 
                 return UserDao.AddAnswerTicket(solver, senderTicket, ticket, email);
             }
