@@ -40,6 +40,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.response = new MaterialSkin.Controls.MaterialLabel();
+            this.Load += new System.EventHandler(this.QuestionPage_Load);
             this.SuspendLayout();
             // 
             // status
@@ -65,7 +66,7 @@
             this.profileBtn.Primary = true;
             this.profileBtn.Size = new System.Drawing.Size(121, 28);
             this.profileBtn.TabIndex = 37;
-            this.profileBtn.Text = "Profile";
+            this.profileBtn.Text = "Main Page";
             this.profileBtn.UseVisualStyleBackColor = true;
             this.profileBtn.Click += new System.EventHandler(this.ProfileBtn_Click);
             // 

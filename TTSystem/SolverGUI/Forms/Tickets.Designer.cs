@@ -38,6 +38,11 @@
             this.profileBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.questionsOpen = new MaterialSkin.Controls.MaterialRaisedButton();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.email = new MaterialSkin.Controls.MaterialLabel();
+            this.name = new MaterialSkin.Controls.MaterialLabel();
+            this.Load += new System.EventHandler(this.Tickets_Load);
             this.SuspendLayout();
             // 
             // logoutBtn
@@ -140,7 +145,7 @@
             this.profileBtn.Primary = true;
             this.profileBtn.Size = new System.Drawing.Size(121, 28);
             this.profileBtn.TabIndex = 47;
-            this.profileBtn.Text = "Profile";
+            this.profileBtn.Text = "Main Page";
             this.profileBtn.UseVisualStyleBackColor = true;
             this.profileBtn.Click += new System.EventHandler(this.ProfileBtn_Click);
             // 
@@ -170,11 +175,65 @@
             this.label4.Text = "You don\'t have any tickets with questions waiting for response";
             this.label4.Visible = false;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(30, 129);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(53, 20);
+            this.label5.TabIndex = 61;
+            this.label5.Text = "Email";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(30, 89);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(55, 20);
+            this.label6.TabIndex = 60;
+            this.label6.Text = "Name";
+            // 
+            // email
+            // 
+            this.email.AutoSize = true;
+            this.email.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.email.Depth = 0;
+            this.email.Font = new System.Drawing.Font("Roboto", 11F);
+            this.email.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.email.Location = new System.Drawing.Point(91, 129);
+            this.email.MouseState = MaterialSkin.MouseState.HOVER;
+            this.email.Name = "email";
+            this.email.Size = new System.Drawing.Size(46, 19);
+            this.email.TabIndex = 59;
+            this.email.Text = "email";
+            // 
+            // name
+            // 
+            this.name.AutoSize = true;
+            this.name.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.name.Depth = 0;
+            this.name.Font = new System.Drawing.Font("Roboto", 11F);
+            this.name.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.name.Location = new System.Drawing.Point(91, 90);
+            this.name.MouseState = MaterialSkin.MouseState.HOVER;
+            this.name.Name = "name";
+            this.name.Size = new System.Drawing.Size(46, 19);
+            this.name.TabIndex = 58;
+            this.name.Text = "name";
+            // 
             // Tickets
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.email);
+            this.Controls.Add(this.name);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.questionsOpen);
             this.Controls.Add(this.profileBtn);
@@ -204,5 +263,9 @@
         private MaterialSkin.Controls.MaterialRaisedButton profileBtn;
         private MaterialSkin.Controls.MaterialRaisedButton questionsOpen;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private MaterialSkin.Controls.MaterialLabel email;
+        private MaterialSkin.Controls.MaterialLabel name;
     }
 }

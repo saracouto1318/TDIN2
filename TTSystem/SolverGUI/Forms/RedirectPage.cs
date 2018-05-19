@@ -77,11 +77,20 @@ namespace SolverGUI
         {
             string department = this.departments.SelectedItem.ToString();
 
+            if (department == "Other")
+                department = this.textBox.Text;
+
             Hide();
             string redirect = message.Text;
             client.SolverProxy.RedirectTicket(ticket.ID, user.ID, redirect, department);
             new TicketPage(user, ticket.ID).ShowDialog();
             Show();
+        }
+
+        private void Departments_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.departments.SelectedItem.ToString() == "Other")
+                this.textBox.Visible = true;
         }
     }
 }

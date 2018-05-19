@@ -34,12 +34,15 @@ namespace GUI.Forms
         public void GetUserInfo()
         {
             this.user = client.Proxy.GetUser(idUser);
+            this.name.Text = this.user.Name;
+            this.email.Text = this.user.Email;
         }
 
         private void OpenBtn_Click(object sender, EventArgs e)
         {
             label2.Visible = false;
             label3.Visible = false;
+            label4.Visible = false;
 
             if (!CheckExist(TicketStatus.UNASSIGNED))
             {
@@ -58,6 +61,7 @@ namespace GUI.Forms
         {
             label1.Visible = false;
             label3.Visible = false;
+            label4.Visible = false;
 
             if (!CheckExist(TicketStatus.ASSIGNED))
             {
@@ -76,6 +80,7 @@ namespace GUI.Forms
         {
             label1.Visible = false;
             label2.Visible = false;
+            label4.Visible = false;
 
             if (!CheckExist(TicketStatus.CLOSED))
             {
@@ -134,25 +139,11 @@ namespace GUI.Forms
             }, 1, 0);
             panel.Controls.Add(new Label()
             {
-                Text = "Description",
-                TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.Black,
-                Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
-            }, 2, 0);
-            panel.Controls.Add(new Label()
-            {
-                Text = "Status",
-                TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.Black,
-                Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
-            }, 3, 0);
-            panel.Controls.Add(new Label()
-            {
                 Text = "Date",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
-            }, 4, 0);
+            }, 2, 0);
 
             int index = 0;
             foreach (Ticket t in tickets)
@@ -166,13 +157,12 @@ namespace GUI.Forms
                     Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
                 };
 
-                if (t.Status != TicketStatus.CLOSED)
-                    labelTmp.Click += (object sender, EventArgs e) =>
-                    {
-                        Hide();
-                        new TicketPage(user, t.ID).ShowDialog();
-                        Show();
-                    };
+                labelTmp.Click += (object sender, EventArgs e) =>
+                {
+                    Hide();
+                    new TicketPage(user, t.ID).ShowDialog();
+                    Show();
+                };
 
                 panel.Controls.Add(labelTmp, 0, index + 1);
 
@@ -183,50 +173,14 @@ namespace GUI.Forms
                     Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
                 };
 
-                if (t.Status != TicketStatus.CLOSED)
-                    labelTmp.Click += (object sender, EventArgs e) =>
-                    {
-                        Hide();
-                        new TicketPage(user, t.ID).ShowDialog();
-                        Show();
-                    };
+                labelTmp.Click += (object sender, EventArgs e) =>
+                {
+                    Hide();
+                    new TicketPage(user, t.ID).ShowDialog();
+                    Show();
+                };
 
                 panel.Controls.Add(labelTmp, 1, index + 1);
-
-                labelTmp = new Label()
-                {
-                    Text = t.Description,
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
-                };
-
-                if (t.Status != TicketStatus.CLOSED)
-                    labelTmp.Click += (object sender, EventArgs e) =>
-                    {
-                        Hide();
-                        new TicketPage(user, t.ID).ShowDialog();
-                        Show();
-                    };
-
-                panel.Controls.Add(labelTmp, 2, index + 1);
-
-                labelTmp = new Label()
-                {
-                    Text = t.Status.ToString(),
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    ForeColor = (t.Status != TicketStatus.CLOSED) ? Color.DarkGray : Color.DarkBlue,
-                    Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
-                };
-
-                if (t.Status != TicketStatus.CLOSED)
-                    labelTmp.Click += (object sender, EventArgs e) =>
-                    {
-                        Hide();
-                        new TicketPage(user, t.ID).ShowDialog();
-                        Show();
-                    };
-
-                panel.Controls.Add(labelTmp, 3, index + 1);
 
                 labelTmp = new Label()
                 {
@@ -235,15 +189,14 @@ namespace GUI.Forms
                     Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
                 };
 
-                if (t.Status != TicketStatus.CLOSED)
-                    labelTmp.Click += (object sender, EventArgs e) =>
-                    {
-                        Hide();
-                        new TicketPage(user, t.ID).ShowDialog();
-                        Show();
-                    };
+                labelTmp.Click += (object sender, EventArgs e) =>
+                {
+                    Hide();
+                    new TicketPage(user, t.ID).ShowDialog();
+                    Show();
+                };
 
-                panel.Controls.Add(labelTmp, 4, index + 1);
+                panel.Controls.Add(labelTmp, 2, index + 1);
 
                 index++;
             }
@@ -257,16 +210,14 @@ namespace GUI.Forms
                 BackColor = SystemColors.ButtonHighlight,
                 BackgroundImageLayout = ImageLayout.Center,
                 CellBorderStyle = TableLayoutPanelCellBorderStyle.Single,
-                ColumnCount = 5
+                ColumnCount = 3
             };
 
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 10F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 20F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 20F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 30F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 20F));
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
             panel.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (0));
-            panel.Location = new Point(100, 221);
+            panel.Location = new Point(130, 221);
             panel.Name = "tableLayoutPanel1";
             panel.Size = new Size(100, 40);
             panel.AutoSize = true;
@@ -307,6 +258,17 @@ namespace GUI.Forms
                 CreateTable(TicketStatus.WAITING);
                 panel.Visible = true;
             }
+        }
+
+        private void Tickets_Load(object sender, EventArgs e)
+        {
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+
+            // no larger than screen size
+            MaximumSize = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
     }
 }

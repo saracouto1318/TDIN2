@@ -40,6 +40,7 @@
             this.redirectBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.departments = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.textBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // message
@@ -157,6 +158,7 @@
             this.departments.Name = "departments";
             this.departments.Size = new System.Drawing.Size(121, 21);
             this.departments.TabIndex = 39;
+            this.departments.SelectedIndexChanged += new System.EventHandler(this.Departments_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -169,11 +171,21 @@
             this.label1.TabIndex = 40;
             this.label1.Text = "Department";
             // 
+            // textBox
+            // 
+            this.textBox.Location = new System.Drawing.Point(328, 192);
+            this.textBox.Name = "textBox";
+            this.textBox.Size = new System.Drawing.Size(153, 20);
+            this.textBox.TabIndex = 41;
+            this.textBox.Text = "Other Department";
+            this.textBox.Visible = false;
+            // 
             // RedirectPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 544);
+            this.Controls.Add(this.textBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.departments);
             this.Controls.Add(this.redirectBtn);
@@ -205,5 +217,6 @@
         private MaterialSkin.Controls.MaterialRaisedButton redirectBtn;
         private System.Windows.Forms.ComboBox departments;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBox;
     }
 }

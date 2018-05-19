@@ -40,6 +40,8 @@ namespace GUI.Forms
         public void GetUserInfo()
         {
             this.user = client.Proxy.GetUser(idUser);
+            this.name.Text = this.user.Name;
+            this.email.Text = this.user.Email;
         }
 
         private bool CheckExist(bool value)
@@ -68,7 +70,7 @@ namespace GUI.Forms
             }, 0, 0);
             panel.Controls.Add(new Label()
             {
-                Text = "Question",
+                Text = "Ticket ID",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
@@ -76,13 +78,6 @@ namespace GUI.Forms
             panel.Controls.Add(new Label()
             {
                 Text = "Date",
-                TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.Black,
-                Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
-            }, 1, 0);
-            panel.Controls.Add(new Label()
-            {
-                Text = "Status",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
@@ -111,7 +106,7 @@ namespace GUI.Forms
 
                 labelTmp = new Label()
                 {
-                    Text = q.Question,
+                    Text = q.TicketID.ToString(),
                     TextAlign = ContentAlignment.MiddleCenter,
                     Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
                 };
@@ -141,21 +136,6 @@ namespace GUI.Forms
 
                 panel.Controls.Add(labelTmp, 2, index + 1);
 
-                labelTmp = new Label()
-                {
-                    Text = (q.Response == null) ? "Open" : "Closed",
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    ForeColor = (q.Response == null) ? Color.DarkGray : Color.DarkBlue,
-                    Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
-                };
-
-                labelTmp.Click += (object sender, EventArgs e) =>
-                {
-                    Hide();
-                    new QuestionPage(user.ID, q.ID).ShowDialog();
-                    Show();
-                };
-
                 index++;
             }
         }
@@ -168,15 +148,14 @@ namespace GUI.Forms
                 BackColor = SystemColors.ButtonHighlight,
                 BackgroundImageLayout = ImageLayout.Center,
                 CellBorderStyle = TableLayoutPanelCellBorderStyle.Single,
-                ColumnCount = 4
+                ColumnCount = 3
             };
 
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
             panel.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (0));
-            panel.Location = new Point(150, 221);
+            panel.Location = new Point(120, 221);
             panel.Name = "tableLayoutPanel1";
             panel.Size = new Size(100, 40);
             panel.AutoSize = true;
@@ -230,6 +209,17 @@ namespace GUI.Forms
             Hide();
             new PersonalPage(user.ID).ShowDialog();
             Show();
+        }
+
+        private void Questions_Load(object sender, EventArgs e)
+        {
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+
+            // no larger than screen size
+            MaximumSize = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
     }
 }

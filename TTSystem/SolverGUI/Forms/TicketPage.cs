@@ -96,5 +96,16 @@ namespace SolverGUI
             });
             //MessageBox.Show("Ticket " + ticketInfo.ID.ToString() + " was assigned to you");
         }
+
+        private void TicketPage_Load(object sender, EventArgs e)
+        {
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+
+            // no larger than screen size
+            MaximumSize = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        }
     }
 }

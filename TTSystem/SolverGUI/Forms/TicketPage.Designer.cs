@@ -41,6 +41,7 @@
             this.profileBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.assignBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.status = new MaterialSkin.Controls.MaterialLabel();
+            this.Load += new System.EventHandler(this.TicketPage_Load);
             this.SuspendLayout();
             // 
             // label2
@@ -177,7 +178,7 @@
             this.profileBtn.Primary = true;
             this.profileBtn.Size = new System.Drawing.Size(121, 28);
             this.profileBtn.TabIndex = 25;
-            this.profileBtn.Text = "Profile";
+            this.profileBtn.Text = "Main Page";
             this.profileBtn.UseVisualStyleBackColor = true;
             this.profileBtn.Click += new System.EventHandler(this.ProfileBtn_Click);
             // 
