@@ -20,8 +20,8 @@ public partial class _ProfilePage : Page
        int id = Int32.Parse(idString);
 
         user = proxy.GetUser(id);
-        divName.InnerHtml = user.Name;
-        divEmail.InnerHtml = user.Email;
+        divName.InnerHtml = "<label class='labelProfile'>Name: </label>" + user.Name;
+        divEmail.InnerHtml = "<label class='labelProfile'>Email: </label>" + user.Email;
 
         loginUsername.Value = user.Name;
         loginEmail.Value = user.Email;

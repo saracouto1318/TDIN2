@@ -1,4 +1,6 @@
-$( document ).ready(function() {
+$(document).ready(function () {
+    $('#example').DataTable();
+
     $('#editProfile').hide();
     $('#myTickets').show();
     $('#newTickets').hide();

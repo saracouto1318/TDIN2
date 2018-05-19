@@ -11,7 +11,7 @@ body {
     height: auto !important;
     /* This line and the next line are not necessary unless you need IE6 support */
     height: 100%;
-    margin: 0 auto -50px;
+    margin: 0 auto -20px;
     margin-top: 80px;
     /* the bottom margin is the negative value of the footer's height */
 }
@@ -174,20 +174,20 @@ body {
     text-align: center;
     margin-top: 20px;
   }
-  
-  .profile-usertitle-name {
-    color: #5a7391;
+
+.profile-usertitle-name {
+    color: #5b9bd1;
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 7px;
-  }
-  
-  .profile-content h2{
-      font-size: 25px;
-      color: #5a7391;
+}
+
+.profile-content h2 {
+    font-size: 25px;
+    color: #5b9bd1;
     font-weight: 600;
     margin-bottom: 7px;
-  }
+}
   
   .profile-content h3{
       font-size: 20px;
@@ -370,3 +370,48 @@ body {
         line-height: 40px;
         font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
+
+.dataTables_wrapper .dataTables_info {
+    width: 190px;
+    margin-left: 20px;
+}
+
+.dataTables_wrapper .dataTables_length{
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none !important;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 2px;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 1px solid #111;
+}
+
+table.dataTable, table.dataTable th, table.dataTable td {
+    box-sizing: content-box;
+}
+
+table.dataTable {
+    width: 100%;
+    margin: 0 auto;
+    clear: both;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table-bordered {
+    border: 1px solid #ddd;
+}
+
+label.labelProfile {
+    color: #5a7391;
+    font-weight: bold;
+}

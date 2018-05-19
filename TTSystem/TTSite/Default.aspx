@@ -21,9 +21,9 @@
         <!-- Header -->
             <header class="masthead d-flex">
                 <div class="container text-center my-auto">
-                <h1 class="mb-1">TDIN</h1>
+                <h1 class="mb-1">IT Trouble Tickets</h1>
                 <h3 class="mb-5">
-                    <em>Tecnologias de Distribuição e Integração</em>
+                    <em>Submit here your trouble tickets</em>
                 </h3>
                     <form runat="server" novalidate="novalidate">
                 <asp:Button ID="loginDiv" runat="server" Class="btn btn-primary btn-xl js-scroll-trigger" Text="Sign In" OnClick="BtnRedirect_Click"/>

@@ -17,7 +17,7 @@
             <link href="~/Content/css/authentication.css" rel="stylesheet" />
     </head>
     <body id="page-top">
-         <form runat="server" novalidate="novalidate">
+         <form runat="server">
             <div id="loginBody">
                 <div id="login" class="modal-dialog modal-login">
                     <div class="modal-content login">
@@ -27,18 +27,18 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <i class="fa fa-user"></i>
-                                <input class="form-control" name="email" placeholder="Email" required="required" type="email" />
+                                <input class="form-control" name="email" placeholder="Email" type="email" />
                             </div>
                             <div class="form-group">
                                 <i class="fa fa-lock"></i>
-                                <input class="form-control" name="password" placeholder="Password" required="required" type="password" />
+                                <input class="form-control" name="password" placeholder="Password" type="password" />
                             </div>
+                            <p id="loginError" runat="server" class="error">
+                            This user isn&#39;t registered</p>
                             <div class="form-group">
                                 <asp:Button ID="Button1" runat="server" Class="btn btn-primary btn-block btn-lg" OnClick="BtnLogin_Click" Text="Login" />
                             </div>
                         </div>
-                        <p id="loginError" runat="server" class="error">
-                            This user isn&#39;t registered</p>
                     </div>
                 </div>
                 <div id="register" class="modal-dialog modal-login">
@@ -49,22 +49,22 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <i class="fa fa-user"></i>
-                                <input class="form-control" name="name" placeholder="Name" required="required" type="text" />
+                                <input class="form-control" name="name" placeholder="Name" type="text"/>
                             </div>
                             <div class="form-group">
                                 <i class="fa fa-envelope"></i>
-                                <input class="form-control" name="emailRegister" placeholder="Email" required="required" type="email" />
+                                <input class="form-control" name="emailRegister" placeholder="Email" type="email"/>
                             </div>
                             <div class="form-group">
                                 <i class="fa fa-lock"></i>
-                                <input class="form-control" name="passwordRegister" placeholder="Password" required="required" type="password" />
+                                <input class="form-control" name="passwordRegister" placeholder="Password" type="password"/>
                             </div>
+                            <p id="registerError" runat="server" class="error">
+                            This user already exists</p>
                             <div class="form-group">
                                 <asp:Button ID="Button2" runat="server" Class="btn btn-primary btn-block btn-lg" OnClick="BtnRegister_Click" Text="Register" />
                             </div>
                         </div>
-                        <p id="registerError" runat="server" class="error">
-                            This user already exists</p>
                     </div>
                 </div>
             </div>

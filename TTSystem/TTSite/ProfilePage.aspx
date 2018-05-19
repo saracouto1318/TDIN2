@@ -19,6 +19,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <link href="~/Content/css/profile.css" rel="stylesheet"/>
+        <link href="~/Content/css/table.css" rel="stylesheet"/>
         <script type="text/javascript">
        function Redirect(id, ticket)
        {
@@ -33,7 +34,8 @@
         <div class="modal-dialog modal-login">
             <div class="modal-content">
                 <div class='profile-usertitle'>
-                    <div id="divName" runat="server" class='profile-usertitle-name'>Name</div>
+                    <div id="divName" runat="server" class='profile-usertitle-name'>
+                        <label>Name:</label>Name</div>
                     <div id="divEmail" runat="server" class='profile-usertitle-email'>Email</div>
                 </div>
                 <div class='profile-userbuttons'>
@@ -92,7 +94,7 @@
             </div>
             <div class="table-responsive">
                 <% if(tickets.Length > 0) { %>
-                <table class="table">
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr >
                             <th>#</th>
@@ -142,7 +144,10 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+        
         <script src="Content/js/profile.js"></script>
+         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     </body>
 </html>

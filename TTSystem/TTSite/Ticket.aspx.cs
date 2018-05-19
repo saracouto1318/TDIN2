@@ -25,10 +25,10 @@ public partial class _Ticket : Page
         user = proxy.GetUser(id);
         ticket = proxy.GetTicket(idTicket);
 
-        title.InnerText = ticket.Title;
-        date.InnerText = ticket.Date.ToString();
-        description.InnerText = ticket.Description;
-        status.InnerText = ticket.Status.ToString();
+        title.InnerText = "<label class='labelProfile'>Ticket Title: </label>" + ticket.Title;
+        date.InnerText = "<label class='labelProfile'>Ticket Date: </label>" + ticket.Date.ToString();
+        description.InnerText = "<label class='labelProfile'>Ticket Description: </label>" + ticket.Description;
+        status.InnerText = "<label class='labelProfile'>Ticket Status: </label>" + ticket.Status.ToString();
     }
 
     protected void Logout_Click(object sender, EventArgs e)
