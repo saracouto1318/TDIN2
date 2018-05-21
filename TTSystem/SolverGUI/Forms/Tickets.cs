@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
@@ -14,9 +15,11 @@ namespace GUI.Forms
         public int idUser;
         public User user;
         private TableLayoutPanel panel = new TableLayoutPanel();
+
         public Tickets(int idUser)
         {
             client = Client.Instance;
+            client.onNewTT += OnNewTT;
 
             InitializeComponent();
 
@@ -108,6 +111,25 @@ namespace GUI.Forms
             return false;
         }
 
+        private void OnNewTT(int idTicket)
+        {
+            Task t = new Task(() => {
+                MethodInvoker methodInvokerDelegate = delegate ()
+                {
+                    CreateTable(TicketStatus.UNASSIGNED);
+                };
+
+                this.Invoke(methodInvokerDelegate);
+            });
+            SendWithDelay(5000, t);
+        }
+
+        private async Task SendWithDelay(int delay, Task task)
+        {
+            await Task.Delay(delay);
+            task.Start();
+        }
+
         private void CreateTable(TicketStatus status)
         {
             Ticket[] tickets;
@@ -159,6 +181,7 @@ namespace GUI.Forms
 
                 labelTmp.Click += (object sender, EventArgs e) =>
                 {
+                    OnHide();
                     Hide();
                     new TicketPage(user, t.ID).ShowDialog();
                     Show();
@@ -175,6 +198,7 @@ namespace GUI.Forms
 
                 labelTmp.Click += (object sender, EventArgs e) =>
                 {
+                    OnHide();
                     Hide();
                     new TicketPage(user, t.ID).ShowDialog();
                     Show();
@@ -191,6 +215,7 @@ namespace GUI.Forms
 
                 labelTmp.Click += (object sender, EventArgs e) =>
                 {
+                    OnHide();
                     Hide();
                     new TicketPage(user, t.ID).ShowDialog();
                     Show();
@@ -225,10 +250,16 @@ namespace GUI.Forms
             Controls.Add(panel);
         }
 
+        private void OnHide()
+        {
+            client.onNewTT -= OnNewTT;
+        }
+
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
             client.SolverProxy.Unsubscribe();
             client.Proxy.Logout(user.ID);
+            OnHide();
             Hide();
             new MainPage().ShowDialog();
             Show();
@@ -236,6 +267,7 @@ namespace GUI.Forms
 
         private void ProfileBtn_Click(object sender, EventArgs e)
         {
+            OnHide();
             Hide();
             new PersonalPage(this.user.ID).ShowDialog();
             Show();

@@ -111,6 +111,7 @@
     <Compile Include="Forms\TicketPage.Designer.cs">
       <DependentUpon>TicketPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="TTList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

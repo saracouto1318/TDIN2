@@ -7,9 +7,12 @@ using System.ServiceModel;
 using TTService;
 using GUI.TTSvc;
 using GUI.TTSolver;
+using System.Windows.Forms;
 
 namespace SolverGUI
 {
+    public delegate void NewTTicket(int idTicket);
+
     public class Client : ITTSolverSvcCallback
     {
         private static Client instance;
@@ -26,6 +29,8 @@ namespace SolverGUI
             }
         }
 
+        public NewTTicket onNewTT;
+
         public TTSolverSvcClient SolverProxy { get; }
 
         public TTServClient Proxy { get; }
@@ -39,14 +44,26 @@ namespace SolverGUI
         
         public void NewTT(int idTicket)
         {
-            // TODO: Add tt to list
-            Console.WriteLine("Hello");
+            if (onNewTT != null)
+                onNewTT(idTicket);
+            else
+                ShowMessageBox();
+        }
+
+        private void ShowMessageBox()
+        {
+            Task.Run(() =>
+            {
+                String message = "New trouble ticket arrived";
+                String caption = "New trouble ticket";
+                MessageBoxButtons buttons = MessageBoxButtons.OK;
+                DialogResult result = MessageBox.Show(message, caption, buttons);
+            });
         }
 
         public void AssignedTT(int idTicket, int idSolver)
         {
             // TODO: Remove tt from list
-            Console.WriteLine("Hello");
         }
     }
 }

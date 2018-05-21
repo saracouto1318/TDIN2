@@ -44,12 +44,30 @@ namespace TTService
         {
             bool success = UserDao.AddTicket(idUser, title, description);
             List<ITTUpdateCallback> subscribers = TTSolverSvc.Subscribers;
+            ITTUpdateCallback rmSub = null;
+
             if (success && subscribers != null)
             {
                 foreach(ITTUpdateCallback sub in subscribers)
                 {
-                    // TODO send ticket id
-                    sub.NewTT(0);
+                    if(rmSub != null)
+                    {
+                        subscribers.Remove(rmSub);
+                    }
+
+                    try
+                    {
+                        // TODO send ticket id
+                        sub.NewTT(0);
+                    } catch(Exception)
+                    {
+                        rmSub = sub;
+                    }
+                }
+
+                if (rmSub != null)
+                {
+                    subscribers.Remove(rmSub);
                 }
             }
             return success;
