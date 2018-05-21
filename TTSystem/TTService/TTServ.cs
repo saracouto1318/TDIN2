@@ -25,7 +25,6 @@ namespace TTService
             List<Ticket> tickets = GetTickets(userInfo);
             userInfo.Tickets = tickets;
             return userInfo;
-            //}
         }
         public User GetUserByEmail(string email)
         {
@@ -33,7 +32,6 @@ namespace TTService
             List<Ticket> tickets = GetTickets(userInfo);
             userInfo.Tickets = tickets;
             return userInfo;
-            //}
         }
         public bool UpdateUser(string name, string email, string password, int idUser)
         {
@@ -44,32 +42,25 @@ namespace TTService
         {
             bool success = UserDao.AddTicket(idUser, title, description);
             Ticket tticket = UserDao.GetUserLastTicket(idUser);
-            List<ITTUpdateCallback> subscribers = TTSolverSvc.Subscribers;
-            ITTUpdateCallback rmSub = null;
+            Dictionary<int, ITTUpdateCallback> subscribers = TTSolverSvc.Subscribers;
+            List<int> rmSubs = new List<int>();
 
             if (success && subscribers != null)
             {
-                foreach(ITTUpdateCallback sub in subscribers)
+                foreach (KeyValuePair<int, ITTUpdateCallback> sub in subscribers)
                 {
-                    if(rmSub != null)
-                    {
-                        subscribers.Remove(rmSub);
-                    }
-
                     try
                     {
-                        sub.NewTT(tticket);
-                    } catch(Exception)
+                        sub.Value.NewTT(tticket);
+                    }
+                    catch (Exception)
                     {
-                        rmSub = sub;
+                        rmSubs.Add(sub.Key);
                     }
                 }
-
-                if (rmSub != null)
-                {
-                    subscribers.Remove(rmSub);
-                }
             }
+
+            TTSolverSvc.Unsubscribe(rmSubs);
             return success;
         }
         public List<Ticket> GetTickets(User user)
@@ -139,11 +130,28 @@ namespace TTService
         }
         public bool AnswerQuestion(SecondaryQuestion question, string department, string responseMessage)
         {
-            int id = GetDepartmentID(department);
-            question.Department = id;
+            question.Department = GetDepartmentID(department);
             question.Response = responseMessage;
-            if(UserDao.UpdateQuestion(question))
-                return UserDao.AssignTicket(question.TicketID, question.SenderID);
+            // Update question in the database
+            if (UserDao.UpdateQuestion(question))
+            {
+                // Get callback interface from subscribed solver 
+                Dictionary<int, ITTUpdateCallback> subs = TTSolverSvc.Subscribers;
+                if (subs.TryGetValue(question.SenderID, out ITTUpdateCallback callback))
+                {
+                    try
+                    {
+                        // Notify answered ticket
+                        callback.AnsweredTicket(question);
+                    }
+                    catch (Exception)
+                    {
+                        // Remove solver from subscribed users
+                        TTSolverSvc.StaticUnsubscribe(question.SenderID);
+                    }
+                }
+                return true;
+            }
             return false;
         }
         #endregion

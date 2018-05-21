@@ -39,7 +39,7 @@ namespace SolverGUI
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            ClientInstance.SolverProxy.Unsubscribe();
+            ClientInstance.UnitializeSolverSession();
             ClientInstance.Proxy.Logout(ClientInstance.Solver.ID); 
             new MainPage().ShowDialog();
             Show();

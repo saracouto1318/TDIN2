@@ -43,15 +43,15 @@ namespace SolverGUI
             TroubleTickets = new TTList();
         }
 
-        private void UnitializeSolverSession()
+        public void UnitializeSolverSession()
         {
-            SolverProxy.Unsubscribe();
+            SolverProxy.Unsubscribe(Solver.ID);
         }
 
-        private void InitializeSolverSession()
+        public void InitializeSolverSession()
         {
             TroubleTickets.UpdateTT(SolverProxy, Solver);
-            SolverProxy.Subscribe();
+            SolverProxy.Subscribe(Solver.ID);
         }
 
         public bool LoginUser(
@@ -110,6 +110,10 @@ namespace SolverGUI
                 TroubleTickets.OnOtherAssignedTroubleTicket?.Invoke(ticket);
                 ShowMessageBox("The trouble ticket " + ticket.Title + " has been assigned.", "Assigned trouble ticket");
             }
+        }
+
+        public void AnsweredTicket(SecondaryQuestion secondaryQuestion)
+        {
         }
     }
 }

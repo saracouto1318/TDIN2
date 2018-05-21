@@ -15,7 +15,9 @@
   </xs:element>
   <xs:element name="Subscribe">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSolver" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SubscribeResponse">
@@ -25,7 +27,9 @@
   </xs:element>
   <xs:element name="Unsubscribe">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSolver" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UnsubscribeResponse">
@@ -194,6 +198,13 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="ticket" nillable="true" type="q10:Ticket" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AnsweredTicket">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="secondaryQuestion" nillable="true" type="q11:SecondaryQuestion" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

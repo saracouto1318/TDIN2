@@ -22,7 +22,7 @@ namespace SolverGUI
         {
             if(Client.Instance.SolverProxy != null)
             {
-                Client.Instance.SolverProxy.Unsubscribe();
+                Client.Instance.UnitializeSolverSession();
             }
         }
     }

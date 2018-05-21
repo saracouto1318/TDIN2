@@ -22,16 +22,16 @@ namespace GUI.TTSolverSvc {
         System.Threading.Tasks.Task<string> HelloAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTSolverSvc/Subscribe", ReplyAction="http://tempuri.org/ITTSolverSvc/SubscribeResponse")]
-        void Subscribe();
+        void Subscribe(int idSolver);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTSolverSvc/Subscribe", ReplyAction="http://tempuri.org/ITTSolverSvc/SubscribeResponse")]
-        System.Threading.Tasks.Task SubscribeAsync();
+        System.Threading.Tasks.Task SubscribeAsync(int idSolver);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTSolverSvc/Unsubscribe", ReplyAction="http://tempuri.org/ITTSolverSvc/UnsubscribeResponse")]
-        void Unsubscribe();
+        void Unsubscribe(int idSolver);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTSolverSvc/Unsubscribe", ReplyAction="http://tempuri.org/ITTSolverSvc/UnsubscribeResponse")]
-        System.Threading.Tasks.Task UnsubscribeAsync();
+        System.Threading.Tasks.Task UnsubscribeAsync(int idSolver);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTSolverSvc/RegisterSolver", ReplyAction="http://tempuri.org/ITTSolverSvc/RegisterSolverResponse")]
         bool RegisterSolver(string name, string email, string password);
@@ -102,6 +102,9 @@ namespace GUI.TTSolverSvc {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ITTSolverSvc/AssignedTT")]
         void AssignedTT(TTService.Ticket ticket);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ITTSolverSvc/AnsweredTicket")]
+        void AnsweredTicket(TTService.SecondaryQuestion secondaryQuestion);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -140,20 +143,20 @@ namespace GUI.TTSolverSvc {
             return base.Channel.HelloAsync();
         }
         
-        public void Subscribe() {
-            base.Channel.Subscribe();
+        public void Subscribe(int idSolver) {
+            base.Channel.Subscribe(idSolver);
         }
         
-        public System.Threading.Tasks.Task SubscribeAsync() {
-            return base.Channel.SubscribeAsync();
+        public System.Threading.Tasks.Task SubscribeAsync(int idSolver) {
+            return base.Channel.SubscribeAsync(idSolver);
         }
         
-        public void Unsubscribe() {
-            base.Channel.Unsubscribe();
+        public void Unsubscribe(int idSolver) {
+            base.Channel.Unsubscribe(idSolver);
         }
         
-        public System.Threading.Tasks.Task UnsubscribeAsync() {
-            return base.Channel.UnsubscribeAsync();
+        public System.Threading.Tasks.Task UnsubscribeAsync(int idSolver) {
+            return base.Channel.UnsubscribeAsync(idSolver);
         }
         
         public bool RegisterSolver(string name, string email, string password) {

@@ -15,10 +15,10 @@ namespace TTService
         String Hello();
 
         [OperationContract]
-        void Subscribe();
+        void Subscribe(int idSolver);
 
         [OperationContract]
-        void Unsubscribe();
+        void Unsubscribe(int idSolver);
 
         [OperationContract]
         bool RegisterSolver(string name, string email, string password);
@@ -58,5 +58,8 @@ namespace TTService
 
         [OperationContract(IsOneWay = true)]
         void AssignedTT(Ticket ticket);
+
+        [OperationContract(IsOneWay = true)]
+        void AnsweredTicket(SecondaryQuestion secondaryQuestion);
     }
 }

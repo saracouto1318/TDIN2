@@ -14,7 +14,7 @@ namespace TTService
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class TTSolverSvc : ITTSolverSvc
     {
-        public static List<ITTUpdateCallback> Subscribers = new List<ITTUpdateCallback>();
+        public static Dictionary<int, ITTUpdateCallback> Subscribers = new Dictionary<int, ITTUpdateCallback>();
 
         #region SolverGUI
         public String Hello()
@@ -22,18 +22,25 @@ namespace TTService
             return "Hello solver";
         }
 
-        public void Subscribe()
+        public void Subscribe(int idSolver)
         {
             ITTUpdateCallback callback = OperationContext.Current.GetCallbackChannel<ITTUpdateCallback>();
-            if (!Subscribers.Contains(callback))
+            if (!Subscribers.ContainsKey(idSolver))
             {
-                Subscribers.Add(callback);
+                Subscribers.Add(idSolver, callback);
             }
         }
-        public void Unsubscribe()
+        public static void StaticUnsubscribe(int idSolver)
         {
-            ITTUpdateCallback callback = OperationContext.Current.GetCallbackChannel<ITTUpdateCallback>();
-            Subscribers.Remove(callback);
+            Subscribers.Remove(idSolver);
+        }
+        public void Unsubscribe(int idSolver)
+        {
+            StaticUnsubscribe(idSolver);
+        }
+        public static void Unsubscribe(List<int> idSolvers)
+        {
+            idSolvers.ForEach(StaticUnsubscribe);
         }
         public bool RegisterSolver(string name, string email, string password)
         {
@@ -69,35 +76,30 @@ namespace TTService
         public bool AssignTicket(int idTicket, int idSolver)
         {
             bool success = UserDao.AssignTicket(idTicket, idSolver);
-            List<ITTUpdateCallback> subscribers = Subscribers;
-            ITTUpdateCallback rmSub = null;
+            Dictionary<int, ITTUpdateCallback> subscribers = Subscribers;
+            List<int> rmSubs = new List<int>();
 
             Ticket tticket = UserDao.GetTicket(idTicket);
 
             if (success && subscribers != null)
             {
-                foreach (ITTUpdateCallback sub in subscribers)
+                foreach (KeyValuePair<int, ITTUpdateCallback> sub in subscribers)
                 {
-                    if (rmSub != null)
+                    if (idSolver == sub.Key)
                     {
-                        subscribers.Remove(rmSub);
+                        try
+                        {
+                            sub.Value.AssignedTT(tticket);
+                        }
+                        catch (Exception)
+                        {
+                            rmSubs.Add(sub.Key);
+                        }
                     }
-
-                    try
-                    {
-                        sub.AssignedTT(tticket);
-                    }
-                    catch (Exception)
-                    {
-                        rmSub = sub;
-                    }
-                }
-
-                if (rmSub != null)
-                {
-                    subscribers.Remove(rmSub);
                 }
             }
+
+            Unsubscribe(rmSubs);
             return success;
         }
         public bool SolveTicket(int ticket)
