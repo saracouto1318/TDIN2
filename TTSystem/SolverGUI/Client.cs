@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 using System.ServiceModel;
 using TTService;
 using GUI.TTSvc;
-using GUI.TTSolver;
+using GUI.TTSolverSvc;
 using System.Windows.Forms;
 
 namespace SolverGUI
 {
-    public delegate void NewTTicket(int idTicket);
-
     public class Client : ITTSolverSvcCallback
     {
         private static Client instance;
@@ -28,42 +26,90 @@ namespace SolverGUI
                 return instance;
             }
         }
-
-        public NewTTicket onNewTT;
-
+        
         public TTSolverSvcClient SolverProxy { get; }
 
         public TTServClient Proxy { get; }
 
+        public User Solver { get; set; }
+
+        public TTList TroubleTickets { get; }
+
+
         private Client()
         {
             SolverProxy = new TTSolverSvcClient(new InstanceContext(this));
-            SolverProxy.Subscribe();
             Proxy = new TTServClient();
-        }
-        
-        public void NewTT(int idTicket)
-        {
-            if (onNewTT != null)
-                onNewTT(idTicket);
-            else
-                ShowMessageBox();
+            TroubleTickets = new TTList();
         }
 
-        private void ShowMessageBox()
+        private void UnitializeSolverSession()
+        {
+            SolverProxy.Unsubscribe();
+        }
+
+        private void InitializeSolverSession()
+        {
+            TroubleTickets.UpdateTT(SolverProxy, Solver);
+            SolverProxy.Subscribe();
+        }
+
+        public bool LoginUser(
+            string email, 
+            string password)
+        {
+            if (SolverProxy.LoginSolver(email, password))
+            {
+                Solver = Proxy.GetUserByEmail(email);
+                InitializeSolverSession();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool RegisterSolver(
+            string email, 
+            string name,
+            string password)
+        {
+            if (SolverProxy.RegisterSolver(name, email, password))
+            {
+                SolverProxy.LoginSolver(email, password);
+                User user = Proxy.GetUserByEmail(email);
+                InitializeSolverSession();
+                return true;
+            }
+
+            return false;
+        }
+
+        private void ShowMessageBox(string message, string caption)
         {
             Task.Run(() =>
             {
-                String message = "New trouble ticket arrived";
-                String caption = "New trouble ticket";
                 MessageBoxButtons buttons = MessageBoxButtons.OK;
                 DialogResult result = MessageBox.Show(message, caption, buttons);
             });
         }
-
-        public void AssignedTT(int idTicket, int idSolver)
+        
+        public void NewTT(Ticket ticket)
         {
-            // TODO: Remove tt from list
+            TroubleTickets.OnNewTroubleTicket?.Invoke(ticket);
+            ShowMessageBox("New trouble ticket arrived", "New trouble ticket");
+        }
+
+        public void AssignedTT(Ticket ticket)
+        {
+            if (ticket.IDSolver == Solver.ID)
+            {
+                TroubleTickets.OnMyAssignedTroubleTicket?.Invoke(ticket);
+            }
+            else
+            {
+                TroubleTickets.OnOtherAssignedTroubleTicket?.Invoke(ticket);
+                ShowMessageBox("The trouble ticket " + ticket.Title + " has been assigned.", "Assigned trouble ticket");
+            }
         }
     }
 }

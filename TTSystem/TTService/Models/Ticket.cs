@@ -19,6 +19,8 @@ namespace TTService
         public string Description { get; set; }
         public TicketStatus Status { get; set; }
         public DateTime Date { get; set; }
+        public int IDSolver { get; set; }
+
         public override bool Equals(Object obj)
         {
             if (!(obj is Ticket ticketObj))

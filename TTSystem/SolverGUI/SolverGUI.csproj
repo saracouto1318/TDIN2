@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
-    <Compile Include="Connected Services\TTSolver\Reference.cs">
+    <Compile Include="Connected Services\TTSolverSvc\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -115,16 +115,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Connected Services\TTSolver\Service.xsd">
+    <None Include="Connected Services\TTSolverSvc\Service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\TTSolver\Service1.xsd">
+    <None Include="Connected Services\TTSolverSvc\Service1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\TTSolver\Service2.xsd">
+    <None Include="Connected Services\TTSolverSvc\Service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\TTSolver\TTSolverSvc.wsdl" />
+    <None Include="Connected Services\TTSolverSvc\TTSolverSvc.wsdl" />
     <None Include="Connected Services\TTSvc\ServiceTT.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -179,7 +179,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\TTSolver\" />
+    <WCFMetadataStorage Include="Connected Services\TTSolverSvc\" />
     <WCFMetadataStorage Include="Connected Services\TTSvc\" />
   </ItemGroup>
   <ItemGroup>
@@ -198,16 +198,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\TTSolver\Service.disco" />
+    <None Include="Connected Services\TTSolverSvc\Service.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\TTSolver\configuration91.svcinfo" />
+    <None Include="Connected Services\TTSolverSvc\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\TTSolver\configuration.svcinfo" />
+    <None Include="Connected Services\TTSolverSvc\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\TTSolver\Reference.svcmap">
+    <None Include="Connected Services\TTSolverSvc\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

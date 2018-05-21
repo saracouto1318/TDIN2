@@ -54,9 +54,9 @@ namespace TTService
     public interface ITTUpdateCallback
     {
         [OperationContract(IsOneWay = true)]
-        void NewTT(int idTicket);
+        void NewTT(Ticket ticket);
 
         [OperationContract(IsOneWay = true)]
-        void AssignedTT(int idTicket, int idSolver);
+        void AssignedTT(Ticket ticket);
     }
 }

@@ -160,7 +160,7 @@
             this.questionsOpen.TabIndex = 48;
             this.questionsOpen.Text = "My Tickets With Questions Open";
             this.questionsOpen.UseVisualStyleBackColor = true;
-            this.questionsOpen.Click += new System.EventHandler(this.questionsOpen_Click);
+            this.questionsOpen.Click += new System.EventHandler(this.QuestionsOpen_Click);
             // 
             // label4
             // 

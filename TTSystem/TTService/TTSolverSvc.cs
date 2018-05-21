@@ -69,8 +69,10 @@ namespace TTService
         public bool AssignTicket(int idTicket, int idSolver)
         {
             bool success = UserDao.AssignTicket(idTicket, idSolver);
-            List<ITTUpdateCallback> subscribers = TTSolverSvc.Subscribers;
+            List<ITTUpdateCallback> subscribers = Subscribers;
             ITTUpdateCallback rmSub = null;
+
+            Ticket tticket = UserDao.GetTicket(idTicket);
 
             if (success && subscribers != null)
             {
@@ -83,7 +85,7 @@ namespace TTService
 
                     try
                     {
-                        sub.AssignedTT(idTicket, idSolver);
+                        sub.AssignedTT(tticket);
                     }
                     catch (Exception)
                     {

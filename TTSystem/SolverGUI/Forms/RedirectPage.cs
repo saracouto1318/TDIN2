@@ -15,17 +15,16 @@ namespace SolverGUI
 {
     public partial class RedirectPage : MaterialForm
     {
-        public Client client;
-        public User user;
-        public Ticket ticket;
-        public RedirectPage(User user, Ticket ticket)
+        public Client ClientInstance;
+        public Ticket TTicket;
+
+        public RedirectPage(Ticket ticket)
         {
-            client = Client.Instance;
+            ClientInstance = Client.Instance;
             
             InitializeComponent();
-
-            this.user = user;
-            this.ticket = ticket;
+            
+            this.TTicket = ticket;
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
@@ -38,13 +37,13 @@ namespace SolverGUI
 
         public void GetTicketInfo()
         {
-            ticketLabel.Text = "Ticket #" + this.ticket.ID.ToString();
-            title.Text = this.ticket.Title;
+            ticketLabel.Text = "Ticket #" + this.TTicket.ID.ToString();
+            title.Text = this.TTicket.Title;
         }
 
         public void GetDepartments()
         {
-            String[] departments = client.Proxy.GetDepartments();
+            String[] departments = ClientInstance.Proxy.GetDepartments();
 
             foreach (string department in departments)
                 this.departments.Items.Add(department);
@@ -53,22 +52,22 @@ namespace SolverGUI
         private void TicketBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            new TicketPage(user, ticket.ID).ShowDialog();
+            new TicketPage(TTicket.ID).ShowDialog();
             Show();
         }
 
         private void ProfileBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            new PersonalPage(user.ID).ShowDialog();
+            new PersonalPage().ShowDialog();
             Show();
         }
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            client.SolverProxy.Unsubscribe();
-            client.Proxy.Logout(user.ID);
+            ClientInstance.SolverProxy.Unsubscribe();
+            ClientInstance.Proxy.Logout(ClientInstance.Solver.ID);
             new MainPage().ShowDialog();
             Show();
         }
@@ -84,9 +83,9 @@ namespace SolverGUI
             string redirect = message.Text;
             Task.Run(() =>
             {
-                client.SolverProxy.RedirectTicket(ticket.ID, user.ID, redirect, department);
+                ClientInstance.SolverProxy.RedirectTicket(TTicket.ID, ClientInstance.Solver.ID, redirect, department);
             });
-            new TicketPage(user, ticket.ID).ShowDialog();
+            new TicketPage(TTicket.ID).ShowDialog();
             Show();
         }
 

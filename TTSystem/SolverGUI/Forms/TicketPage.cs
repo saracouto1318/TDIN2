@@ -1,12 +1,7 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TTService;
@@ -15,18 +10,16 @@ namespace SolverGUI
 {
     public partial class TicketPage : MaterialForm
     {
-        public Client client;
+        public Client ClientInstance;
+        public Ticket TicketInfo;
+        public int TicketID;
 
-        public User user;
-        public Ticket ticketInfo;
-        public int ticketID;
-        public TicketPage(User user, int ticketID)
+        public TicketPage(int ticketID)
         {
-            client = Client.Instance;
+            ClientInstance = Client.Instance;
             InitializeComponent();
-
-            this.user = user;
-            this.ticketID = ticketID;
+            
+            this.TicketID = ticketID;
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
@@ -38,35 +31,35 @@ namespace SolverGUI
 
         public void GetTicketInfo()
         {
-            this.ticketInfo = client.Proxy.GetTicket(this.ticketID);
-            ticketLabel.Text = "Ticket #" + this.ticketInfo.ID.ToString();
-            title.Text = this.ticketInfo.Title;
-            date.Text = this.ticketInfo.Date.ToString();
-            description.Text = this.ticketInfo.Description;
-            status.Text = this.ticketInfo.Status.ToString();
+            this.TicketInfo = ClientInstance.Proxy.GetTicket(this.TicketID);
+            ticketLabel.Text = "Ticket #" + this.TicketInfo.ID.ToString();
+            title.Text = this.TicketInfo.Title;
+            date.Text = this.TicketInfo.Date.ToString();
+            description.Text = this.TicketInfo.Description;
+            status.Text = this.TicketInfo.Status.ToString();
 
-            if (this.ticketInfo.Status == TicketStatus.CLOSED)
+            if (this.TicketInfo.Status == TicketStatus.CLOSED)
             {
                 this.assignBtn.Visible = false;
                 this.solveBtn.Visible = false;
                 this.redirectBtn.Visible = false;
             }
-            else if (this.ticketInfo.Status == TicketStatus.ASSIGNED)
+            else if (this.TicketInfo.Status == TicketStatus.ASSIGNED)
                 this.assignBtn.Visible = false;
         }
 
         private void ProfileBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            new PersonalPage(user.ID).ShowDialog();
+            new PersonalPage().ShowDialog();
             Show();
         }
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            client.SolverProxy.Unsubscribe();
-            client.Proxy.Logout(user.ID);
+            ClientInstance.SolverProxy.Unsubscribe();
+            ClientInstance.Proxy.Logout(ClientInstance.Solver.ID);
             new MainPage().ShowDialog();
             Show();
         }
@@ -74,7 +67,7 @@ namespace SolverGUI
         private void SolveBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            new SolvePage(user, ticketInfo).ShowDialog();
+            new SolvePage(TicketInfo).ShowDialog();
             Show();
         }
 
@@ -82,7 +75,7 @@ namespace SolverGUI
         {
             redirectBtn.Visible = false;
             Hide();
-            new RedirectPage(user, ticketInfo).ShowDialog();
+            new RedirectPage(TicketInfo).ShowDialog();
             Show();
         }
 
@@ -90,9 +83,11 @@ namespace SolverGUI
         {
             Task.Run(() =>
             {
-                client.SolverProxy.AssignTicket(ticketInfo.ID, user.ID);
+                if(ClientInstance.SolverProxy.AssignTicket(TicketInfo.ID, ClientInstance.Solver.ID))
+                {
+                    MessageBox.Show("Ticket " + TicketInfo.Title + " was assigned to you");
+                }
             });
-            //MessageBox.Show("Ticket " + ticketInfo.ID.ToString() + " was assigned to you");
         }
 
         private void TicketPage_Load(object sender, EventArgs e)

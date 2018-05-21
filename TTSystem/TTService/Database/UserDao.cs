@@ -361,6 +361,44 @@ namespace TTService.Database
 
             return tickets;
         }
+        public static Ticket GetUserLastTicket(int user)
+        {
+            Ticket ticket = null;
+            SqlConnection c = AccessDao.Instance.Conn;
+            SqlDataReader reader = null;
+            try
+            {
+                c.Open();
+                string sql = "SELECT * FROM Ticket WHERE idSender = " + user +
+                    " ORDER BY idTicket DESC LIMIT 1";
+                SqlCommand cmd = new SqlCommand(sql, c);
+                reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    ticket = new Ticket
+                    {
+                        ID = reader.GetInt32(0),
+                        Date = reader.GetDateTime(5),
+                        Description = reader.GetString(4),
+                        Title = reader.GetString(3),
+                        IDSolver = reader.GetInt32(2)
+                    };
+                }
+            }
+            catch (SqlException)
+            {
+            }
+            finally
+            {
+                if (reader != null)
+                    reader.Close();
+                if (c != null)
+                    c.Close();
+            }
+
+            return ticket;
+        }
         public static List<Ticket> GetTicketsByType(User user, TicketStatus status)
         {
             List<Ticket> tickets = new List<Ticket>();

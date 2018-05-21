@@ -11,20 +11,15 @@ namespace GUI.Forms
 {
     public partial class Tickets : MaterialForm
     {
-        public Client client;
-        public int idUser;
-        public User user;
-        private TableLayoutPanel panel = new TableLayoutPanel();
+        public Client ClientInstance;
+        private TableLayoutPanel Panel = new TableLayoutPanel();
 
         public Tickets(int idUser)
         {
-            client = Client.Instance;
-            client.onNewTT += OnNewTT;
+            ClientInstance = Client.Instance;
+            ClientInstance.TroubleTickets.OnNewTroubleTicket += OnNewTT;
 
             InitializeComponent();
-
-            this.user = new User();
-            this.idUser = idUser;
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
@@ -36,9 +31,8 @@ namespace GUI.Forms
 
         public void GetUserInfo()
         {
-            this.user = client.Proxy.GetUser(idUser);
-            this.name.Text = this.user.Name;
-            this.email.Text = this.user.Email;
+            this.name.Text = ClientInstance.Solver.Name;
+            this.email.Text = ClientInstance.Solver.Email;
         }
 
         private void OpenBtn_Click(object sender, EventArgs e)
@@ -50,13 +44,13 @@ namespace GUI.Forms
             if (!CheckExist(TicketStatus.UNASSIGNED))
             {
                 label1.Visible = true;
-                panel.Visible = false;
+                Panel.Visible = false;
             }
             else
             {
                 label1.Visible = false;
                 CreateTable(TicketStatus.UNASSIGNED);
-                panel.Visible = true;
+                Panel.Visible = true;
             }
         }
 
@@ -69,13 +63,13 @@ namespace GUI.Forms
             if (!CheckExist(TicketStatus.ASSIGNED))
             {
                 label2.Visible = true;
-                panel.Visible = false;
+                Panel.Visible = false;
             }
             else
             {
                 label2.Visible = false;
                 CreateTable(TicketStatus.ASSIGNED);
-                panel.Visible = true;
+                Panel.Visible = true;
             }
         }
 
@@ -88,13 +82,13 @@ namespace GUI.Forms
             if (!CheckExist(TicketStatus.CLOSED))
             {
                 label3.Visible = true;
-                panel.Visible = false;
+                Panel.Visible = false;
             }
             else
             {
                 label3.Visible = false;
                 CreateTable(TicketStatus.CLOSED);
-                panel.Visible = true;
+                Panel.Visible = true;
             }
         }
 
@@ -102,16 +96,16 @@ namespace GUI.Forms
         {
             if (status == TicketStatus.UNASSIGNED)
             {
-                if (client.SolverProxy.GetUnassignedTT().Length > 0)
+                if (ClientInstance.SolverProxy.GetUnassignedTT().Length > 0)
                     return true;
             }
             else
-                if (client.SolverProxy.GetSolverTTByType(this.user, status).Length > 0)
+                if (ClientInstance.SolverProxy.GetSolverTTByType(ClientInstance.Solver, status).Length > 0)
                     return true;
             return false;
         }
 
-        private void OnNewTT(int idTicket)
+        private void OnNewTT(Ticket ticket)
         {
             Task t = new Task(() => {
                 MethodInvoker methodInvokerDelegate = delegate ()
@@ -121,6 +115,7 @@ namespace GUI.Forms
 
                 this.Invoke(methodInvokerDelegate);
             });
+
             SendWithDelay(5000, t);
         }
 
@@ -135,31 +130,31 @@ namespace GUI.Forms
             Ticket[] tickets;
 
             if (status == TicketStatus.UNASSIGNED)
-                tickets = client.SolverProxy.GetUnassignedTT();
+                tickets = ClientInstance.SolverProxy.GetUnassignedTT();
             else
-                tickets = client.SolverProxy.GetSolverTTByType(this.user, status);
+                tickets = ClientInstance.SolverProxy.GetSolverTTByType(ClientInstance.Solver, status);
 
 
-            panel.Visible = true;
+            Panel.Visible = true;
             float value = 100 / (tickets.Length + 1);
-            panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, value));
+            Panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, value));
 
             CreatePanel();
-            panel.Controls.Add(new Label()
+            Panel.Controls.Add(new Label()
             {
                 Text = "Ticket ID",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
             }, 0, 0);
-            panel.Controls.Add(new Label()
+            Panel.Controls.Add(new Label()
             {
                 Text = "Title",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
             }, 1, 0);
-            panel.Controls.Add(new Label()
+            Panel.Controls.Add(new Label()
             {
                 Text = "Date",
                 TextAlign = ContentAlignment.MiddleCenter,
@@ -171,7 +166,7 @@ namespace GUI.Forms
             foreach (Ticket t in tickets)
             {
 
-                panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, value));
+                Panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, value));
                 Label labelTmp = new Label()
                 {
                     Text = t.ID.ToString(),
@@ -183,11 +178,11 @@ namespace GUI.Forms
                 {
                     OnHide();
                     Hide();
-                    new TicketPage(user, t.ID).ShowDialog();
+                    new TicketPage(t.ID).ShowDialog();
                     Show();
                 };
 
-                panel.Controls.Add(labelTmp, 0, index + 1);
+                Panel.Controls.Add(labelTmp, 0, index + 1);
 
                 labelTmp = new Label()
                 {
@@ -200,11 +195,11 @@ namespace GUI.Forms
                 {
                     OnHide();
                     Hide();
-                    new TicketPage(user, t.ID).ShowDialog();
+                    new TicketPage(t.ID).ShowDialog();
                     Show();
                 };
 
-                panel.Controls.Add(labelTmp, 1, index + 1);
+                Panel.Controls.Add(labelTmp, 1, index + 1);
 
                 labelTmp = new Label()
                 {
@@ -217,11 +212,11 @@ namespace GUI.Forms
                 {
                     OnHide();
                     Hide();
-                    new TicketPage(user, t.ID).ShowDialog();
+                    new TicketPage(t.ID).ShowDialog();
                     Show();
                 };
 
-                panel.Controls.Add(labelTmp, 2, index + 1);
+                Panel.Controls.Add(labelTmp, 2, index + 1);
 
                 index++;
             }
@@ -229,8 +224,8 @@ namespace GUI.Forms
 
         private void CreatePanel()
         {
-            panel.Dispose();
-            panel = new TableLayoutPanel
+            Panel.Dispose();
+            Panel = new TableLayoutPanel
             {
                 BackColor = SystemColors.ButtonHighlight,
                 BackgroundImageLayout = ImageLayout.Center,
@@ -238,27 +233,27 @@ namespace GUI.Forms
                 ColumnCount = 3
             };
 
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
-            panel.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (0));
-            panel.Location = new Point(130, 221);
-            panel.Name = "tableLayoutPanel1";
-            panel.Size = new Size(100, 40);
-            panel.AutoSize = true;
+            Panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
+            Panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
+            Panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
+            Panel.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (0));
+            Panel.Location = new Point(130, 221);
+            Panel.Name = "tableLayoutPanel1";
+            Panel.Size = new Size(100, 40);
+            Panel.AutoSize = true;
 
-            Controls.Add(panel);
+            Controls.Add(Panel);
         }
 
         private void OnHide()
         {
-            client.onNewTT -= OnNewTT;
+            ClientInstance.TroubleTickets.OnNewTroubleTicket -= OnNewTT;
         }
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
-            client.SolverProxy.Unsubscribe();
-            client.Proxy.Logout(user.ID);
+            ClientInstance.SolverProxy.Unsubscribe();
+            ClientInstance.Proxy.Logout(ClientInstance.Solver.ID);
             OnHide();
             Hide();
             new MainPage().ShowDialog();
@@ -269,11 +264,11 @@ namespace GUI.Forms
         {
             OnHide();
             Hide();
-            new PersonalPage(this.user.ID).ShowDialog();
+            new PersonalPage().ShowDialog();
             Show();
         }
 
-        private void questionsOpen_Click(object sender, EventArgs e)
+        private void QuestionsOpen_Click(object sender, EventArgs e)
         {
             label1.Visible = false;
             label2.Visible = false;
@@ -282,13 +277,13 @@ namespace GUI.Forms
             if (!CheckExist(TicketStatus.WAITING))
             {
                 label4.Visible = true;
-                panel.Visible = false;
+                Panel.Visible = false;
             }
             else
             {
                 label4.Visible = false;
                 CreateTable(TicketStatus.WAITING);
-                panel.Visible = true;
+                Panel.Visible = true;
             }
         }
 

@@ -7,11 +7,11 @@ namespace SolverGUI
 {
     public partial class MainPage : MaterialForm
     {
-        private Client client;
+        private Client ClientInstance;
 
         public MainPage()
         {
-            client = Client.Instance;
+            ClientInstance = Client.Instance;
 
             InitializeComponent();
 
@@ -26,17 +26,16 @@ namespace SolverGUI
             string email = emailLogin.Text;
             string password = passwordLogin.Text;
 
-            if (client.SolverProxy.LoginSolver(email, password))
+            if(ClientInstance.LoginUser(email,password))
             {
-                User user = client.Proxy.GetUserByEmail(email);
-                //client.Proxy.LoginSolver(email, password);
                 Hide();
-                new PersonalPage(user.ID).ShowDialog();
+                new PersonalPage().ShowDialog();
                 Show();
             }
             else
+            {
                 labelLogin.Visible = true;
-
+            }
         }
 
         private void RegisterBtn_Click(object sender, EventArgs e)
@@ -45,15 +44,15 @@ namespace SolverGUI
             string email = emailRegister.Text;
             string password = passwordRegister.Text;
 
-            if (!client.SolverProxy.RegisterSolver(name, email, password))
-                labelRegister.Visible = true;
+            if(ClientInstance.RegisterSolver(email, name, password))
+            {
+                Hide();
+                new PersonalPage().ShowDialog();
+                Show();
+            }
             else
             {
-                client.SolverProxy.LoginSolver(email, password);
-                User user = client.Proxy.GetUserByEmail(email);
-                Hide();
-                new PersonalPage(user.ID).ShowDialog();
-                Show();
+                labelRegister.Visible = true;
             }
         }
     }

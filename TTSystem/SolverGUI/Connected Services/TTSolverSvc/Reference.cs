@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GUI.TTSolver {
+namespace GUI.TTSolverSvc {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="TTSolver.ITTSolverSvc", CallbackContract=typeof(GUI.TTSolver.ITTSolverSvcCallback))]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="TTSolverSvc.ITTSolverSvc", CallbackContract=typeof(GUI.TTSolverSvc.ITTSolverSvcCallback))]
     public interface ITTSolverSvc {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTSolverSvc/Hello", ReplyAction="http://tempuri.org/ITTSolverSvc/HelloResponse")]
@@ -98,19 +98,19 @@ namespace GUI.TTSolver {
     public interface ITTSolverSvcCallback {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ITTSolverSvc/NewTT")]
-        void NewTT(int idTicket);
+        void NewTT(TTService.Ticket ticket);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ITTSolverSvc/AssignedTT")]
-        void AssignedTT(int idTicket, int idSolver);
+        void AssignedTT(TTService.Ticket ticket);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface ITTSolverSvcChannel : GUI.TTSolver.ITTSolverSvc, System.ServiceModel.IClientChannel {
+    public interface ITTSolverSvcChannel : GUI.TTSolverSvc.ITTSolverSvc, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class TTSolverSvcClient : System.ServiceModel.DuplexClientBase<GUI.TTSolver.ITTSolverSvc>, GUI.TTSolver.ITTSolverSvc {
+    public partial class TTSolverSvcClient : System.ServiceModel.DuplexClientBase<GUI.TTSolverSvc.ITTSolverSvc>, GUI.TTSolverSvc.ITTSolverSvc {
         
         public TTSolverSvcClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {

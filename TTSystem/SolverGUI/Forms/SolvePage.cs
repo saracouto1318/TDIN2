@@ -15,17 +15,16 @@ namespace SolverGUI
 {
     public partial class SolvePage : MaterialForm
     {
-        public Client client;
-        public User user;
-        public Ticket ticket;
-        public SolvePage(User user, Ticket ticket)
+        public Client ClientInstance;
+        public Ticket TTicket;
+
+        public SolvePage(Ticket ticket)
         {
-            client = Client.Instance;
+            ClientInstance = Client.Instance;
 
             InitializeComponent();
 
-            this.user = user;
-            this.ticket = ticket;
+            this.TTicket = ticket;
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
@@ -36,29 +35,29 @@ namespace SolverGUI
         }
         public void GetTicketInfo()
         {
-            ticketID.Text = "Ticket #" + this.ticket.ID.ToString();
-            title.Text = this.ticket.Title;
+            ticketID.Text = "Ticket #" + this.TTicket.ID.ToString();
+            title.Text = this.TTicket.Title;
         }
 
         private void TicketBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            new TicketPage(user, ticket.ID).ShowDialog();
+            new TicketPage(TTicket.ID).ShowDialog();
             Show();
         }
 
         private void ProfileBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            new PersonalPage(user.ID).ShowDialog();
+            new PersonalPage().ShowDialog();
             Show();
         }
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            client.SolverProxy.Unsubscribe();
-            client.Proxy.Logout(user.ID);
+            ClientInstance.SolverProxy.Unsubscribe();
+            ClientInstance.Proxy.Logout(ClientInstance.Solver.ID);
             new MainPage().ShowDialog();
             Show();
         }
@@ -66,8 +65,8 @@ namespace SolverGUI
         private void SendBtn_Click(object sender, EventArgs e)
         {
             string emailText = email.Text;
-            client.SolverProxy.AnswerTicket(user.ID, ticket.Author.ID, ticket.ID, emailText);
-            new TicketPage(user, ticket.ID).ShowDialog();
+            ClientInstance.SolverProxy.AnswerTicket(ClientInstance.Solver.ID, TTicket.Author.ID, TTicket.ID, emailText);
+            new TicketPage(TTicket.ID).ShowDialog();
             Show();
         }
     }

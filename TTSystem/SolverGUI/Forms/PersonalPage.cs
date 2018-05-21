@@ -1,33 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using GUI.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
-using TTService;
 
 namespace SolverGUI
 {
     public partial class PersonalPage : MaterialForm
     {
-        public Client client;
-        public int idUser;
-        public User user;
-        public PersonalPage(int idUser)
+        public Client ClientInstance;
+
+        public PersonalPage()
         {
-            client = Client.Instance;
+            ClientInstance = Client.Instance;
 
             InitializeComponent();
-
-            this.user = new User();
-            this.idUser = idUser;
-
+            
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
@@ -38,19 +25,22 @@ namespace SolverGUI
 
         public void GetUserInfo()
         {
-            this.user = client.Proxy.GetUser(idUser);
-            name.Text = this.user.Name;
-            email.Text = this.user.Email;
-            ticketsOpen.Text = client.SolverProxy.GetUnassignedTT().Length.ToString();
-            tickets.Text = client.SolverProxy.GetSolverTT(this.user).Length.ToString();
-            questionsOpen.Text = ((client.SolverProxy.MyQuestions(this.user.ID, true).Length) + (client.SolverProxy.MyQuestions(this.user.ID, false).Length)).ToString();
+            name.Text = ClientInstance.Solver.Name;
+            email.Text = ClientInstance.Solver.Email;
+            ticketsOpen.Text = 
+                ClientInstance.SolverProxy.GetUnassignedTT().Length.ToString();
+            tickets.Text = 
+                ClientInstance.SolverProxy.GetSolverTT(ClientInstance.Solver).Length.ToString();
+            questionsOpen.Text = 
+                ((ClientInstance.SolverProxy.MyQuestions(ClientInstance.Solver.ID, true).Length) + 
+                (ClientInstance.SolverProxy.MyQuestions(ClientInstance.Solver.ID, false).Length)).ToString();
         }
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            client.SolverProxy.Unsubscribe();
-            client.Proxy.Logout(user.ID); 
+            ClientInstance.SolverProxy.Unsubscribe();
+            ClientInstance.Proxy.Logout(ClientInstance.Solver.ID); 
             new MainPage().ShowDialog();
             Show();
         }
@@ -58,14 +48,14 @@ namespace SolverGUI
         private void TtBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            new Tickets(this.user.ID).ShowDialog();
+            new Tickets(ClientInstance.Solver.ID).ShowDialog();
             Show();
         }
 
         private void QuestionBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            new Questions(this.user.ID).ShowDialog();
+            new Questions().ShowDialog();
             Show();
         }
     }

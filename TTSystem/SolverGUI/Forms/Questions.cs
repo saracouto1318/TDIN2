@@ -1,13 +1,7 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using SolverGUI;
 using TTService;
@@ -16,19 +10,15 @@ namespace GUI.Forms
 {
     public partial class Questions : MaterialForm
     {
-        public Client client;
-        public int idUser;
-        public User user;
-        private TableLayoutPanel panel = new TableLayoutPanel();
-        public Questions(int idUser)
+        public Client ClientInstance;
+        private TableLayoutPanel Panel = new TableLayoutPanel();
+
+        public Questions()
         {
-            client = Client.Instance;
+            ClientInstance = Client.Instance;
 
             InitializeComponent();
-
-            this.user = new User();
-            this.idUser = idUser;
-
+            
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
@@ -39,50 +29,49 @@ namespace GUI.Forms
 
         public void GetUserInfo()
         {
-            this.user = client.Proxy.GetUser(idUser);
-            this.name.Text = this.user.Name;
-            this.email.Text = this.user.Email;
+            this.name.Text = ClientInstance.Solver.Name;
+            this.email.Text = ClientInstance.Solver.Email;
         }
 
         private bool CheckExist(bool value)
         {
-            return client.SolverProxy.MyQuestions(this.user.ID, value).Length > 0;
+            return ClientInstance.SolverProxy.MyQuestions(ClientInstance.Solver.ID, value).Length > 0;
         }
 
         private void CreateTable(bool value)
         {
             SecondaryQuestion[] questions;
 
-            questions = client.SolverProxy.MyQuestions(this.user.ID, value);
+            questions = ClientInstance.SolverProxy.MyQuestions(ClientInstance.Solver.ID, value);
 
 
-            panel.Visible = true;
+            Panel.Visible = true;
             float rows = 100 / (questions.Length + 1);
-            panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, rows));
+            Panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, rows));
 
             CreatePanel();
-            panel.Controls.Add(new Label()
+            Panel.Controls.Add(new Label()
             {
                 Text = "Question ID",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
             }, 0, 0);
-            panel.Controls.Add(new Label()
+            Panel.Controls.Add(new Label()
             {
                 Text = "Department",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
             }, 1, 0);
-            panel.Controls.Add(new Label()
+            Panel.Controls.Add(new Label()
             {
                 Text = "Ticket ID",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
             }, 2, 0);
-            panel.Controls.Add(new Label()
+            Panel.Controls.Add(new Label()
             {
                 Text = "Date",
                 TextAlign = ContentAlignment.MiddleCenter,
@@ -94,7 +83,7 @@ namespace GUI.Forms
             foreach (SecondaryQuestion q in questions)
             {
 
-                panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, rows));
+                Panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, rows));
                 Label labelTmp = new Label()
                 {
                     Text = q.ID.ToString(),
@@ -105,11 +94,11 @@ namespace GUI.Forms
                 labelTmp.Click += (object sender, EventArgs e) =>
                 {
                     Hide();
-                    new QuestionPage(user.ID, q.ID).ShowDialog();
+                    new QuestionPage(q.ID).ShowDialog();
                     Show();
                 };
 
-                panel.Controls.Add(labelTmp, 0, index + 1);
+                Panel.Controls.Add(labelTmp, 0, index + 1);
 
                 labelTmp = new Label()
                 {
@@ -121,15 +110,15 @@ namespace GUI.Forms
                 labelTmp.Click += (object sender, EventArgs e) =>
                 {
                     Hide();
-                    new QuestionPage(user.ID, q.ID).ShowDialog();
+                    new QuestionPage(q.ID).ShowDialog();
                     Show();
                 };
 
-                panel.Controls.Add(labelTmp, 1, index + 1);
+                Panel.Controls.Add(labelTmp, 1, index + 1);
 
                 labelTmp = new Label()
                 {
-                    Text = client.Proxy.GetDepartment(q.Department),
+                    Text = ClientInstance.Proxy.GetDepartment(q.Department),
                     TextAlign = ContentAlignment.MiddleCenter,
                     Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
                 };
@@ -137,11 +126,11 @@ namespace GUI.Forms
                 labelTmp.Click += (object sender, EventArgs e) =>
                 {
                     Hide();
-                    new QuestionPage(user.ID, q.ID).ShowDialog();
+                    new QuestionPage(q.ID).ShowDialog();
                     Show();
                 };
 
-                panel.Controls.Add(labelTmp, 2, index + 1);
+                Panel.Controls.Add(labelTmp, 2, index + 1);
 
                 labelTmp = new Label()
                 {
@@ -153,11 +142,11 @@ namespace GUI.Forms
                 labelTmp.Click += (object sender, EventArgs e) =>
                 {
                     Hide();
-                    new QuestionPage(user.ID, q.ID).ShowDialog();
+                    new QuestionPage(q.ID).ShowDialog();
                     Show();
                 };
 
-                panel.Controls.Add(labelTmp, 3, index + 1);
+                Panel.Controls.Add(labelTmp, 3, index + 1);
 
                 index++;
             }
@@ -165,8 +154,8 @@ namespace GUI.Forms
 
         private void CreatePanel()
         {
-            panel.Dispose();
-            panel = new TableLayoutPanel
+            Panel.Dispose();
+            Panel = new TableLayoutPanel
             {
                 BackColor = SystemColors.ButtonHighlight,
                 BackgroundImageLayout = ImageLayout.Center,
@@ -174,24 +163,24 @@ namespace GUI.Forms
                 ColumnCount = 4
             };
 
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
-            panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
-            panel.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (0));
-            panel.Location = new Point(120, 221);
-            panel.Name = "tableLayoutPanel1";
-            panel.Size = new Size(100, 40);
-            panel.AutoSize = true;
+            Panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
+            Panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
+            Panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
+            Panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
+            Panel.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (0));
+            Panel.Location = new Point(120, 221);
+            Panel.Name = "tableLayoutPanel1";
+            Panel.Size = new Size(100, 40);
+            Panel.AutoSize = true;
 
-            Controls.Add(panel);
+            Controls.Add(Panel);
         }
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            client.SolverProxy.Unsubscribe();
-            client.Proxy.Logout(user.ID);
+            ClientInstance.SolverProxy.Unsubscribe();
+            ClientInstance.Proxy.Logout(ClientInstance.Solver.ID);
             new MainPage().ShowDialog();
             Show();
         }
@@ -202,12 +191,12 @@ namespace GUI.Forms
             if (!CheckExist(false))
             {
                 label1.Visible = true;
-                panel.Visible = false;
+                Panel.Visible = false;
             }
             else
             {
                 label1.Visible = false;
-                panel.Visible = true;
+                Panel.Visible = true;
                 CreateTable(false);
             }
         }
@@ -218,12 +207,12 @@ namespace GUI.Forms
             if (!CheckExist(true))
             {
                 label2.Visible = true;
-                panel.Visible = false;
+                Panel.Visible = false;
             }
             else
             {
                 label2.Visible = false;
-                panel.Visible = true;
+                Panel.Visible = true;
                 CreateTable(true);
             }
         }
@@ -231,7 +220,7 @@ namespace GUI.Forms
         private void ProfileBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            new PersonalPage(user.ID).ShowDialog();
+            new PersonalPage().ShowDialog();
             Show();
         }
 

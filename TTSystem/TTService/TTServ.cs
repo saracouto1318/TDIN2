@@ -43,6 +43,7 @@ namespace TTService
         public bool AddTicket(int idUser, string title, string description)
         {
             bool success = UserDao.AddTicket(idUser, title, description);
+            Ticket tticket = UserDao.GetUserLastTicket(idUser);
             List<ITTUpdateCallback> subscribers = TTSolverSvc.Subscribers;
             ITTUpdateCallback rmSub = null;
 
@@ -57,8 +58,7 @@ namespace TTService
 
                     try
                     {
-                        // TODO send ticket id
-                        sub.NewTT(0);
+                        sub.NewTT(tticket);
                     } catch(Exception)
                     {
                         rmSub = sub;

@@ -16,64 +16,54 @@ namespace GUI.Forms
 {
     public partial class QuestionPage : MaterialForm
     {
-        public Client client;
-        public int idUser;
-        public User user;
-        public int idQuestion;
-        public SecondaryQuestion secQuestion;
-        public QuestionPage(int idUser, int idQuestion)
+        public Client ClientInstance;
+        public int IDQuestion;
+        public SecondaryQuestion SecQuestion;
+
+        public QuestionPage(int idQuestion)
         {
-            client = Client.Instance;
+            ClientInstance = Client.Instance;
 
             InitializeComponent();
             
-            this.user = new User();
-            this.secQuestion = new SecondaryQuestion();
-            this.idUser = idUser;
-            this.idQuestion = idQuestion;
+            this.SecQuestion = new SecondaryQuestion();
+            this.IDQuestion = idQuestion;
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-
-            GetUserInfo();
+            
             GetQuestionInfo();
-        }
-
-        public void GetUserInfo()
-        {
-            this.user = client.Proxy.GetUser(idUser);
         }
 
         public void GetQuestionInfo()
         {
-            this.secQuestion = client.Proxy.GetQuestion(idQuestion);
-            status.Text = (secQuestion.Response == null) ? "Open" : "Closed";
-            ticketID.Text = "Ticket #" + secQuestion.TicketID.ToString();
-            date.Text = secQuestion.Date.ToString();
-            question.Text = secQuestion.Question.ToString();
+            this.SecQuestion = ClientInstance.Proxy.GetQuestion(IDQuestion);
+            status.Text = (SecQuestion.Response == null) ? "Open" : "Closed";
+            ticketID.Text = "Ticket #" + SecQuestion.TicketID.ToString();
+            date.Text = SecQuestion.Date.ToString();
+            question.Text = SecQuestion.Question.ToString();
 
-            if (secQuestion.Response == null)
+            if (SecQuestion.Response == null)
             {
                 response.Visible = false;
                 label1.Visible = false;
             }
             else
-                response.Text = secQuestion.Response.ToString();
+                response.Text = SecQuestion.Response.ToString();
         }
 
         private void ProfileBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            Hide();
-            new PersonalPage(user.ID).ShowDialog();
+            new PersonalPage().ShowDialog();
             Show();
         }
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
-            client.Proxy.Logout(user.ID);
+            ClientInstance.Proxy.Logout(ClientInstance.Solver.ID);
             Hide();
             new MainPage().ShowDialog();
             Show();

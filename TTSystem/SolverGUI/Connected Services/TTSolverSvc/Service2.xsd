@@ -186,15 +186,14 @@
   <xs:element name="NewTT">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="idTicket" type="xs:int" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="ticket" nillable="true" type="q9:Ticket" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AssignedTT">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="idTicket" type="xs:int" />
-        <xs:element minOccurs="0" name="idSolver" type="xs:int" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="ticket" nillable="true" type="q10:Ticket" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
