@@ -110,20 +110,20 @@ namespace TTService
             {
                 User to = UserDao.SelectUser(senderTicket);
                 Ticket ticketInfo = UserDao.GetTicket(ticket);
-
-                SmtpClient MyServer = new SmtpClient();
-                MyServer.Host = "";
-                MyServer.Port = 81;
+                SmtpClient client = new SmtpClient("smtp.gmail.com");
 
                 //Server Credentials
                 NetworkCredential NC = new NetworkCredential();
                 NC.UserName = "";
                 NC.Password = "";
                 //assigned credetial details to server
-                MyServer.Credentials = NC;
+                client.Port = 25;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.EnableSsl = true;
+                client.Credentials = NC;
 
-                //create sender address
-                MailAddress from = new MailAddress("trouble_ticket@gmail.com", "IT Trouble Tickets");
+                MailAddress from = new MailAddress("trouble.tickets.it@gmail.com", "Trouble Tickets");
 
                 //create receiver address
                 MailAddress receiver = new MailAddress(to.Email.Trim(), to.Name.ToString());
@@ -131,8 +131,8 @@ namespace TTService
                 MailMessage Mymessage = new MailMessage(from, receiver);
                 Mymessage.Subject = "Ticket #" + ticketInfo.ID.ToString() + " - " + ticketInfo.Title.ToString();
                 Mymessage.Body = email.Trim();
-                //sends the email
-                MyServer.Send(Mymessage);
+
+                client.Send(Mymessage);
 
                 return UserDao.AddAnswerTicket(solver, senderTicket, ticket, email);
             }
