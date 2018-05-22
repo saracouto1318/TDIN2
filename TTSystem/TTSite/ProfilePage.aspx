@@ -100,7 +100,6 @@
                         <tr >
                             <th>#</th>
                             <th>Title</th>
-                            <th>Description</th>
                             <th>Date</th>
                             <th>Status</th>
                         </tr>
@@ -116,9 +115,8 @@
                             %>
                             <td><%: ticket.ID %></td>
                             <td><%: ticket.Title %></td>
-                            <td><%: ticket.Description %></td>
                             <td><%: ticket.Date.ToString() %></td>
-                            <td><%: ticket.Status.ToString() %></td>
+                            <td style="font-weight: bold"><%: ticket.Status.ToString() %></td>
                         </tr>
                         <% } %>
                         
