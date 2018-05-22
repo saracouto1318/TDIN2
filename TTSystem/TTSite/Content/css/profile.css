@@ -416,3 +416,8 @@ label.labelProfile {
     color: #5a7391;
     font-weight: bold;
 }
+
+.inputDescription{
+    width: 80%;
+    margin: 0 auto;
+}

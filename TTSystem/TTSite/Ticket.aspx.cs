@@ -25,9 +25,9 @@ public partial class _Ticket : Page
         user = proxy.GetUser(id);
         ticket = proxy.GetTicket(idTicket);
 
-        title.InnerHtml = "<label class='labelProfile'>Ticket Title: </label>" + ticket.Title;
+        title.InnerHtml = "<label class='labelProfile'>Ticket Title: </label><div class='inputDescription'>" + ticket.Title + "</div>";
         date.InnerHtml = "<label class='labelProfile'>Ticket Date: </label>" + ticket.Date.ToString();
-        description.InnerHtml = "<label class='labelProfile'>Ticket Description: </label>" + ticket.Description;
+        description.InnerHtml = "<label class='labelProfile'>Ticket Description: </label><div class='inputDescription'>" + ticket.Description + "</div>";
         status.InnerHtml = "<label class='labelProfile'>Ticket Status: </label>" + ticket.Status.ToString();
     }
 
