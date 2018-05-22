@@ -30,6 +30,10 @@ namespace SolverGUI
 
         public void LoadTicketInfo()
         {
+            this.assignBtn.Visible = false;
+            this.solveBtn.Visible = false;
+            this.redirectBtn.Visible = false;
+
             ticketLabel.Text = "Ticket #" + this.TicketInfo.ID.ToString();
             title.Text = this.TicketInfo.Title;
             date.Text = this.TicketInfo.Date.ToString();
@@ -42,8 +46,14 @@ namespace SolverGUI
                 this.solveBtn.Visible = false;
                 this.redirectBtn.Visible = false;
             }
-            else if (TicketInfo.Status == TicketStatus.ASSIGNED)
+            else if (TicketInfo.Status == TicketStatus.ASSIGNED || TicketInfo.Status == TicketStatus.WAITING)
+            {
                 this.assignBtn.Visible = false;
+                this.solveBtn.Visible = true;
+                this.redirectBtn.Visible = true;
+            }
+            else if (TicketInfo.Status == TicketStatus.UNASSIGNED)
+                this.assignBtn.Visible = true;
         }
 
         private void ProfileBtn_Click(object sender, EventArgs e)
@@ -86,6 +96,10 @@ namespace SolverGUI
                     MessageBox.Show("Ticket " + TicketInfo.Title + " was assigned to you");
                 }
             });
+
+            this.assignBtn.Visible = false;
+            this.solveBtn.Visible = true;
+            this.redirectBtn.Visible = true;
         }
 
         private void TicketPage_Load(object sender, EventArgs e)

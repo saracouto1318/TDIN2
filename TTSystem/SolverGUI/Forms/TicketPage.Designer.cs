@@ -41,7 +41,6 @@
             this.profileBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.assignBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.status = new MaterialSkin.Controls.MaterialLabel();
-            this.Load += new System.EventHandler(this.TicketPage_Load);
             this.SuspendLayout();
             // 
             // label2
@@ -133,7 +132,7 @@
             // solveBtn
             // 
             this.solveBtn.Depth = 0;
-            this.solveBtn.Location = new System.Drawing.Point(393, 387);
+            this.solveBtn.Location = new System.Drawing.Point(250, 387);
             this.solveBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.solveBtn.Name = "solveBtn";
             this.solveBtn.Primary = true;
@@ -146,7 +145,7 @@
             // redirectBtn
             // 
             this.redirectBtn.Depth = 0;
-            this.redirectBtn.Location = new System.Drawing.Point(567, 387);
+            this.redirectBtn.Location = new System.Drawing.Point(475, 387);
             this.redirectBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.redirectBtn.Name = "redirectBtn";
             this.redirectBtn.Primary = true;
@@ -185,7 +184,7 @@
             // assignBtn
             // 
             this.assignBtn.Depth = 0;
-            this.assignBtn.Location = new System.Drawing.Point(218, 387);
+            this.assignBtn.Location = new System.Drawing.Point(348, 387);
             this.assignBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.assignBtn.Name = "assignBtn";
             this.assignBtn.Primary = true;
@@ -229,6 +228,7 @@
             this.Controls.Add(this.label2);
             this.Name = "TicketPage";
             this.Text = "Ticket Page";
+            this.Load += new System.EventHandler(this.TicketPage_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
