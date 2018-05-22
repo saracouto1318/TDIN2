@@ -53,6 +53,22 @@ namespace SolverGUI
             OnAnsweredSecondaryQuestion += OnAnsweredSQ;
         }
 
+        public List<Ticket> GetTicketsByStatus(TicketStatus status)
+        {
+            switch(status)
+            {
+                case TicketStatus.UNASSIGNED:
+                    return UnassignedTroubleTickets;
+                case TicketStatus.ASSIGNED:
+                    return AssignedTroubleTickets;
+                case TicketStatus.WAITING:
+                    return WaitingTroubleTickets;
+                case TicketStatus.CLOSED:
+                    return ClosedTroubleTickets;
+            }
+            return null;
+        }
+
         // Queries the service for the information
         public void UpdateTT(
             TTSolverSvcClient SolverProxy, 

@@ -48,7 +48,7 @@ namespace SolverGUI
         private void TtBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            new Tickets(ClientInstance.Solver.ID).ShowDialog();
+            new Tickets().ShowDialog();
             Show();
         }
 

@@ -12,9 +12,11 @@ namespace GUI.Forms
     public partial class Tickets : MaterialForm
     {
         public Client ClientInstance;
-        private TableLayoutPanel Panel = new TableLayoutPanel();
+        public TableLayoutPanel Panel = new TableLayoutPanel();
+        private TicketStatus PanelStatus = TicketStatus.ASSIGNED;
+        private IStatusPanel StatusPanelController;
 
-        public Tickets(int idUser)
+        public Tickets()
         {
             ClientInstance = Client.Instance;
             ClientInstance.TroubleTickets.OnNewTroubleTicket += OnNewTT;
@@ -27,7 +29,11 @@ namespace GUI.Forms
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
             GetUserInfo();
+
+            StatusPanelController = StatusPanel.GetStatusPanelController(PanelStatus);
+            CreateTable(PanelStatus);
         }
+
 
         public void GetUserInfo()
         {
@@ -35,89 +41,26 @@ namespace GUI.Forms
             this.email.Text = ClientInstance.Solver.Email;
         }
 
-        private void OpenBtn_Click(object sender, EventArgs e)
-        {
-            label2.Visible = false;
-            label3.Visible = false;
-            label4.Visible = false;
-
-            if (!CheckExist(TicketStatus.UNASSIGNED))
-            {
-                label1.Visible = true;
-                Panel.Visible = false;
-            }
-            else
-            {
-                label1.Visible = false;
-                CreateTable(TicketStatus.UNASSIGNED);
-                Panel.Visible = true;
-            }
-        }
-
-        private void MyTicketsBtn_Click(object sender, EventArgs e)
-        {
-            label1.Visible = false;
-            label3.Visible = false;
-            label4.Visible = false;
-
-            if (!CheckExist(TicketStatus.ASSIGNED))
-            {
-                label2.Visible = true;
-                Panel.Visible = false;
-            }
-            else
-            {
-                label2.Visible = false;
-                CreateTable(TicketStatus.ASSIGNED);
-                Panel.Visible = true;
-            }
-        }
-
-        private void CloseBtn_Click(object sender, EventArgs e)
-        {
-            label1.Visible = false;
-            label2.Visible = false;
-            label4.Visible = false;
-
-            if (!CheckExist(TicketStatus.CLOSED))
-            {
-                label3.Visible = true;
-                Panel.Visible = false;
-            }
-            else
-            {
-                label3.Visible = false;
-                CreateTable(TicketStatus.CLOSED);
-                Panel.Visible = true;
-            }
-        }
-
         private bool CheckExist(TicketStatus status)
         {
-            if (status == TicketStatus.UNASSIGNED)
-            {
-                if (ClientInstance.SolverProxy.GetUnassignedTT().Length > 0)
-                    return true;
-            }
-            else
-                if (ClientInstance.SolverProxy.GetSolverTTByType(ClientInstance.Solver, status).Length > 0)
-                    return true;
-            return false;
+            return ClientInstance.TroubleTickets.GetTicketsByStatus(status).Count > 0;
+        }
+
+
+        private void UpdatePanelStatus(TicketStatus status)
+        {
+            PanelStatus = TicketStatus.ASSIGNED;
+            StatusPanelController = StatusPanel.GetStatusPanelController(PanelStatus);
         }
 
         private void OnNewTT(Ticket ticket)
         {
-            Task t = new Task(() => {
-                MethodInvoker methodInvokerDelegate = delegate ()
-                {
-                    CreateTable(TicketStatus.UNASSIGNED);
-                };
-
-                this.Invoke(methodInvokerDelegate);
-            });
-
-            SendWithDelay(5000, t);
+            if(StatusPanelController != null)
+            {
+                StatusPanelController.NewTT(this, ticket);
+            }
         }
+
 
         private async Task SendWithDelay(int delay, Task task)
         {
@@ -125,101 +68,40 @@ namespace GUI.Forms
             task.Start();
         }
 
-        private void CreateTable(TicketStatus status)
+
+        public void TicketClickAction(Ticket t)
         {
-            Ticket[] tickets;
+            OnHide();
+            Hide();
+            new TicketPage(t).ShowDialog();
+            Show();
+        }
 
-            if (status == TicketStatus.UNASSIGNED)
-                tickets = ClientInstance.SolverProxy.GetUnassignedTT();
-            else
-                tickets = ClientInstance.SolverProxy.GetSolverTTByType(ClientInstance.Solver, status);
+        public void CreateTable(TicketStatus status)
+        {
+            Ticket[] tickets = ClientInstance.TroubleTickets.GetTicketsByStatus(status).ToArray();
+            LoadTable(tickets);
+        }
 
+        public void LoadTable(Ticket[] tickets)
+        {
+            IPanelRow panelRow = new TitlePanelRowImpl();
 
             Panel.Visible = true;
             float value = 100 / (tickets.Length + 1);
-            Panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, value));
 
             CreatePanel();
-            Panel.Controls.Add(new Label()
-            {
-                Text = "Ticket ID",
-                TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.Black,
-                Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
-            }, 0, 0);
-            Panel.Controls.Add(new Label()
-            {
-                Text = "Title",
-                TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.Black,
-                Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
-            }, 1, 0);
-            Panel.Controls.Add(new Label()
-            {
-                Text = "Date",
-                TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.Black,
-                Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
-            }, 2, 0);
+            Panel.SuspendLayout();
 
-            int index = 0;
+            panelRow.AddPanelRow(Panel, value, null, () => { });
+
+            panelRow = new TicketPanelRowImpl();
             foreach (Ticket t in tickets)
             {
-
-                Panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, value));
-                Label labelTmp = new Label()
-                {
-                    Text = t.ID.ToString(),
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
-                };
-
-                labelTmp.Click += (object sender, EventArgs e) =>
-                {
-                    OnHide();
-                    Hide();
-                    new TicketPage(t.ID).ShowDialog();
-                    Show();
-                };
-
-                Panel.Controls.Add(labelTmp, 0, index + 1);
-
-                labelTmp = new Label()
-                {
-                    Text = t.Title,
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
-                };
-
-                labelTmp.Click += (object sender, EventArgs e) =>
-                {
-                    OnHide();
-                    Hide();
-                    new TicketPage(t.ID).ShowDialog();
-                    Show();
-                };
-
-                Panel.Controls.Add(labelTmp, 1, index + 1);
-
-                labelTmp = new Label()
-                {
-                    Text = t.Date.ToString(),
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
-                };
-
-                labelTmp.Click += (object sender, EventArgs e) =>
-                {
-                    OnHide();
-                    Hide();
-                    new TicketPage(t.ID).ShowDialog();
-                    Show();
-                };
-
-                Panel.Controls.Add(labelTmp, 2, index + 1);
-
-                index++;
+                panelRow.AddPanelRow(Panel, value, t,  () => { TicketClickAction(t); });
             }
+
+            Panel.ResumeLayout();
         }
 
         private void CreatePanel()
@@ -245,9 +127,74 @@ namespace GUI.Forms
             Controls.Add(Panel);
         }
 
+
         private void OnHide()
         {
             ClientInstance.TroubleTickets.OnNewTroubleTicket -= OnNewTT;
+        }
+
+        
+        private void OpenBtn_Click(object sender, EventArgs e)
+        {
+            label2.Visible = false;
+            label3.Visible = false;
+            label4.Visible = false;
+
+            UpdatePanelStatus(TicketStatus.UNASSIGNED);
+
+            if (!CheckExist(TicketStatus.UNASSIGNED))
+            {
+                label1.Visible = true;
+                Panel.Visible = false;
+            }
+            else
+            {
+                label1.Visible = false;
+                CreateTable(TicketStatus.UNASSIGNED);
+                Panel.Visible = true;
+            }
+        }
+
+        private void MyTicketsBtn_Click(object sender, EventArgs e)
+        {
+            label1.Visible = false;
+            label3.Visible = false;
+            label4.Visible = false;
+
+            UpdatePanelStatus(TicketStatus.ASSIGNED);
+
+            if (!CheckExist(TicketStatus.ASSIGNED))
+            {
+                label2.Visible = true;
+                Panel.Visible = false;
+            }
+            else
+            {
+                label2.Visible = false;
+                CreateTable(TicketStatus.ASSIGNED);
+                Panel.Visible = true;
+            }
+        }
+
+        private void CloseBtn_Click(object sender, EventArgs e)
+        {
+            label1.Visible = false;
+            label2.Visible = false;
+            label4.Visible = false;
+
+            UpdatePanelStatus(TicketStatus.CLOSED);
+
+            if (!CheckExist(TicketStatus.CLOSED))
+            {
+                label3.Visible = true;
+                Panel.Visible = false;
+            }
+            else
+            {
+                label3.Visible = false;
+                CreateTable(TicketStatus.CLOSED);
+                Panel.Visible = true;
+            }
         }
 
         private void LogoutBtn_Click(object sender, EventArgs e)
@@ -274,6 +221,8 @@ namespace GUI.Forms
             label2.Visible = false;
             label3.Visible = false;
 
+            UpdatePanelStatus(TicketStatus.WAITING);
+
             if (!CheckExist(TicketStatus.WAITING))
             {
                 label4.Visible = true;
@@ -297,5 +246,163 @@ namespace GUI.Forms
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
+    }
+
+    interface IPanelRow
+    {
+        void AddPanelRow(TableLayoutPanel panel, float value, object obj, Action action);
+    }
+
+    class TicketPanelRowImpl : IPanelRow
+    {
+        public void AddPanelRow(TableLayoutPanel panel, float value, object obj, Action action)
+        {
+            if (!(obj is Ticket))
+                return;
+
+            Ticket ticket = (Ticket)obj;
+            int count = panel.Controls.Count;
+
+            panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, value));
+            Label labelTmp = new Label()
+            {
+                Text = ticket.ID.ToString(),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
+            };
+
+            labelTmp.Click += (object sender, EventArgs e) =>
+            {
+                action();
+            };
+
+            panel.Controls.Add(labelTmp, 0, count);
+
+            labelTmp = new Label()
+            {
+                Text = ticket.Title,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
+            };
+
+            labelTmp.Click += (object sender, EventArgs e) =>
+            {
+                action();
+            };
+
+            panel.Controls.Add(labelTmp, 1, count);
+
+            labelTmp = new Label()
+            {
+                Text = ticket.Date.ToString(),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
+            };
+
+            labelTmp.Click += (object sender, EventArgs e) =>
+            {
+                action();
+            };
+
+            panel.Controls.Add(labelTmp, 2, count);
+        }
+    }
+
+    class TitlePanelRowImpl : IPanelRow
+    {
+        public void AddPanelRow(TableLayoutPanel panel, float value, object obj, Action action)
+        {
+            panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, value));
+            Label labelTmp = new Label()
+            {
+                Text = "Ticket ID",
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.Black,
+                Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
+            };
+            labelTmp.Click += (object sender, EventArgs e) =>
+            {
+                action();
+            };
+            panel.Controls.Add(labelTmp, 0, 0);
+
+            labelTmp = new Label()
+            {
+                Text = "Title",
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.Black,
+                Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
+            };
+            labelTmp.Click += (object sender, EventArgs e) =>
+            {
+                action();
+            };
+            panel.Controls.Add(labelTmp, 1, 0);
+
+            labelTmp = new Label()
+            {
+                Text = "Date",
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.Black,
+                Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
+            };
+            labelTmp.Click += (object sender, EventArgs e) =>
+            {
+                action();
+            };
+            panel.Controls.Add(labelTmp, 2, 0);
+        }
+    }
+
+    interface IStatusPanel
+    {
+        void NewTT(Tickets form, Ticket ticket);
+        void AssignedTT(Tickets form, Ticket ticket);
+        void WaitingTT(Tickets form, Ticket ticket);
+        void ClosedTT(Tickets form, Ticket ticket);
+    }
+
+    class StatusPanel
+    {
+        public static IStatusPanel GetStatusPanelController(TicketStatus status)
+        {
+            switch(status)
+            {
+                case TicketStatus.UNASSIGNED:
+                    return new UnassignedStautsPanel();
+                case TicketStatus.ASSIGNED:
+                    return null;
+                case TicketStatus.WAITING:
+                    return null;
+                case TicketStatus.CLOSED:
+                    return null;
+            }
+            return null;
+        }
+    }
+
+    class UnassignedStautsPanel : IStatusPanel
+    {
+        // Reload current panel
+        public void AssignedTT(Tickets form, Ticket ticket)
+        {
+            form.CreateTable(TicketStatus.UNASSIGNED);
+        }
+        
+        // Add new ticket to current panel
+        public void NewTT(Tickets form, Ticket ticket)
+        {
+            IPanelRow panelRow = new TicketPanelRowImpl();
+            float value = 100 / (form.ClientInstance.TroubleTickets.UnassignedTroubleTickets.Count + 1);
+            panelRow.AddPanelRow(form.Panel, value, ticket, () => { form.TicketClickAction(ticket); });
+        }
+
+        // Do nothing
+        public void ClosedTT(Tickets form, Ticket ticket)
+        {}
+
+        // Do nothing
+        public void WaitingTT(Tickets form, Ticket ticket)
+        {}
     }
 }

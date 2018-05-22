@@ -12,39 +12,37 @@ namespace SolverGUI
     {
         public Client ClientInstance;
         public Ticket TicketInfo;
-        public int TicketID;
 
-        public TicketPage(int ticketID)
+        public TicketPage(Ticket ticket)
         {
             ClientInstance = Client.Instance;
             InitializeComponent();
             
-            this.TicketID = ticketID;
+            TicketInfo = ticket;
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
-            GetTicketInfo();
+            LoadTicketInfo();
         }
 
-        public void GetTicketInfo()
+        public void LoadTicketInfo()
         {
-            this.TicketInfo = ClientInstance.Proxy.GetTicket(this.TicketID);
             ticketLabel.Text = "Ticket #" + this.TicketInfo.ID.ToString();
             title.Text = this.TicketInfo.Title;
             date.Text = this.TicketInfo.Date.ToString();
             description.Text = this.TicketInfo.Description;
             status.Text = this.TicketInfo.Status.ToString();
 
-            if (this.TicketInfo.Status == TicketStatus.CLOSED)
+            if (TicketInfo.Status == TicketStatus.CLOSED)
             {
                 this.assignBtn.Visible = false;
                 this.solveBtn.Visible = false;
                 this.redirectBtn.Visible = false;
             }
-            else if (this.TicketInfo.Status == TicketStatus.ASSIGNED)
+            else if (TicketInfo.Status == TicketStatus.ASSIGNED)
                 this.assignBtn.Visible = false;
         }
 

@@ -42,7 +42,7 @@ namespace SolverGUI
         private void TicketBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            new TicketPage(TTicket.ID).ShowDialog();
+            new TicketPage(TTicket).ShowDialog();
             Show();
         }
 
@@ -66,7 +66,7 @@ namespace SolverGUI
         {
             string emailText = email.Text;
             ClientInstance.SolverProxy.AnswerTicket(ClientInstance.Solver.ID, TTicket.Author.ID, TTicket.ID, emailText);
-            new TicketPage(TTicket.ID).ShowDialog();
+            new TicketPage(TTicket).ShowDialog();
             Show();
         }
     }

@@ -52,7 +52,7 @@ namespace SolverGUI
         private void TicketBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            new TicketPage(TTicket.ID).ShowDialog();
+            new TicketPage(TTicket).ShowDialog();
             Show();
         }
 
@@ -85,7 +85,7 @@ namespace SolverGUI
             {
                 ClientInstance.SolverProxy.RedirectTicket(TTicket.ID, ClientInstance.Solver.ID, redirect, department);
             });
-            new TicketPage(TTicket.ID).ShowDialog();
+            new TicketPage(TTicket).ShowDialog();
             Show();
         }
 
