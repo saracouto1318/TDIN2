@@ -19,7 +19,6 @@ namespace GUI.Forms
         public Tickets()
         {
             ClientInstance = Client.Instance;
-            ClientInstance.TroubleTickets.OnNewTroubleTicket += OnNewTT;
 
             InitializeComponent();
 
@@ -30,110 +29,25 @@ namespace GUI.Forms
 
             GetUserInfo();
 
-            StatusPanelController = StatusPanel.GetStatusPanelController(PanelStatus);
+            StatusPanelController = StatusPanelFactory.GetStatusPanelController(PanelStatus);
             CreateTable(PanelStatus);
+
+            this.VisibleChanged += OnVisibleChange;
         }
 
-
-        public void GetUserInfo()
+        #region Form
+        private void OnVisibleChange(object sender, EventArgs e)
         {
-            this.name.Text = ClientInstance.Solver.Name;
-            this.email.Text = ClientInstance.Solver.Email;
-        }
-
-        private bool CheckExist(TicketStatus status)
-        {
-            return ClientInstance.TroubleTickets.GetTicketsByStatus(status).Count > 0;
-        }
-
-
-        private void UpdatePanelStatus(TicketStatus status)
-        {
-            PanelStatus = TicketStatus.ASSIGNED;
-            StatusPanelController = StatusPanel.GetStatusPanelController(PanelStatus);
-        }
-
-        private void OnNewTT(Ticket ticket)
-        {
-            if(StatusPanelController != null)
+            if(!Visible)
             {
-                StatusPanelController.NewTT(this, ticket);
-            }
-        }
-
-
-        private async Task SendWithDelay(int delay, Task task)
-        {
-            await Task.Delay(delay);
-            task.Start();
-        }
-
-
-        public void TicketClickAction(Ticket t)
-        {
-            OnHide();
-            Hide();
-            new TicketPage(t).ShowDialog();
-            Show();
-        }
-
-        public void CreateTable(TicketStatus status)
-        {
-            Ticket[] tickets = ClientInstance.TroubleTickets.GetTicketsByStatus(status).ToArray();
-            LoadTable(tickets);
-        }
-
-        public void LoadTable(Ticket[] tickets)
-        {
-            IPanelRow panelRow = new TitlePanelRowImpl();
-
-            Panel.Visible = true;
-            float value = 100 / (tickets.Length + 1);
-
-            CreatePanel();
-            Panel.SuspendLayout();
-
-            panelRow.AddPanelRow(Panel, value, null, () => { });
-
-            panelRow = new TicketPanelRowImpl();
-            foreach (Ticket t in tickets)
+                UnsubscribeEvents();
+}
+            else
             {
-                panelRow.AddPanelRow(Panel, value, t,  () => { TicketClickAction(t); });
-            }
-
-            Panel.ResumeLayout();
+                SubscribeEvents();
+}
         }
 
-        private void CreatePanel()
-        {
-            Panel.Dispose();
-            Panel = new TableLayoutPanel
-            {
-                BackColor = SystemColors.ButtonHighlight,
-                BackgroundImageLayout = ImageLayout.Center,
-                CellBorderStyle = TableLayoutPanelCellBorderStyle.Single,
-                ColumnCount = 3
-            };
-
-            Panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
-            Panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
-            Panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
-            Panel.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (0));
-            Panel.Location = new Point(130, 221);
-            Panel.Name = "tableLayoutPanel1";
-            Panel.Size = new Size(100, 40);
-            Panel.AutoSize = true;
-
-            Controls.Add(Panel);
-        }
-
-
-        private void OnHide()
-        {
-            ClientInstance.TroubleTickets.OnNewTroubleTicket -= OnNewTT;
-        }
-
-        
         private void OpenBtn_Click(object sender, EventArgs e)
         {
             label2.Visible = false;
@@ -201,7 +115,6 @@ namespace GUI.Forms
         {
             ClientInstance.UnitializeSolverSession();
             ClientInstance.Proxy.Logout(ClientInstance.Solver.ID);
-            OnHide();
             Hide();
             new MainPage().ShowDialog();
             Show();
@@ -209,7 +122,6 @@ namespace GUI.Forms
 
         private void ProfileBtn_Click(object sender, EventArgs e)
         {
-            OnHide();
             Hide();
             new PersonalPage().ShowDialog();
             Show();
@@ -246,6 +158,145 @@ namespace GUI.Forms
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
+        #endregion
+
+        #region Panel
+        private void UpdatePanelStatus(TicketStatus status)
+        {
+            PanelStatus = TicketStatus.ASSIGNED;
+            StatusPanelController = StatusPanelFactory.GetStatusPanelController(PanelStatus);
+        }
+
+        public void TicketClickAction(Ticket t)
+        {
+            Hide();
+            new TicketPage(t).ShowDialog();
+            Show();
+        }
+
+        public void CreateTable(TicketStatus status)
+        {
+            Ticket[] tickets = ClientInstance.TroubleTickets.GetTicketsByStatus(status).ToArray();
+            LoadTable(tickets);
+        }
+
+        public void LoadTable(Ticket[] tickets)
+        {
+            IPanelRow panelRow = new TitlePanelRowImpl();
+
+            Panel.Visible = true;
+            float value = 100 / (tickets.Length + 1);
+
+            CreatePanel();
+            Panel.SuspendLayout();
+
+            panelRow.AddPanelRow(Panel, value, null, () => { });
+
+            panelRow = new TicketPanelRowImpl();
+            foreach (Ticket t in tickets)
+            {
+                panelRow.AddPanelRow(Panel, value, t, () => { TicketClickAction(t); });
+            }
+
+            Panel.ResumeLayout();
+        }
+
+        private void CreatePanel()
+        {
+            Panel.Dispose();
+            Panel = new TableLayoutPanel
+            {
+                BackColor = SystemColors.ButtonHighlight,
+                BackgroundImageLayout = ImageLayout.Center,
+                CellBorderStyle = TableLayoutPanelCellBorderStyle.Single,
+                ColumnCount = 3
+            };
+
+            Panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
+            Panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
+            Panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 33F));
+            Panel.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (0));
+            Panel.Location = new Point(130, 221);
+            Panel.Name = "tableLayoutPanel1";
+            Panel.Size = new Size(100, 40);
+            Panel.AutoSize = true;
+
+            Controls.Add(Panel);
+        }
+        #endregion
+
+        #region Events
+        private void SubscribeEvents()
+        {
+            ClientInstance.TroubleTickets.OnNewTroubleTicket += OnNewTT;
+            ClientInstance.TroubleTickets.OnMyAssignedTroubleTicket += OnAssignedMyTT;
+            ClientInstance.TroubleTickets.OnOtherAssignedTroubleTicket += OnAssignedOthTT;
+            ClientInstance.TroubleTickets.OnWaitingSecondaryQuestion += OnWaitingTT;
+            ClientInstance.TroubleTickets.OnClosedTroubleTicket += OnCloseTT;
+        }
+
+        private void UnsubscribeEvents()
+        {
+            ClientInstance.TroubleTickets.OnNewTroubleTicket -= OnNewTT;
+            ClientInstance.TroubleTickets.OnMyAssignedTroubleTicket -= OnAssignedMyTT;
+            ClientInstance.TroubleTickets.OnOtherAssignedTroubleTicket -= OnAssignedOthTT;
+            ClientInstance.TroubleTickets.OnWaitingSecondaryQuestion -= OnWaitingTT;
+            ClientInstance.TroubleTickets.OnClosedTroubleTicket -= OnCloseTT;
+        }
+
+        private void OnNewTT(Ticket ticket)
+        {
+            if(StatusPanelController != null)
+            {
+                StatusPanelController.NewTT(this, ticket);
+            }
+        }
+
+        private void OnAssignedMyTT(Ticket ticket)
+        {
+            if (StatusPanelController != null)
+            {
+                StatusPanelController.AssignedMyTT(this, ticket);
+            }
+        }
+
+        private void OnAssignedOthTT(Ticket ticket)
+        {
+            if (StatusPanelController != null)
+            {
+                StatusPanelController.AssignedOthTT(this, ticket);
+            }
+        }
+
+        private void OnWaitingTT(Ticket ticket, SecondaryQuestion secondaryQuestion)
+        {
+            if (StatusPanelController != null)
+            {
+                StatusPanelController.WaitingTT(this, ticket);
+            }
+        }
+
+        private void OnCloseTT(Ticket ticket)
+        {
+            if (StatusPanelController != null)
+            {
+                StatusPanelController.ClosedTT(this, ticket);
+            }
+        }
+        #endregion
+
+        #region Service
+        public void GetUserInfo()
+        {
+            this.name.Text = ClientInstance.Solver.Name;
+            this.email.Text = ClientInstance.Solver.Email;
+        }
+
+        private bool CheckExist(TicketStatus status)
+        {
+            return ClientInstance.TroubleTickets.GetTicketsByStatus(status).Count > 0;
+        }
+        #endregion
     }
 
     interface IPanelRow
@@ -357,12 +408,13 @@ namespace GUI.Forms
     interface IStatusPanel
     {
         void NewTT(Tickets form, Ticket ticket);
-        void AssignedTT(Tickets form, Ticket ticket);
+        void AssignedMyTT(Tickets form, Ticket ticket);
+        void AssignedOthTT(Tickets form, Ticket ticket);
         void WaitingTT(Tickets form, Ticket ticket);
         void ClosedTT(Tickets form, Ticket ticket);
     }
 
-    class StatusPanel
+    class StatusPanelFactory
     {
         public static IStatusPanel GetStatusPanelController(TicketStatus status)
         {
@@ -371,11 +423,11 @@ namespace GUI.Forms
                 case TicketStatus.UNASSIGNED:
                     return new UnassignedStautsPanel();
                 case TicketStatus.ASSIGNED:
-                    return null;
+                    return new AssignedStautsPanel();
                 case TicketStatus.WAITING:
-                    return null;
+                    return new WaitingStautsPanel();
                 case TicketStatus.CLOSED:
-                    return null;
+                    return new CloseStautsPanel();
             }
             return null;
         }
@@ -384,7 +436,13 @@ namespace GUI.Forms
     class UnassignedStautsPanel : IStatusPanel
     {
         // Reload current panel
-        public void AssignedTT(Tickets form, Ticket ticket)
+        public void AssignedMyTT(Tickets form, Ticket ticket)
+        {
+            form.CreateTable(TicketStatus.UNASSIGNED);
+        }
+
+        // Reload current panel
+        public void AssignedOthTT(Tickets form, Ticket ticket)
         {
             form.CreateTable(TicketStatus.UNASSIGNED);
         }
@@ -404,5 +462,98 @@ namespace GUI.Forms
         // Do nothing
         public void WaitingTT(Tickets form, Ticket ticket)
         {}
+    }
+
+    class AssignedStautsPanel : IStatusPanel
+    {
+        // Reload current panel
+        public void AssignedMyTT(Tickets form, Ticket ticket)
+        {
+            form.CreateTable(TicketStatus.UNASSIGNED);
+        }
+
+        // Reload current panel
+        public void AssignedOthTT(Tickets form, Ticket ticket)
+        {
+            form.CreateTable(TicketStatus.UNASSIGNED);
+        }
+
+        // Add new ticket to current panel
+        public void NewTT(Tickets form, Ticket ticket)
+        {
+            IPanelRow panelRow = new TicketPanelRowImpl();
+            float value = 100 / (form.ClientInstance.TroubleTickets.UnassignedTroubleTickets.Count + 1);
+            panelRow.AddPanelRow(form.Panel, value, ticket, () => { form.TicketClickAction(ticket); });
+        }
+
+        // Do nothing
+        public void ClosedTT(Tickets form, Ticket ticket)
+        { }
+
+        // Do nothing
+        public void WaitingTT(Tickets form, Ticket ticket)
+        { }
+    }
+
+    class WaitingStautsPanel : IStatusPanel
+    {
+        // Reload current panel
+        public void AssignedMyTT(Tickets form, Ticket ticket)
+        {
+            form.CreateTable(TicketStatus.UNASSIGNED);
+        }
+
+        // Reload current panel
+        public void AssignedOthTT(Tickets form, Ticket ticket)
+        {
+            form.CreateTable(TicketStatus.UNASSIGNED);
+        }
+
+        // Add new ticket to current panel
+        public void NewTT(Tickets form, Ticket ticket)
+        {
+            IPanelRow panelRow = new TicketPanelRowImpl();
+            float value = 100 / (form.ClientInstance.TroubleTickets.UnassignedTroubleTickets.Count + 1);
+            panelRow.AddPanelRow(form.Panel, value, ticket, () => { form.TicketClickAction(ticket); });
+        }
+
+        // Do nothing
+        public void ClosedTT(Tickets form, Ticket ticket)
+        { }
+
+        // Do nothing
+        public void WaitingTT(Tickets form, Ticket ticket)
+        { }
+    }
+
+    class CloseStautsPanel : IStatusPanel
+    {
+        // Reload current panel
+        public void AssignedMyTT(Tickets form, Ticket ticket)
+        {
+            form.CreateTable(TicketStatus.UNASSIGNED);
+        }
+
+        // Reload current panel
+        public void AssignedOthTT(Tickets form, Ticket ticket)
+        {
+            form.CreateTable(TicketStatus.UNASSIGNED);
+        }
+
+        // Add new ticket to current panel
+        public void NewTT(Tickets form, Ticket ticket)
+        {
+            IPanelRow panelRow = new TicketPanelRowImpl();
+            float value = 100 / (form.ClientInstance.TroubleTickets.UnassignedTroubleTickets.Count + 1);
+            panelRow.AddPanelRow(form.Panel, value, ticket, () => { form.TicketClickAction(ticket); });
+        }
+
+        // Do nothing
+        public void ClosedTT(Tickets form, Ticket ticket)
+        { }
+
+        // Do nothing
+        public void WaitingTT(Tickets form, Ticket ticket)
+        { }
     }
 }
