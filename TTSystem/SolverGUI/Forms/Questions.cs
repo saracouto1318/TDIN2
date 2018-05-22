@@ -59,14 +59,14 @@ namespace GUI.Forms
             }, 0, 0);
             Panel.Controls.Add(new Label()
             {
-                Text = "Department",
+                Text = "Ticket ID",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
             }, 1, 0);
             Panel.Controls.Add(new Label()
             {
-                Text = "Ticket ID",
+                Text = "Department",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
@@ -168,9 +168,9 @@ namespace GUI.Forms
             Panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
             Panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 25F));
             Panel.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (0));
-            Panel.Location = new Point(120, 221);
+            Panel.Location = new Point(100, 221);
             Panel.Name = "tableLayoutPanel1";
-            Panel.Size = new Size(100, 40);
+            Panel.Size = new Size(120, 40);
             Panel.AutoSize = true;
 
             Controls.Add(Panel);
