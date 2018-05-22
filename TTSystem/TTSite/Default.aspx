@@ -4,7 +4,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head runat="server">
-        <title>TDIN</title>
+        <title>Trouble Tickets</title>
+        <link rel="shortcut icon" href="~/Content/img/ticket-icon.png" />
         <link href="~/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 
         <!-- Custom Fonts -->

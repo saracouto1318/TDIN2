@@ -6,6 +6,7 @@
     <head runat="server">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
             <title>Ticket</title>
+        <link rel="shortcut icon" href="~/Content/img/ticket-icon.png" />
         <link href="~/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
         <!-- Custom Fonts -->
