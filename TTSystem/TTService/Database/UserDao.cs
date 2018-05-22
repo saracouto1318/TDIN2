@@ -844,39 +844,13 @@ namespace TTService.Database
         #region SecondaryQuestionTable        
         public static bool AddQuestion(int ticket, int solver, string redirectMessage, int id)
         {
-            if (UpdateTicketQuestion(ticket))
-            {
-                SqlConnection c = AccessDao.Instance.Conn;
-                try
-                {
-                    c.Open();
-                    string sql = "" +
-                        "INSERT INTO SecondaryQuestions(idTicket, idSender, idDepartment, question, response, dateTime) " +
-                        "VALUES (" + ticket + ", " + solver + ", " + id + ", '" + redirectMessage + "', null, GetDate())";
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    int rowCount = cmd.ExecuteNonQuery();
-                    return rowCount >= 1;
-                }
-                catch (SqlException)
-                {
-                }
-                finally
-                {
-                    if (c != null)
-                        c.Close();
-                }
-                return false;
-            }
-            return false;
-        }
-
-        public static bool UpdateTicketQuestion(int idTicket)
-        {
             SqlConnection c = AccessDao.Instance.Conn;
             try
             {
                 c.Open();
-                string sql = "UPDATE Ticket SET status='wait' WHERE idTicket=" + idTicket;
+                string sql = "" +
+                    "INSERT INTO SecondaryQuestions(idTicket, idSender, idDepartment, question, response, dateTime) " +
+                    "VALUES (" + ticket + ", " + solver + ", " + id + ", '" + redirectMessage + "', null, GetDate()); UPDATE Ticket SET status='wait' WHERE idTicket=" + ticket;
                 SqlCommand cmd = new SqlCommand(sql, c);
                 int rowCount = cmd.ExecuteNonQuery();
                 return rowCount >= 1;
@@ -969,29 +943,25 @@ namespace TTService.Database
         }
         public static bool UpdateQuestion(SecondaryQuestion question)
         {
-            if(AssignTicket(question.TicketID, question.SenderID))
+            SqlConnection c = AccessDao.Instance.Conn;
+            try
             {
-                SqlConnection c = AccessDao.Instance.Conn;
-                try
-                {
-                    c.Open();
-                    string sql = "UPDATE SecondaryQuestions " +
-                        "SET idDepartment = " + question.Department + ", " +
-                        "response = '" + question.Response + "' " +
-                        "WHERE idQuestion = " + question.ID;
-                    SqlCommand cmd = new SqlCommand(sql, c);
-                    int rowCount = cmd.ExecuteNonQuery();
-                    return rowCount >= 1;
-                }
-                catch (SqlException)
-                {
-                }
-                finally
-                {
-                    if (c != null)
-                        c.Close();
-                }
-                return false;
+                c.Open();
+                string sql = "UPDATE SecondaryQuestions " +
+                    "SET idDepartment = " + question.Department + ", " +
+                    "response = '" + question.Response + "' " +
+                    "WHERE idQuestion = " + question.ID + "; UPDATE Ticket SET status='assigned' WHERE idTicket=" + question.TicketID;
+                SqlCommand cmd = new SqlCommand(sql, c);
+                int rowCount = cmd.ExecuteNonQuery();
+                return rowCount >= 1;
+            }
+            catch (SqlException)
+            {
+            }
+            finally
+            {
+                if (c != null)
+                    c.Close();
             }
             return false;
         }
