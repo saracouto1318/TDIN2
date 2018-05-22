@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -27,7 +28,7 @@ namespace GUI.Forms
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
-            GetUserInfo();
+            LoadUserInfo();
 
             StatusPanelController = StatusPanelFactory.GetStatusPanelController(PanelStatus);
             CreateTable(PanelStatus);
@@ -35,7 +36,13 @@ namespace GUI.Forms
             this.VisibleChanged += OnVisibleChange;
         }
 
-        #region Form
+        #region Form        
+        public void LoadUserInfo()
+        {
+            this.name.Text = ClientInstance.Solver.Name;
+            this.email.Text = ClientInstance.Solver.Email;
+        }
+
         private void OnVisibleChange(object sender, EventArgs e)
         {
             if(!Visible)
@@ -111,22 +118,6 @@ namespace GUI.Forms
             }
         }
 
-        private void LogoutBtn_Click(object sender, EventArgs e)
-        {
-            ClientInstance.UnitializeSolverSession();
-            ClientInstance.Proxy.Logout(ClientInstance.Solver.ID);
-            Hide();
-            new MainPage().ShowDialog();
-            Show();
-        }
-
-        private void ProfileBtn_Click(object sender, EventArgs e)
-        {
-            Hide();
-            new PersonalPage().ShowDialog();
-            Show();
-        }
-
         private void QuestionsOpen_Click(object sender, EventArgs e)
         {
             label1.Visible = false;
@@ -148,6 +139,22 @@ namespace GUI.Forms
             }
         }
 
+        private void LogoutBtn_Click(object sender, EventArgs e)
+        {
+            ClientInstance.UnitializeSolverSession();
+            ClientInstance.Proxy.Logout(ClientInstance.Solver.ID);
+            Hide();
+            new MainPage().ShowDialog();
+            Show();
+        }
+
+        private void ProfileBtn_Click(object sender, EventArgs e)
+        {
+            Hide();
+            new PersonalPage().ShowDialog();
+            Show();
+        }
+
         private void Tickets_Load(object sender, EventArgs e)
         {
             this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
@@ -163,7 +170,7 @@ namespace GUI.Forms
         #region Panel
         private void UpdatePanelStatus(TicketStatus status)
         {
-            PanelStatus = TicketStatus.ASSIGNED;
+            PanelStatus = status;
             StatusPanelController = StatusPanelFactory.GetStatusPanelController(PanelStatus);
         }
 
@@ -176,16 +183,18 @@ namespace GUI.Forms
 
         public void CreateTable(TicketStatus status)
         {
-            Ticket[] tickets = ClientInstance.TroubleTickets.GetTicketsByStatus(status).ToArray();
+            List<Ticket> tickets = ClientInstance.TroubleTickets.GetTicketsByStatus(status);
+            if (tickets.Count <= 0)
+                return;
             LoadTable(tickets);
         }
 
-        public void LoadTable(Ticket[] tickets)
+        public void LoadTable(List<Ticket> tickets)
         {
             IPanelRow panelRow = new TitlePanelRowImpl();
 
             Panel.Visible = true;
-            float value = 100 / (tickets.Length + 1);
+            float value = 100 / (tickets.Count + 1);
 
             CreatePanel();
             Panel.SuspendLayout();
@@ -231,8 +240,6 @@ namespace GUI.Forms
             ClientInstance.TroubleTickets.OnNewTroubleTicket += OnNewTT;
             ClientInstance.TroubleTickets.OnMyAssignedTroubleTicket += OnAssignedMyTT;
             ClientInstance.TroubleTickets.OnOtherAssignedTroubleTicket += OnAssignedOthTT;
-            ClientInstance.TroubleTickets.OnWaitingSecondaryQuestion += OnWaitingTT;
-            ClientInstance.TroubleTickets.OnClosedTroubleTicket += OnCloseTT;
         }
 
         private void UnsubscribeEvents()
@@ -240,8 +247,6 @@ namespace GUI.Forms
             ClientInstance.TroubleTickets.OnNewTroubleTicket -= OnNewTT;
             ClientInstance.TroubleTickets.OnMyAssignedTroubleTicket -= OnAssignedMyTT;
             ClientInstance.TroubleTickets.OnOtherAssignedTroubleTicket -= OnAssignedOthTT;
-            ClientInstance.TroubleTickets.OnWaitingSecondaryQuestion -= OnWaitingTT;
-            ClientInstance.TroubleTickets.OnClosedTroubleTicket -= OnCloseTT;
         }
 
         private void OnNewTT(Ticket ticket)
@@ -267,31 +272,9 @@ namespace GUI.Forms
                 StatusPanelController.AssignedOthTT(this, ticket);
             }
         }
-
-        private void OnWaitingTT(Ticket ticket, SecondaryQuestion secondaryQuestion)
-        {
-            if (StatusPanelController != null)
-            {
-                StatusPanelController.WaitingTT(this, ticket);
-            }
-        }
-
-        private void OnCloseTT(Ticket ticket)
-        {
-            if (StatusPanelController != null)
-            {
-                StatusPanelController.ClosedTT(this, ticket);
-            }
-        }
         #endregion
 
         #region Service
-        public void GetUserInfo()
-        {
-            this.name.Text = ClientInstance.Solver.Name;
-            this.email.Text = ClientInstance.Solver.Email;
-        }
-
         private bool CheckExist(TicketStatus status)
         {
             return ClientInstance.TroubleTickets.GetTicketsByStatus(status).Count > 0;
@@ -407,11 +390,9 @@ namespace GUI.Forms
 
     interface IStatusPanel
     {
-        void NewTT(Tickets form, Ticket ticket);
         void AssignedMyTT(Tickets form, Ticket ticket);
         void AssignedOthTT(Tickets form, Ticket ticket);
-        void WaitingTT(Tickets form, Ticket ticket);
-        void ClosedTT(Tickets form, Ticket ticket);
+        void NewTT(Tickets form, Ticket ticket);
     }
 
     class StatusPanelFactory
@@ -423,11 +404,9 @@ namespace GUI.Forms
                 case TicketStatus.UNASSIGNED:
                     return new UnassignedStautsPanel();
                 case TicketStatus.ASSIGNED:
-                    return new AssignedStautsPanel();
                 case TicketStatus.WAITING:
-                    return new WaitingStautsPanel();
                 case TicketStatus.CLOSED:
-                    return new CloseStautsPanel();
+                    return new DoNothingStatusPanel();
             }
             return null;
         }
@@ -447,113 +426,34 @@ namespace GUI.Forms
             form.CreateTable(TicketStatus.UNASSIGNED);
         }
         
-        // Add new ticket to current panel
+        // Add new ticket to current panel or load new panel
         public void NewTT(Tickets form, Ticket ticket)
         {
-            IPanelRow panelRow = new TicketPanelRowImpl();
-            float value = 100 / (form.ClientInstance.TroubleTickets.UnassignedTroubleTickets.Count + 1);
-            panelRow.AddPanelRow(form.Panel, value, ticket, () => { form.TicketClickAction(ticket); });
+            if(form.Panel == null || form.Panel.RowCount == 0)
+            {
+                form.CreateTable(TicketStatus.UNASSIGNED);
+            }
+            else
+            {
+                IPanelRow panelRow = new TicketPanelRowImpl();
+                float value = 100 / (form.ClientInstance.TroubleTickets.UnassignedTroubleTickets.Count + 1);
+                panelRow.AddPanelRow(form.Panel, value, ticket, () => { form.TicketClickAction(ticket); });
+            }
         }
-
-        // Do nothing
-        public void ClosedTT(Tickets form, Ticket ticket)
-        {}
-
-        // Do nothing
-        public void WaitingTT(Tickets form, Ticket ticket)
-        {}
     }
 
-    class AssignedStautsPanel : IStatusPanel
+    class DoNothingStatusPanel : IStatusPanel
     {
-        // Reload current panel
+        // Do nothing
         public void AssignedMyTT(Tickets form, Ticket ticket)
-        {
-            form.CreateTable(TicketStatus.UNASSIGNED);
-        }
+        { }
 
-        // Reload current panel
+        // Do nothing
         public void AssignedOthTT(Tickets form, Ticket ticket)
-        {
-            form.CreateTable(TicketStatus.UNASSIGNED);
-        }
+        { }
 
-        // Add new ticket to current panel
+        // Do nothing
         public void NewTT(Tickets form, Ticket ticket)
-        {
-            IPanelRow panelRow = new TicketPanelRowImpl();
-            float value = 100 / (form.ClientInstance.TroubleTickets.UnassignedTroubleTickets.Count + 1);
-            panelRow.AddPanelRow(form.Panel, value, ticket, () => { form.TicketClickAction(ticket); });
-        }
-
-        // Do nothing
-        public void ClosedTT(Tickets form, Ticket ticket)
-        { }
-
-        // Do nothing
-        public void WaitingTT(Tickets form, Ticket ticket)
-        { }
-    }
-
-    class WaitingStautsPanel : IStatusPanel
-    {
-        // Reload current panel
-        public void AssignedMyTT(Tickets form, Ticket ticket)
-        {
-            form.CreateTable(TicketStatus.UNASSIGNED);
-        }
-
-        // Reload current panel
-        public void AssignedOthTT(Tickets form, Ticket ticket)
-        {
-            form.CreateTable(TicketStatus.UNASSIGNED);
-        }
-
-        // Add new ticket to current panel
-        public void NewTT(Tickets form, Ticket ticket)
-        {
-            IPanelRow panelRow = new TicketPanelRowImpl();
-            float value = 100 / (form.ClientInstance.TroubleTickets.UnassignedTroubleTickets.Count + 1);
-            panelRow.AddPanelRow(form.Panel, value, ticket, () => { form.TicketClickAction(ticket); });
-        }
-
-        // Do nothing
-        public void ClosedTT(Tickets form, Ticket ticket)
-        { }
-
-        // Do nothing
-        public void WaitingTT(Tickets form, Ticket ticket)
-        { }
-    }
-
-    class CloseStautsPanel : IStatusPanel
-    {
-        // Reload current panel
-        public void AssignedMyTT(Tickets form, Ticket ticket)
-        {
-            form.CreateTable(TicketStatus.UNASSIGNED);
-        }
-
-        // Reload current panel
-        public void AssignedOthTT(Tickets form, Ticket ticket)
-        {
-            form.CreateTable(TicketStatus.UNASSIGNED);
-        }
-
-        // Add new ticket to current panel
-        public void NewTT(Tickets form, Ticket ticket)
-        {
-            IPanelRow panelRow = new TicketPanelRowImpl();
-            float value = 100 / (form.ClientInstance.TroubleTickets.UnassignedTroubleTickets.Count + 1);
-            panelRow.AddPanelRow(form.Panel, value, ticket, () => { form.TicketClickAction(ticket); });
-        }
-
-        // Do nothing
-        public void ClosedTT(Tickets form, Ticket ticket)
-        { }
-
-        // Do nothing
-        public void WaitingTT(Tickets form, Ticket ticket)
         { }
     }
 }

@@ -47,7 +47,7 @@ namespace SolverGUI
         {
             OnNewTroubleTicket += OnNewTT;
             OnMyAssignedTroubleTicket += OnMyAssignedTT;
-            OnOtherAssignedTroubleTicket += AssignedTT;
+            OnOtherAssignedTroubleTicket += OnAssignedTT;
             OnClosedTroubleTicket += OnClosedTT;
             OnWaitingSecondaryQuestion += OnQuestionTT;
             OnAnsweredSecondaryQuestion += OnAnsweredSQ;
@@ -104,12 +104,12 @@ namespace SolverGUI
         // Called when this user's trouble ticket as been assigned
         public void OnMyAssignedTT(Ticket ticket)
         {
-            AssignedTT(ticket);
+            OnAssignedTT(ticket);
             AssignedTroubleTickets.Add(ticket);
         }
 
         // Called when a trouble ticket as been assigned
-        public void AssignedTT(Ticket ticket)
+        public void OnAssignedTT(Ticket ticket)
         {
             UnassignedTroubleTickets.Remove(ticket);
         }

@@ -31,11 +31,11 @@ namespace SolverGUI
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
-            GetTicketInfo();
+            LoadTicketInfo();
             GetDepartments();
         }
 
-        public void GetTicketInfo()
+        public void LoadTicketInfo()
         {
             ticketLabel.Text = "Ticket #" + this.TTicket.ID.ToString();
             title.Text = this.TTicket.Title;
@@ -44,9 +44,10 @@ namespace SolverGUI
         public void GetDepartments()
         {
             String[] departments = ClientInstance.Proxy.GetDepartments();
-
             foreach (string department in departments)
+            {
                 this.departments.Items.Add(department);
+            }
         }
 
         private void TicketBtn_Click(object sender, EventArgs e)
@@ -81,10 +82,7 @@ namespace SolverGUI
 
             Hide();
             string redirect = message.Text;
-            Task.Run(() =>
-            {
-                ClientInstance.SolverProxy.RedirectTicket(TTicket.ID, ClientInstance.Solver.ID, redirect, department);
-            });
+            ClientInstance.SolverProxy.RedirectTicket(TTicket.ID, ClientInstance.Solver.ID, redirect, department);
             new TicketPage(TTicket).ShowDialog();
             Show();
         }

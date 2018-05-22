@@ -369,8 +369,11 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "SELECT * FROM Ticket WHERE idSender = " + user +
-                    " ORDER BY idTicket DESC LIMIT 1";
+                string sql = "SELECT * " +
+                    "FROM Ticket " +
+                    "WHERE idSender = " + user + " " +
+                    "ORDER BY idTicket DESC " +
+                    "OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY;";
                 SqlCommand cmd = new SqlCommand(sql, c);
                 reader = cmd.ExecuteReader();
 
@@ -381,8 +384,7 @@ namespace TTService.Database
                         ID = reader.GetInt32(0),
                         Date = reader.GetDateTime(5),
                         Description = reader.GetString(4),
-                        Title = reader.GetString(3),
-                        IDSolver = reader.GetInt32(2)
+                        Title = reader.GetString(3)
                     };
                 }
             }
@@ -865,7 +867,6 @@ namespace TTService.Database
             }
             return false;
         }
-
         public static List<SecondaryQuestion> GetQuestions(int idDepartment)
         {
             List<SecondaryQuestion> questions = new List<SecondaryQuestion>();

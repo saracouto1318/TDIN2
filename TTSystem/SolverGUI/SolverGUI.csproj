@@ -111,6 +111,11 @@
     <Compile Include="Forms\TicketPage.Designer.cs">
       <DependentUpon>TicketPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="TTList.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +147,10 @@
     <None Include="Properties\DataSources\TTService.SecondaryQuestion.datasource" />
     <None Include="Properties\DataSources\TTService.Ticket.datasource" />
     <None Include="Properties\DataSources\TTService.User.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\MainPage.resx">

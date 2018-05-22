@@ -41,9 +41,7 @@ namespace GUI.Forms
         private void CreateTable(bool value)
         {
             SecondaryQuestion[] questions;
-
             questions = ClientInstance.SolverProxy.MyQuestions(ClientInstance.Solver.ID, value);
-
 
             Panel.Visible = true;
             float rows = 100 / (questions.Length + 1);

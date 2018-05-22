@@ -114,6 +114,15 @@ namespace SolverGUI
 
         public void AnsweredTicket(SecondaryQuestion secondaryQuestion)
         {
+            List<Ticket> waitingTickets = TroubleTickets.WaitingTroubleTickets;
+            foreach(Ticket ticket in waitingTickets)
+            {
+                if(ticket.ID == secondaryQuestion.TicketID)
+                {
+                    TroubleTickets.OnAnsweredSecondaryQuestion(ticket, secondaryQuestion);
+                    break;
+                }
+            }
         }
     }
 }

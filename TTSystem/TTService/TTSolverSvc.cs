@@ -85,16 +85,13 @@ namespace TTService
             {
                 foreach (KeyValuePair<int, ITTUpdateCallback> sub in subscribers)
                 {
-                    if (idSolver == sub.Key)
+                    try
                     {
-                        try
-                        {
-                            sub.Value.AssignedTT(tticket);
-                        }
-                        catch (Exception)
-                        {
-                            rmSubs.Add(sub.Key);
-                        }
+                        sub.Value.AssignedTT(tticket);
+                    }
+                    catch (Exception)
+                    {
+                        rmSubs.Add(sub.Key);
                     }
                 }
             }
