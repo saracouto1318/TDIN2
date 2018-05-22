@@ -115,14 +115,31 @@ namespace SolverGUI
         public void AnsweredTicket(SecondaryQuestion secondaryQuestion)
         {
             List<Ticket> waitingTickets = TroubleTickets.WaitingTroubleTickets;
+            Ticket questionTicket = null;
             foreach(Ticket ticket in waitingTickets)
             {
                 if(ticket.ID == secondaryQuestion.TicketID)
                 {
-                    TroubleTickets.OnAnsweredSecondaryQuestion(ticket, secondaryQuestion);
+                    questionTicket = ticket;
                     break;
                 }
             }
+            if (questionTicket != null)
+            {
+                TroubleTickets.OnAnsweredSecondaryQuestion(questionTicket, secondaryQuestion);
+                ShowMessageBox("The trouble ticket " + questionTicket.Title + " has been assigned.", "Assigned trouble ticket");
+            }
+            else
+            {
+                UpdateTroubleTicketAsync();
+                ShowMessageBox("Trouble tickets out of sync.", "Sync problem");
+            }
+        }
+
+        private async Task UpdateTroubleTicketAsync()
+        {
+            await Task.Delay(1000);
+            TroubleTickets.UpdateTT(SolverProxy, Solver);
         }
     }
 }
