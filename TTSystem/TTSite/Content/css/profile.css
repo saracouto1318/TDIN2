@@ -16,6 +16,10 @@ body {
     /* the bottom margin is the negative value of the footer's height */
 }
 
+#description{
+    height: 40%;
+}
+
 .navbar-custom {
     background-color: #222222;
     border-color: transparent;

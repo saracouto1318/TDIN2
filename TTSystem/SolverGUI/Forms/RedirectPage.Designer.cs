@@ -60,7 +60,7 @@
             this.profileBtn.Primary = true;
             this.profileBtn.Size = new System.Drawing.Size(121, 28);
             this.profileBtn.TabIndex = 32;
-            this.profileBtn.Text = "Profile";
+            this.profileBtn.Text = "Main Page";
             this.profileBtn.UseVisualStyleBackColor = true;
             this.profileBtn.Click += new System.EventHandler(this.ProfileBtn_Click);
             // 

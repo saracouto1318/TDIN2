@@ -113,17 +113,13 @@ namespace TTService
                 User to = UserDao.SelectUser(senderTicket);
                 Ticket ticketInfo = UserDao.GetTicket(ticket);
                 SmtpClient client = new SmtpClient("smtp.gmail.com");
-
-                //Server Credentials
-                NetworkCredential NC = new NetworkCredential();
-                NC.UserName = "";
-                NC.Password = "";
+                
                 //assigned credetial details to server
-                client.Port = 25;
+                client.Port = 587;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
                 client.EnableSsl = true;
-                client.Credentials = NC;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential("trouble.tickets.it@gmail.com", "troubletickets1234");
 
                 MailAddress from = new MailAddress("trouble.tickets.it@gmail.com", "Trouble Tickets");
 

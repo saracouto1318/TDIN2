@@ -38,7 +38,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.email = new MaterialSkin.Controls.MaterialLabel();
             this.name = new MaterialSkin.Controls.MaterialLabel();
-            this.Load += new System.EventHandler(this.Questions_Load);
             this.SuspendLayout();
             // 
             // logoutBtn
@@ -96,7 +95,7 @@
             // profileBtn
             // 
             this.profileBtn.Depth = 0;
-            this.profileBtn.Location = new System.Drawing.Point(496, 84);
+            this.profileBtn.Location = new System.Drawing.Point(494, 81);
             this.profileBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.profileBtn.Name = "profileBtn";
             this.profileBtn.Primary = true;
@@ -186,6 +185,7 @@
             this.Controls.Add(this.openBtn);
             this.Name = "Questions";
             this.Text = "My Questions";
+            this.Load += new System.EventHandler(this.Questions_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
