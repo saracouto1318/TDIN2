@@ -887,7 +887,8 @@ namespace TTService.Database
                         Date = reader.GetDateTime(6),
                         SenderID = reader.GetInt32(2),
                         TicketID = reader.GetInt32(1),
-                        Question = reader.GetString(4)
+                        Question = reader.GetString(4),
+                        Department = reader.GetInt32(3)
                     };
 
                     questions.Add(question);
@@ -990,6 +991,7 @@ namespace TTService.Database
                     question.SenderID = reader.GetInt32(2);
                     question.TicketID = reader.GetInt32(1);
                     question.Question = reader.GetString(4);
+                    question.Department = reader.GetInt32(3);
 
                     questions.Add(question);
                 }
