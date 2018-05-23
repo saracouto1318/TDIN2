@@ -454,8 +454,8 @@ namespace TTService.Database
                     sql += "'wait'";
 
                 SqlCommand cmd = new SqlCommand(sql, c);
-                reader = cmd.ExecuteReader();
                 cmd.Parameters.Add(new SqlParameter("userID", user.ID));
+                reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
