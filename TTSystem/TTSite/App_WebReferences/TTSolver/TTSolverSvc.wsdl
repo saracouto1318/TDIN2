@@ -104,6 +104,9 @@
   <wsdl:message name="ITTSolverSvc_AssignedTT_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:AssignedTT" />
   </wsdl:message>
+  <wsdl:message name="ITTSolverSvc_AnsweredTicket_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:AnsweredTicket" />
+  </wsdl:message>
   <wsdl:portType name="ITTSolverSvc">
     <wsdl:operation name="Hello">
       <wsdl:input wsaw:Action="http://tempuri.org/ITTSolverSvc/Hello" message="tns:ITTSolverSvc_Hello_InputMessage" />
@@ -162,6 +165,9 @@
     </wsdl:operation>
     <wsdl:operation name="AssignedTT">
       <wsdl:output wsaw:Action="http://tempuri.org/ITTSolverSvc/AssignedTT" message="tns:ITTSolverSvc_AssignedTT_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AnsweredTicket">
+      <wsdl:output wsaw:Action="http://tempuri.org/ITTSolverSvc/AnsweredTicket" message="tns:ITTSolverSvc_AnsweredTicket_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="DualEndpoint_ITTSolverSvc" type="tns:ITTSolverSvc">
@@ -292,6 +298,12 @@
     </wsdl:operation>
     <wsdl:operation name="AssignedTT">
       <soap12:operation soapAction="http://tempuri.org/ITTSolverSvc/AssignedTT" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AnsweredTicket">
+      <soap12:operation soapAction="http://tempuri.org/ITTSolverSvc/AnsweredTicket" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
