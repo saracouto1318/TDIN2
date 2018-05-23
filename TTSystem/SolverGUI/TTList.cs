@@ -89,10 +89,10 @@ namespace SolverGUI
 
             OpenSecondaryQuestion =
                 new List<SecondaryQuestion>(
-                    SolverProxy.MyQuestions(user.ID, false));
+                    SolverProxy.MyQuestions(user.ID, true));
             ClosedSecondaryQuestion =
                 new List<SecondaryQuestion>(
-                    SolverProxy.MyQuestions(user.ID, true));
+                    SolverProxy.MyQuestions(user.ID, false));
         }
         
         // Called when a new trouble ticket as been dispatched
