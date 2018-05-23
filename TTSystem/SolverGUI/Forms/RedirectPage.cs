@@ -1,4 +1,5 @@
-﻿using MaterialSkin;
+﻿using GUI.Forms;
+using MaterialSkin;
 using MaterialSkin.Controls;
 using System;
 using System.Collections.Generic;
@@ -82,9 +83,19 @@ namespace SolverGUI
 
             Hide();
             string redirect = message.Text;
-            ClientInstance.SolverProxy.RedirectTicket(TTicket.ID, ClientInstance.Solver.ID, redirect, department);
-            new TicketPage(TTicket).ShowDialog();
-            Show();
+            SecondaryQuestion sq = ClientInstance.SolverProxy.RedirectTicket(TTicket.ID, ClientInstance.Solver.ID, redirect, department);
+            if (sq != null)
+            {
+                TTicket.Status = TicketStatus.WAITING;
+                ClientInstance.TroubleTickets.OnWaitingSecondaryQuestion(TTicket, sq);
+                new QuestionPage(sq).ShowDialog();
+                Show();
+            }
+            else
+            {
+                new MainPage().ShowDialog();
+                Show();
+            }
         }
 
         private void Departments_SelectedIndexChanged(object sender, EventArgs e)

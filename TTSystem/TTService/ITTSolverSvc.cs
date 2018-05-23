@@ -45,7 +45,7 @@ namespace TTService
         bool AnswerTicket(int solver, int senderTicket, int ticket, string email);
 
         [OperationContract]
-        bool RedirectTicket(int ticket, int solver, string redirectMessage, string department);
+        SecondaryQuestion RedirectTicket(int ticket, int solver, string redirectMessage, string department);
 
         [OperationContract]
         List<SecondaryQuestion> MyQuestions(int idSolver, bool isUnanswered);

@@ -7,7 +7,8 @@ using TTService.Models;
 
 namespace TTService
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, 
+        ConcurrencyMode = ConcurrencyMode.Single)]
     public class TTServ : ITTServ {
         
         #region WebApp

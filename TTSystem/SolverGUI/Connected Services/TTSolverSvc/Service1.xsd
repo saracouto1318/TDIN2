@@ -38,12 +38,6 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="TicketStatus" nillable="true" type="tns:TicketStatus" />
-  <xs:complexType name="ArrayOfSecondaryQuestion">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="SecondaryQuestion" nillable="true" type="tns:SecondaryQuestion" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfSecondaryQuestion" nillable="true" type="tns:ArrayOfSecondaryQuestion" />
   <xs:complexType name="SecondaryQuestion">
     <xs:sequence>
       <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
@@ -56,4 +50,10 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SecondaryQuestion" nillable="true" type="tns:SecondaryQuestion" />
+  <xs:complexType name="ArrayOfSecondaryQuestion">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SecondaryQuestion" nillable="true" type="tns:SecondaryQuestion" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSecondaryQuestion" nillable="true" type="tns:ArrayOfSecondaryQuestion" />
 </xs:schema>

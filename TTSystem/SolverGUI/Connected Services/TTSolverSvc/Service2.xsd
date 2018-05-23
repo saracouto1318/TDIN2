@@ -168,7 +168,7 @@
   <xs:element name="RedirectTicketResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="RedirectTicketResult" type="xs:boolean" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="RedirectTicketResult" nillable="true" type="q8:SecondaryQuestion" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -176,35 +176,35 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="idSolver" type="xs:int" />
-        <xs:element minOccurs="0" name="type" type="xs:boolean" />
+        <xs:element minOccurs="0" name="isUnanswered" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="MyQuestionsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="MyQuestionsResult" nillable="true" type="q8:ArrayOfSecondaryQuestion" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="MyQuestionsResult" nillable="true" type="q9:ArrayOfSecondaryQuestion" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NewTT">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="ticket" nillable="true" type="q9:Ticket" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="ticket" nillable="true" type="q10:Ticket" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AssignedTT">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="ticket" nillable="true" type="q10:Ticket" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="ticket" nillable="true" type="q11:Ticket" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AnsweredTicket">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="secondaryQuestion" nillable="true" type="q11:SecondaryQuestion" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/TTService" minOccurs="0" name="secondaryQuestion" nillable="true" type="q12:SecondaryQuestion" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

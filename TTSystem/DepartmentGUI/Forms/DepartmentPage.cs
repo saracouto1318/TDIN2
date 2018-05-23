@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TTService;
+using TTService.Models;
 
 namespace DepartmentGUI
 {
@@ -18,6 +19,7 @@ namespace DepartmentGUI
     {
         public TTServClient proxy;
         public string name;
+        public int departmentID;
 
         private MessageQueueReceiver mqr;
         private TableLayoutPanel panel = new TableLayoutPanel();
@@ -37,18 +39,24 @@ namespace DepartmentGUI
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+
             CheckQuestions();
+
+            this.VisibleChanged += OnVisibleChange;
         }
         
         private void CheckQuestions()
         {
-            int id = proxy.GetDepartmentID(name);
-            SecondaryQuestion[] questions = proxy.GetQuestions(id);
+            departmentID = proxy.GetDepartmentID(name);
+            SecondaryQuestion[] questions = proxy.GetQuestions(departmentID);
             if (questions.Length != 0)
                 CreateTable(questions);
             else
+            {
                 label1.Visible = true;
+            }
         }
+
         private void CreateTable(SecondaryQuestion[] questions)
         {
             label1.Visible = false;
@@ -144,5 +152,61 @@ namespace DepartmentGUI
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
 
+
+        private void OnVisibleChange(object sender, EventArgs e)
+        {
+            if (!Visible)
+            {
+                UnsubscribeEvents();
+            }
+            else
+            {
+                SubscribeEvents();
+            }
+        }
+
+        private void SubscribeEvents()
+        {
+            mqr.OnNewSecondaryQuestion += OnNewSecondaryQuestion;
+        }
+
+        private void UnsubscribeEvents()
+        {
+            mqr.OnNewSecondaryQuestion -= OnNewSecondaryQuestion;
+        }
+
+        private void OnNewSecondaryQuestion(SerializedSecondaryQuestion secondaryQuestion)
+        {
+            Task.Run(async () =>
+            {
+                await Task.Delay(500);
+                bool tryAgain = true;
+                SecondaryQuestion[] questions = null;
+                while (tryAgain)
+                {
+                    tryAgain = false;
+                    try
+                    {
+                        questions = proxy.GetQuestions(departmentID);
+                    }
+                    catch
+                    {
+                        tryAgain = true;
+                    }
+
+                    if(!tryAgain)
+                    {
+                        MethodInvoker PanelInvoker = (delegate
+                        {
+                            CreateTable(questions);
+                            label1.Visible = false;
+                        });
+                        this.Invoke(PanelInvoker);
+                    }
+                    else
+                        await Task.Delay(1000);
+                }
+            });
+        }
     }
 }

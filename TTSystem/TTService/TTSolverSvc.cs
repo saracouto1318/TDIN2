@@ -11,7 +11,8 @@ using TTService.Models;
 
 namespace TTService
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single,
+        ConcurrencyMode = ConcurrencyMode.Single)]
     public class TTSolverSvc : ITTSolverSvc
     {
         public static Dictionary<int, ITTUpdateCallback> Subscribers = new Dictionary<int, ITTUpdateCallback>();
@@ -109,14 +110,15 @@ namespace TTService
             {
                 User to = UserDao.SelectUser(senderTicket);
                 Ticket ticketInfo = UserDao.GetTicket(ticket);
-                SmtpClient client = new SmtpClient("smtp.gmail.com");
-                
-                //assigned credetial details to server
-                client.Port = 587;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.EnableSsl = true;
-                client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential("trouble.tickets.it@gmail.com", "troubletickets1234");
+                SmtpClient client = new SmtpClient("smtp.gmail.com")
+                {
+                    //assigned credetial details to server
+                    Port = 587,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    EnableSsl = true,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("trouble.tickets.it@gmail.com", "troubletickets1234")
+                };
 
                 MailAddress from = new MailAddress("trouble.tickets.it@gmail.com", "Trouble Tickets");
 
@@ -129,11 +131,11 @@ namespace TTService
 
                 client.Send(Mymessage);
 
-                return UserDao.AddAnswerTicket(solver, senderTicket, ticket, email);
+                return UserDao.SolveTicket(ticket);
             }
             return false;
         }
-        public bool RedirectTicket(int ticket, int solver, string redirectMessage, string department)
+        public SecondaryQuestion RedirectTicket(int ticket, int solver, string redirectMessage, string department)
         {
             int id = UserDao.GetDepartmentID(department);
             MessageQueueSender sender = MessageQueueManager.Instance.GetMessageQueue(department);
@@ -157,7 +159,11 @@ namespace TTService
                 Question = redirectMessage
             });
 
-            return UserDao.AddQuestion(ticket, solver, redirectMessage, id);
+            if(UserDao.AddQuestion(ticket, solver, redirectMessage, id))
+            {
+                return UserDao.GetSolverLastQuestion(solver);
+            }
+            return null;
         }
 
         public List<SecondaryQuestion> MyQuestions(int idSolver, bool isUnanswered)

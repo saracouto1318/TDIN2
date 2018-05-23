@@ -33,6 +33,8 @@ namespace GUI.Forms
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
             
             LoadQuestionInfo();
+
+            this.VisibleChanged += OnVisibleChange;
         }
 
         public void LoadQuestionInfo()
@@ -49,6 +51,40 @@ namespace GUI.Forms
             }
             else
                 response.Text = SecQuestion.Response.ToString();
+        }
+
+        private void OnVisibleChange(object sender, EventArgs e)
+        {
+            if (!Visible)
+            {
+                UnsubscribeEvents();
+            }
+            else
+            {
+                SubscribeEvents();
+            }
+        }
+
+        private void SubscribeEvents()
+        {
+            ClientInstance.TroubleTickets.OnAnsweredSecondaryQuestion += OnAnsweredQuestion;
+        }
+
+        private void UnsubscribeEvents()
+        {
+            ClientInstance.TroubleTickets.OnAnsweredSecondaryQuestion -= OnAnsweredQuestion;
+        }
+
+        private void OnAnsweredQuestion(Ticket ticket, SecondaryQuestion secondaryQuestion)
+        {
+            if(SecQuestion.ID == secondaryQuestion.ID)
+            {
+                SecQuestion = secondaryQuestion;
+                status.Text = (SecQuestion.Response == null) ? "Open" : "Closed";
+                response.Text = SecQuestion.Response.ToString();
+                response.Visible = true;
+                label1.Visible = false;
+            }
         }
 
         private void ProfileBtn_Click(object sender, EventArgs e)

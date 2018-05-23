@@ -305,6 +305,39 @@ namespace TTService.Database
             }
             return false;
         }
+        private static Ticket ReadTicket(SqlDataReader reader)
+        {
+            Ticket ticket = new Ticket
+            {
+                ID = reader.GetInt32(0),
+                AuthorID = reader.GetInt32(1),
+                Title = reader.GetString(3),
+                Description = reader.GetString(4),
+                Date = reader.GetDateTime(5)
+            };
+
+            if (!reader.IsDBNull(2))
+                ticket.IDSolver = reader.GetInt32(2);
+
+            string status = reader.GetString(6);
+            switch (status)
+            {
+                case "unassigned":
+                    ticket.Status = TicketStatus.UNASSIGNED;
+                    break;
+                case "assigned":
+                    ticket.Status = TicketStatus.ASSIGNED;
+                    break;
+                case "closed":
+                    ticket.Status = TicketStatus.CLOSED;
+                    break;
+                case "wait":
+                    ticket.Status = TicketStatus.WAITING;
+                    break;
+            }
+
+            return ticket;
+        }
         public static List<Ticket> GetTickets(User user)
         {
             List<Ticket> tickets = new List<Ticket>();
@@ -319,32 +352,7 @@ namespace TTService.Database
 
                 while (reader.Read())
                 {
-                    Ticket ticket = new Ticket
-                    {
-                        ID = reader.GetInt32(0),
-                        Date = reader.GetDateTime(5),
-                        Description = reader.GetString(4),
-                        Title = reader.GetString(3)
-                    };
-
-                    string status = reader.GetString(6);
-
-                    switch (status)
-                    {
-                        case "unassigned":
-                            ticket.Status = TicketStatus.UNASSIGNED;
-                            break;
-                        case "assigned":
-                            ticket.Status = TicketStatus.ASSIGNED;
-                            break;
-                        case "closed":
-                            ticket.Status = TicketStatus.CLOSED;
-                            break;
-                        case "wait":
-                            ticket.Status = TicketStatus.WAITING;
-                            break;
-                    }
-
+                    Ticket ticket = ReadTicket(reader);
                     tickets.Add(ticket);
                 }
             }
@@ -379,13 +387,7 @@ namespace TTService.Database
 
                 if (reader.Read())
                 {
-                    ticket = new Ticket
-                    {
-                        ID = reader.GetInt32(0),
-                        Date = reader.GetDateTime(5),
-                        Description = reader.GetString(4),
-                        Title = reader.GetString(3)
-                    };
+                    ticket = ReadTicket(reader);
                 }
             }
             catch (SqlException)
@@ -425,15 +427,7 @@ namespace TTService.Database
 
                 while (reader.Read())
                 {
-                    Ticket ticket = new Ticket
-                    {
-                        ID = reader.GetInt32(0),
-                        Date = reader.GetDateTime(5),
-                        Description = reader.GetString(4),
-                        Title = reader.GetString(3),
-                        Status = status
-                    };
-
+                    Ticket ticket = ReadTicket(reader);
                     tickets.Add(ticket);
                 }
             }
@@ -464,29 +458,7 @@ namespace TTService.Database
 
                 if (reader.Read())
                 {
-                    ticket.ID = reader.GetInt32(0);
-                    ticket.AuthorID = reader.GetInt32(1);
-                    ticket.Title = reader.GetString(3);
-                    ticket.Description = reader.GetString(4);
-                    ticket.Date = reader.GetDateTime(5);
-
-                    string status = reader.GetString(6);
-
-                    switch (status)
-                    {
-                        case "unassigned":
-                            ticket.Status = TicketStatus.UNASSIGNED;
-                            break;
-                        case "assigned":
-                            ticket.Status = TicketStatus.ASSIGNED;
-                            break;
-                        case "closed":
-                            ticket.Status = TicketStatus.CLOSED;
-                            break;
-                        case "wait":
-                            ticket.Status = TicketStatus.WAITING;
-                            break;
-                    }
+                    ticket = ReadTicket(reader);
                 }
                 return ticket;
             }
@@ -516,13 +488,7 @@ namespace TTService.Database
 
                 while (reader.Read())
                 {
-                    Ticket ticket = new Ticket();
-                    ticket.ID = reader.GetInt32(0);
-                    ticket.Date = reader.GetDateTime(5);
-                    ticket.Description = reader.GetString(4);
-                    ticket.Author = null;
-                    ticket.Title = reader.GetString(3);
-                    ticket.Status = TicketStatus.UNASSIGNED;
+                    Ticket ticket = ReadTicket(reader);
                     tickets.Add(ticket);
                 }
 
@@ -555,28 +521,7 @@ namespace TTService.Database
 
                 while (reader.Read())
                 {
-                    Ticket ticket = new Ticket();
-                    ticket.ID = reader.GetInt32(0);
-                    ticket.Date = reader.GetDateTime(5);
-                    ticket.Description = reader.GetString(4);
-                    ticket.Author = solver;
-                    ticket.Title = reader.GetString(3);
-
-                    string status = reader.GetString(6);
-
-                    switch (status)
-                    {
-                        case "assigned":
-                            ticket.Status = TicketStatus.ASSIGNED;
-                            break;
-                        case "wait":
-                            ticket.Status = TicketStatus.WAITING;
-                            break;
-                        case "closed":
-                            ticket.Status = TicketStatus.CLOSED;
-                            break;
-                    }
-
+                    Ticket ticket = ReadTicket(reader);
                     tickets.Add(ticket);
                 }
 
@@ -617,14 +562,7 @@ namespace TTService.Database
 
                 while (reader.Read())
                 {
-                    Ticket ticket = new Ticket();
-                    ticket.ID = reader.GetInt32(0);
-                    ticket.Date = reader.GetDateTime(5);
-                    ticket.Description = reader.GetString(4);
-                    ticket.Title = reader.GetString(3);
-                    ticket.Author = solver;
-                    ticket.Status = status;
-
+                    Ticket ticket = ReadTicket(reader);
                     tickets.Add(ticket);
                 }
 
@@ -894,7 +832,7 @@ namespace TTService.Database
                     questions.Add(question);
                 }
             }
-            catch (SqlException)
+            catch
             {
             }
             finally
@@ -922,6 +860,47 @@ namespace TTService.Database
                 if (reader.Read())
                 {
                     question.ID = id;
+                    question.TicketID = reader.GetInt32(1);
+                    question.SenderID = reader.GetInt32(2);
+                    question.Department = reader.GetInt32(3);
+                    question.Question = reader.GetString(4);
+                    if (!reader.IsDBNull(5))
+                        question.Response = reader.GetString(5);
+                    question.Date = reader.GetDateTime(6);
+                }
+            }
+            catch (SqlException)
+            {
+            }
+            finally
+            {
+                if (reader != null)
+                    reader.Close();
+                if (c != null)
+                    c.Close();
+            }
+            return question;
+        }
+        public static SecondaryQuestion GetSolverLastQuestion(int user)
+        {
+            SecondaryQuestion question = new SecondaryQuestion();
+            SqlConnection c = AccessDao.Instance.Conn;
+            SqlDataReader reader = null;
+            try
+            {
+                c.Open();
+                string sql = 
+                    "SELECT * " +
+                    "FROM SecondaryQuestions " +
+                    "WHERE idSender=" + user + " " +
+                    "ORDER BY idQuestion DESC " +
+                    "OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY;";
+                SqlCommand cmd = new SqlCommand(sql, c);
+                reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    question.ID = reader.GetInt32(0);
                     question.TicketID = reader.GetInt32(1);
                     question.SenderID = reader.GetInt32(2);
                     question.Department = reader.GetInt32(3);

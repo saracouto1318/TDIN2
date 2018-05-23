@@ -82,16 +82,16 @@ namespace GUI.TTSolverSvc {
         System.Threading.Tasks.Task<bool> AnswerTicketAsync(int solver, int senderTicket, int ticket, string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTSolverSvc/RedirectTicket", ReplyAction="http://tempuri.org/ITTSolverSvc/RedirectTicketResponse")]
-        bool RedirectTicket(int ticket, int solver, string redirectMessage, string department);
+        TTService.SecondaryQuestion RedirectTicket(int ticket, int solver, string redirectMessage, string department);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTSolverSvc/RedirectTicket", ReplyAction="http://tempuri.org/ITTSolverSvc/RedirectTicketResponse")]
-        System.Threading.Tasks.Task<bool> RedirectTicketAsync(int ticket, int solver, string redirectMessage, string department);
+        System.Threading.Tasks.Task<TTService.SecondaryQuestion> RedirectTicketAsync(int ticket, int solver, string redirectMessage, string department);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTSolverSvc/MyQuestions", ReplyAction="http://tempuri.org/ITTSolverSvc/MyQuestionsResponse")]
-        TTService.SecondaryQuestion[] MyQuestions(int idSolver, bool type);
+        TTService.SecondaryQuestion[] MyQuestions(int idSolver, bool isUnanswered);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITTSolverSvc/MyQuestions", ReplyAction="http://tempuri.org/ITTSolverSvc/MyQuestionsResponse")]
-        System.Threading.Tasks.Task<TTService.SecondaryQuestion[]> MyQuestionsAsync(int idSolver, bool type);
+        System.Threading.Tasks.Task<TTService.SecondaryQuestion[]> MyQuestionsAsync(int idSolver, bool isUnanswered);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -223,20 +223,20 @@ namespace GUI.TTSolverSvc {
             return base.Channel.AnswerTicketAsync(solver, senderTicket, ticket, email);
         }
         
-        public bool RedirectTicket(int ticket, int solver, string redirectMessage, string department) {
+        public TTService.SecondaryQuestion RedirectTicket(int ticket, int solver, string redirectMessage, string department) {
             return base.Channel.RedirectTicket(ticket, solver, redirectMessage, department);
         }
         
-        public System.Threading.Tasks.Task<bool> RedirectTicketAsync(int ticket, int solver, string redirectMessage, string department) {
+        public System.Threading.Tasks.Task<TTService.SecondaryQuestion> RedirectTicketAsync(int ticket, int solver, string redirectMessage, string department) {
             return base.Channel.RedirectTicketAsync(ticket, solver, redirectMessage, department);
         }
         
-        public TTService.SecondaryQuestion[] MyQuestions(int idSolver, bool type) {
-            return base.Channel.MyQuestions(idSolver, type);
+        public TTService.SecondaryQuestion[] MyQuestions(int idSolver, bool isUnanswered) {
+            return base.Channel.MyQuestions(idSolver, isUnanswered);
         }
         
-        public System.Threading.Tasks.Task<TTService.SecondaryQuestion[]> MyQuestionsAsync(int idSolver, bool type) {
-            return base.Channel.MyQuestionsAsync(idSolver, type);
+        public System.Threading.Tasks.Task<TTService.SecondaryQuestion[]> MyQuestionsAsync(int idSolver, bool isUnanswered) {
+            return base.Channel.MyQuestionsAsync(idSolver, isUnanswered);
         }
     }
 }

@@ -8,17 +8,19 @@ using TTService;
 
 namespace SolverGUI
 {
+    public delegate void ChangeButtonDelegate(bool visible);
+
     public partial class TicketPage : MaterialForm
     {
         public Client ClientInstance;
-        public Ticket TicketInfo;
+        public Ticket TTicket;
 
         public TicketPage(Ticket ticket)
         {
             ClientInstance = Client.Instance;
             InitializeComponent();
             
-            TicketInfo = ticket;
+            TTicket = ticket;
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
@@ -26,6 +28,8 @@ namespace SolverGUI
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
             LoadTicketInfo();
+
+            this.VisibleChanged += OnVisibleChange;
         }
 
         public void LoadTicketInfo()
@@ -34,26 +38,30 @@ namespace SolverGUI
             this.solveBtn.Visible = false;
             this.redirectBtn.Visible = false;
 
-            ticketLabel.Text = "Ticket #" + this.TicketInfo.ID.ToString();
-            title.Text = this.TicketInfo.Title;
-            date.Text = this.TicketInfo.Date.ToString();
-            description.Text = this.TicketInfo.Description;
-            status.Text = this.TicketInfo.Status.ToString();
+            ticketLabel.Text = "Ticket #" + this.TTicket.ID.ToString();
+            title.Text = this.TTicket.Title;
+            date.Text = this.TTicket.Date.ToString();
+            description.Text = this.TTicket.Description;
+            status.Text = this.TTicket.Status.ToString();
 
-            if (TicketInfo.Status == TicketStatus.CLOSED)
+            if (TTicket.Status == TicketStatus.CLOSED || TTicket.Status == TicketStatus.WAITING)
             {
                 this.assignBtn.Visible = false;
                 this.solveBtn.Visible = false;
                 this.redirectBtn.Visible = false;
             }
-            else if (TicketInfo.Status == TicketStatus.ASSIGNED || TicketInfo.Status == TicketStatus.WAITING)
+            else if (TTicket.Status == TicketStatus.ASSIGNED)
             {
                 this.assignBtn.Visible = false;
                 this.solveBtn.Visible = true;
                 this.redirectBtn.Visible = true;
             }
-            else if (TicketInfo.Status == TicketStatus.UNASSIGNED)
+            else if (TTicket.Status == TicketStatus.UNASSIGNED)
+            {
                 this.assignBtn.Visible = true;
+                this.solveBtn.Visible = false;
+                this.redirectBtn.Visible = false;
+            }
         }
 
         private void ProfileBtn_Click(object sender, EventArgs e)
@@ -75,7 +83,7 @@ namespace SolverGUI
         private void SolveBtn_Click(object sender, EventArgs e)
         {
             Hide();
-            new SolvePage(TicketInfo).ShowDialog();
+            new SolvePage(TTicket).ShowDialog();
             Show();
         }
 
@@ -83,7 +91,7 @@ namespace SolverGUI
         {
             redirectBtn.Visible = false;
             Hide();
-            new RedirectPage(TicketInfo).ShowDialog();
+            new RedirectPage(TTicket).ShowDialog();
             Show();
         }
 
@@ -91,15 +99,30 @@ namespace SolverGUI
         {
             Task.Run(() =>
             {
-                if(ClientInstance.SolverProxy.AssignTicket(TicketInfo.ID, ClientInstance.Solver.ID))
+                if(ClientInstance.SolverProxy.AssignTicket(TTicket.ID, ClientInstance.Solver.ID))
                 {
-                    MessageBox.Show("Ticket " + TicketInfo.Title + " was assigned to you");
+                    MethodInvoker UpdateGUI = (delegate
+                    {
+                        assignBtn.Visible = false;
+                    });
+                    assignBtn.Invoke(UpdateGUI);
+                    UpdateGUI = (delegate
+                    {
+                        solveBtn.Visible = true;
+                    });
+                    solveBtn.Invoke(UpdateGUI);
+                    UpdateGUI = (delegate
+                    {
+                        redirectBtn.Visible = true;
+                    });
+                    redirectBtn.Invoke(UpdateGUI);
+                    UpdateGUI = (delegate
+                    {
+                        status.Text = this.TTicket.Status.ToString();
+                    });
+                    status.Invoke(UpdateGUI);
                 }
             });
-
-            this.assignBtn.Visible = false;
-            this.solveBtn.Visible = true;
-            this.redirectBtn.Visible = true;
         }
 
         private void TicketPage_Load(object sender, EventArgs e)
@@ -111,6 +134,53 @@ namespace SolverGUI
 
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        }
+
+
+        private void OnVisibleChange(object sender, EventArgs e)
+        {
+            if (!Visible)
+            {
+                UnsubscribeEvents();
+            }
+            else
+            {
+                SubscribeEvents();
+            }
+        }
+        private void SubscribeEvents()
+        {
+            ClientInstance.TroubleTickets.OnOtherAssignedTroubleTicket += OnAssignedOthTT;
+        }
+
+        private void UnsubscribeEvents()
+        {
+            ClientInstance.TroubleTickets.OnOtherAssignedTroubleTicket -= OnAssignedOthTT;
+        }
+
+        private void OnAssignedOthTT(Ticket ticket)
+        {
+            if(ticket.ID == TTicket.ID)
+            {
+                Task.Run(() =>
+                {
+                    MethodInvoker ButtonInvoker = (delegate
+                    {
+                        assignBtn.Visible = false;
+                    });
+                    assignBtn.Invoke(ButtonInvoker);
+                    ButtonInvoker = (delegate
+                    {
+                        solveBtn.Visible = false;
+                    });
+                    solveBtn.Invoke(ButtonInvoker);
+                    ButtonInvoker = (delegate
+                    {
+                        redirectBtn.Visible = false;
+                    });
+                    redirectBtn.Invoke(ButtonInvoker);
+                });
+            }
         }
     }
 }

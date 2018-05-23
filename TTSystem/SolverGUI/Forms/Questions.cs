@@ -57,8 +57,15 @@ namespace GUI.Forms
                 secondaryQuestions = ClientInstance.TroubleTickets.ClosedSecondaryQuestion;
 
             if (secondaryQuestions.Count <= 0)
+            {
+                Panel.Dispose();
                 return;
+            }
 
+            label1.Visible = false;
+            label2.Visible = false;
+            label3.Visible = false;
+            label4.Visible = false;
             LoadTable(secondaryQuestions);
         }
 
@@ -108,7 +115,7 @@ namespace GUI.Forms
         }
         #endregion
 
-        #region Form        
+        #region Form
         private void UpdatePanelStatus(bool isOpen)
         {
             IsShowingOpen = isOpen;

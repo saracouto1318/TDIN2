@@ -234,6 +234,7 @@ namespace SolverGUI
         void AssignedMyTT(Tickets form, Ticket ticket);
         void AssignedOthTT(Tickets form, Ticket ticket);
         void NewTT(Tickets form, Ticket ticket);
+        void AnsweredQuestion(Tickets form, Ticket ticket, SecondaryQuestion secondaryQuestion);
     }
 
     public class StatusPanelFactory
@@ -245,7 +246,9 @@ namespace SolverGUI
                 case TicketStatus.UNASSIGNED:
                     return new UnassignedStautsPanel();
                 case TicketStatus.ASSIGNED:
+                    return new AssignedStautsPanel();
                 case TicketStatus.WAITING:
+                    return new WaitingStautsPanel();
                 case TicketStatus.CLOSED:
                     return new DoNothingStatusPanel();
             }
@@ -281,8 +284,62 @@ namespace SolverGUI
                 panelRow.AddPanelRow(form.Panel, value, ticket, () => { form.TicketClickAction(ticket); });
             }
         }
+
+        // Do nothing
+        public void AnsweredQuestion(Tickets form, Ticket ticket, SecondaryQuestion secondaryQuestion)
+        {}
     }
 
+    public class AssignedStautsPanel : IStatusPanel
+    {
+        // Do nothing
+        public void AssignedMyTT(Tickets form, Ticket ticket)
+        { }
+
+        // Do nothing
+        public void AssignedOthTT(Tickets form, Ticket ticket)
+        { }
+
+        // Do nothing
+        public void NewTT(Tickets form, Ticket ticket)
+        { }
+
+        // Create table Assigned or add row with answered ticket
+        public void AnsweredQuestion(Tickets form, Ticket ticket, SecondaryQuestion secondaryQuestion)
+        {
+            if (form.Panel == null || form.Panel.RowCount == 0)
+            {
+                form.CreateTable(TicketStatus.ASSIGNED);
+            }
+            else
+            {
+                IPanelRow panelRow = new TicketPanelRowImpl();
+                float value = 100 / (form.ClientInstance.TroubleTickets.AssignedTroubleTickets.Count + 1);
+                panelRow.AddPanelRow(form.Panel, value, ticket, () => { form.TicketClickAction(ticket); });
+            }
+        }
+    }
+
+    public class WaitingStautsPanel : IStatusPanel
+    {
+        // Do nothing
+        public void AssignedMyTT(Tickets form, Ticket ticket)
+        { }
+
+        // Do nothing
+        public void AssignedOthTT(Tickets form, Ticket ticket)
+        { }
+
+        // Do nothing
+        public void NewTT(Tickets form, Ticket ticket)
+        { }
+
+        // Reload table Waiting
+        public void AnsweredQuestion(Tickets form, Ticket ticket, SecondaryQuestion secondaryQuestion)
+        {
+            form.CreateTable(TicketStatus.WAITING);
+        }
+    }
     public class DoNothingStatusPanel : IStatusPanel
     {
         // Do nothing
@@ -295,6 +352,10 @@ namespace SolverGUI
 
         // Do nothing
         public void NewTT(Tickets form, Ticket ticket)
+        { }
+
+        // Do nothing
+        public void AnsweredQuestion(Tickets form, Ticket ticket, SecondaryQuestion secondaryQuestion)
         { }
     }
 

@@ -185,7 +185,15 @@ namespace GUI.Forms
         {
             List<Ticket> tickets = ClientInstance.TroubleTickets.GetTicketsByStatus(status);
             if (tickets.Count <= 0)
+            {
+                Panel.Dispose();
                 return;
+            }
+
+            label1.Visible = false;
+            label2.Visible = false;
+            label3.Visible = false;
+            label4.Visible = false;
             LoadTable(tickets);
         }
 
@@ -240,6 +248,7 @@ namespace GUI.Forms
             ClientInstance.TroubleTickets.OnNewTroubleTicket += OnNewTT;
             ClientInstance.TroubleTickets.OnMyAssignedTroubleTicket += OnAssignedMyTT;
             ClientInstance.TroubleTickets.OnOtherAssignedTroubleTicket += OnAssignedOthTT;
+            ClientInstance.TroubleTickets.OnAnsweredSecondaryQuestion += OnAnsweredQuestion;
         }
 
         private void UnsubscribeEvents()
@@ -247,6 +256,7 @@ namespace GUI.Forms
             ClientInstance.TroubleTickets.OnNewTroubleTicket -= OnNewTT;
             ClientInstance.TroubleTickets.OnMyAssignedTroubleTicket -= OnAssignedMyTT;
             ClientInstance.TroubleTickets.OnOtherAssignedTroubleTicket -= OnAssignedOthTT;
+            ClientInstance.TroubleTickets.OnAnsweredSecondaryQuestion -= OnAnsweredQuestion;
         }
 
         private void OnNewTT(Ticket ticket)
@@ -270,6 +280,14 @@ namespace GUI.Forms
             if (StatusPanelController != null)
             {
                 StatusPanelController.AssignedOthTT(this, ticket);
+            }
+        }
+        
+        private void OnAnsweredQuestion(Ticket ticket, SecondaryQuestion secondaryQuestion)
+        {
+            if (StatusPanelController != null)
+            {
+                StatusPanelController.AnsweredQuestion(this, ticket, secondaryQuestion);
             }
         }
         #endregion

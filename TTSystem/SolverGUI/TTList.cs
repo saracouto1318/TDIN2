@@ -98,12 +98,16 @@ namespace SolverGUI
         // Called when a new trouble ticket as been dispatched
         public void OnNewTT(Ticket ticket)
         {
+            ticket.Status = TicketStatus.UNASSIGNED;
+
             UnassignedTroubleTickets.Add(ticket);
         }
         
         // Called when this user's trouble ticket as been assigned
         public void OnMyAssignedTT(Ticket ticket)
         {
+            ticket.Status = TicketStatus.ASSIGNED;
+
             OnAssignedTT(ticket);
             AssignedTroubleTickets.Add(ticket);
         }
@@ -119,6 +123,8 @@ namespace SolverGUI
             Ticket ticket, 
             SecondaryQuestion secondaryQuestion)
         {
+            ticket.Status = TicketStatus.WAITING;
+
             AssignedTroubleTickets.Remove(ticket);
             WaitingTroubleTickets.Add(ticket);
 
@@ -130,6 +136,8 @@ namespace SolverGUI
             Ticket ticket,
             SecondaryQuestion secondaryQuestion)
         {
+            ticket.Status = TicketStatus.ASSIGNED;
+
             WaitingTroubleTickets.Remove(ticket);
             AssignedTroubleTickets.Add(ticket);
 
@@ -140,6 +148,8 @@ namespace SolverGUI
         // Called when a trouble ticket is answered
         public void OnClosedTT(Ticket ticket)
         {
+            ticket.Status = TicketStatus.CLOSED;
+
             AssignedTroubleTickets.Remove(ticket);
             ClosedTroubleTickets.Add(ticket);
         }

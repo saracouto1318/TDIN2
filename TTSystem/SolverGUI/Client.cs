@@ -126,6 +126,7 @@ namespace SolverGUI
             }
             if (questionTicket != null)
             {
+                questionTicket.Status = TicketStatus.ASSIGNED;
                 TroubleTickets.OnAnsweredSecondaryQuestion(questionTicket, secondaryQuestion);
                 ShowMessageBox("The trouble ticket " + questionTicket.Title + " has been assigned.", "Assigned trouble ticket");
             }

@@ -33,6 +33,7 @@ namespace SolverGUI
 
             GetTicketInfo();
         }
+
         public void GetTicketInfo()
         {
             ticketID.Text = "Ticket #" + this.TTicket.ID.ToString();
@@ -64,8 +65,12 @@ namespace SolverGUI
 
         private void SendBtn_Click(object sender, EventArgs e)
         {
+            Hide();
             string emailText = email.Text;
-            ClientInstance.SolverProxy.AnswerTicket(ClientInstance.Solver.ID, TTicket.Author.ID, TTicket.ID, emailText);
+            if(ClientInstance.SolverProxy.AnswerTicket(ClientInstance.Solver.ID, TTicket.AuthorID, TTicket.ID, emailText))
+            {
+                ClientInstance.TroubleTickets.OnClosedTroubleTicket(TTicket);
+            }
             new TicketPage(TTicket).ShowDialog();
             Show();
         }
