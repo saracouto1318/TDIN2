@@ -143,16 +143,13 @@ namespace GUI.Forms
         {
             ClientInstance.UnitializeSolverSession();
             ClientInstance.Proxy.Logout(ClientInstance.Solver.ID);
-            Hide();
-            new MainPage().ShowDialog();
-            Show();
+
+            FormController.ChangeForm(this, new MainPage());
         }
 
         private void ProfileBtn_Click(object sender, EventArgs e)
         {
-            Hide();
-            new PersonalPage().ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new PersonalPage());
         }
 
         private void Tickets_Load(object sender, EventArgs e)
@@ -176,9 +173,7 @@ namespace GUI.Forms
 
         public void TicketClickAction(Ticket t)
         {
-            Hide();
-            new TicketPage(t).ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new TicketPage(t));
         }
 
         public void CreateTable(TicketStatus status)

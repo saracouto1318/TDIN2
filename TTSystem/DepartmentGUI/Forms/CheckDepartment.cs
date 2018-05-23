@@ -27,9 +27,7 @@ namespace DepartmentGUI
             if (!proxy.CheckDepartment(department))
                 proxy.AddDepartment(department);
 
-            Hide();
-            new DepartmentPage(department).ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new DepartmentPage(department));
         }
     }
 }

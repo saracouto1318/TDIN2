@@ -53,16 +53,12 @@ namespace SolverGUI
 
         private void TicketBtn_Click(object sender, EventArgs e)
         {
-            Hide();
-            new TicketPage(TTicket).ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new TicketPage(TTicket));
         }
 
         private void ProfileBtn_Click(object sender, EventArgs e)
         {
-            Hide();
-            new PersonalPage().ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new PersonalPage());
         }
 
         private void LogoutBtn_Click(object sender, EventArgs e)
@@ -80,21 +76,19 @@ namespace SolverGUI
 
             if (department == "Other")
                 department = this.textBox.Text;
-
-            Hide();
+            
             string redirect = message.Text;
             SecondaryQuestion sq = ClientInstance.SolverProxy.RedirectTicket(TTicket.ID, ClientInstance.Solver.ID, redirect, department);
             if (sq != null)
             {
                 TTicket.Status = TicketStatus.WAITING;
                 ClientInstance.TroubleTickets.OnWaitingSecondaryQuestion(TTicket, sq);
-                new QuestionPage(sq).ShowDialog();
-                Show();
+
+                FormController.ChangeForm(this, new QuestionPage(sq));
             }
             else
             {
-                new MainPage().ShowDialog();
-                Show();
+                FormController.ChangeForm(this, new MainPage());
             }
         }
 

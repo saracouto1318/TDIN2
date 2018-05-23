@@ -20,6 +20,7 @@ namespace DepartmentGUI
         public int idQuestion;
         public SecondaryQuestion secQuestion;
         public string name;
+
         public TicketQuestion(int idQuestion, string name)
         {
             proxy = new TTServClient();
@@ -46,16 +47,12 @@ namespace DepartmentGUI
 
         private void AnswerBtn_Click(object sender, EventArgs e)
         {
-            Hide();
-            new ResponseTicket(this.idQuestion, this.name).ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new ResponseTicket(this.idQuestion, this.name));
         }
 
         private void DepartmentBtn_Click(object sender, EventArgs e)
         {
-            Hide();
-            new DepartmentPage(this.name).ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new DepartmentPage(this.name));
         }
 
         private void TicketQuestion_Load(object sender, EventArgs e)

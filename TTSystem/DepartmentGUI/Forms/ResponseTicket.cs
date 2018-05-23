@@ -47,16 +47,13 @@ namespace DepartmentGUI
         {
             string response = message.Text;
             proxy.AnswerQuestion(this.secQuestion, this.name, response);
-            Hide();
-            new DepartmentPage(this.name).ShowDialog();
-            Show();
+
+            FormController.ChangeForm(this, new DepartmentPage(this.name));
         }
 
         private void DepartmentBtn_Click(object sender, EventArgs e)
         {
-            Hide();
-            new DepartmentPage(this.name).ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new DepartmentPage(this.name));
         }
     }
 }

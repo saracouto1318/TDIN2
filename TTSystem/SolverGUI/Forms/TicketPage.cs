@@ -66,33 +66,27 @@ namespace SolverGUI
 
         private void ProfileBtn_Click(object sender, EventArgs e)
         {
-            Hide();
-            new PersonalPage().ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new PersonalPage());
         }
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
-            Hide();
             ClientInstance.UnitializeSolverSession();
             ClientInstance.Proxy.Logout(ClientInstance.Solver.ID);
-            new MainPage().ShowDialog();
-            Show();
+
+            FormController.ChangeForm(this, new MainPage());
         }
 
         private void SolveBtn_Click(object sender, EventArgs e)
         {
-            Hide();
-            new SolvePage(TTicket).ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new SolvePage(TTicket));
         }
 
         private void RedirectBtn_Click(object sender, EventArgs e)
         {
             redirectBtn.Visible = false;
-            Hide();
-            new RedirectPage(TTicket).ShowDialog();
-            Show();
+
+            FormController.ChangeForm(this, new RedirectPage(TTicket));
         }
 
         private void AssignBtn_Click(object sender, EventArgs e)

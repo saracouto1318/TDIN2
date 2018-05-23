@@ -96,9 +96,7 @@ namespace DepartmentGUI
                 panel.Controls.Add(labelTmp, 0, index + 1);
                 labelTmp.Click += (object sender, EventArgs e) =>
                 {
-                    Hide();
-                    new TicketQuestion(question.ID, this.name).ShowDialog();
-                    Show();
+                    FormController.ChangeForm(this, new TicketQuestion(question.ID, this.name));
                 };
 
                 labelTmp = new Label()
@@ -111,9 +109,7 @@ namespace DepartmentGUI
                 panel.Controls.Add(labelTmp, 1, index + 1);
                 labelTmp.Click += (object sender, EventArgs e) =>
                 {
-                    Hide();
-                    new TicketQuestion(question.ID, this.name).ShowDialog();
-                    Show();
+                    FormController.ChangeForm(this, new TicketQuestion(question.ID, this.name));
                 };
 
                 index++;

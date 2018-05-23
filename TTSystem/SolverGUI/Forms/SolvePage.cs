@@ -42,16 +42,12 @@ namespace SolverGUI
 
         private void TicketBtn_Click(object sender, EventArgs e)
         {
-            Hide();
-            new TicketPage(TTicket).ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new TicketPage(TTicket));
         }
 
         private void ProfileBtn_Click(object sender, EventArgs e)
         {
-            Hide();
-            new PersonalPage().ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new PersonalPage());
         }
 
         private void LogoutBtn_Click(object sender, EventArgs e)
@@ -65,14 +61,13 @@ namespace SolverGUI
 
         private void SendBtn_Click(object sender, EventArgs e)
         {
-            Hide();
             string emailText = email.Text;
             if(ClientInstance.SolverProxy.AnswerTicket(ClientInstance.Solver.ID, TTicket.AuthorID, TTicket.ID, emailText))
             {
                 ClientInstance.TroubleTickets.OnClosedTroubleTicket(TTicket);
             }
-            new TicketPage(TTicket).ShowDialog();
-            Show();
+
+            FormController.ChangeForm(this, new TicketPage(TTicket));
         }
     }
 }

@@ -38,25 +38,20 @@ namespace SolverGUI
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
-            Hide();
             ClientInstance.UnitializeSolverSession();
-            ClientInstance.Proxy.Logout(ClientInstance.Solver.ID); 
-            new MainPage().ShowDialog();
-            Show();
+            ClientInstance.Proxy.Logout(ClientInstance.Solver.ID);
+
+            FormController.ChangeForm(this, new MainPage());
         }
 
         private void TtBtn_Click(object sender, EventArgs e)
         {
-            Hide();
-            new Tickets().ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new Tickets());
         }
 
         private void QuestionBtn_Click(object sender, EventArgs e)
         {
-            Hide();
-            new Questions().ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new Questions());
         }
     }
 }

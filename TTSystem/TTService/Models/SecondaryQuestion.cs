@@ -15,5 +15,16 @@ namespace TTService
         public int Department { get; set; }
         public string Question { get; set; }
         public string Response { get; set; }
+        public override bool Equals(Object obj)
+        {
+            if (!(obj is SecondaryQuestion sqObj))
+                return false;
+            else
+                return ID == sqObj.ID;
+        }
+        public override int GetHashCode()
+        {
+            return 1213502048 + ID.GetHashCode();
+        }
     }
 }

@@ -89,18 +89,15 @@ namespace GUI.Forms
 
         private void ProfileBtn_Click(object sender, EventArgs e)
         {
-            Hide();
-            new PersonalPage().ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new PersonalPage());
         }
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
             ClientInstance.UnitializeSolverSession();
             ClientInstance.Proxy.Logout(ClientInstance.Solver.ID);
-            Hide();
-            new MainPage().ShowDialog();
-            Show();
+
+            FormController.ChangeForm(this, new MainPage());
         }
 
         private void QuestionPage_Load(object sender, EventArgs e)

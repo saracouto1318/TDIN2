@@ -43,9 +43,7 @@ namespace GUI.Forms
         #region Panel
         public void QuestionClickAction(SecondaryQuestion secondaryQuestion)
         {
-            Hide();
-            new QuestionPage(secondaryQuestion).ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new QuestionPage(secondaryQuestion));
         }
 
         public void CreateTable(bool isOpen)
@@ -142,11 +140,10 @@ namespace GUI.Forms
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
-            Hide();
             ClientInstance.UnitializeSolverSession();
             ClientInstance.Proxy.Logout(ClientInstance.Solver.ID);
-            new MainPage().ShowDialog();
-            Show();
+
+            FormController.ChangeForm(this, new MainPage());
         }
 
         private void OpenBtn_Click(object sender, EventArgs e)
@@ -189,9 +186,7 @@ namespace GUI.Forms
 
         private void ProfileBtn_Click(object sender, EventArgs e)
         {
-            Hide();
-            new PersonalPage().ShowDialog();
-            Show();
+            FormController.ChangeForm(this, new PersonalPage());
         }
 
         private void Questions_Load(object sender, EventArgs e)

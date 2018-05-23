@@ -28,9 +28,7 @@ namespace SolverGUI
 
             if(ClientInstance.LoginUser(email,password))
             {
-                Hide();
-                new PersonalPage().ShowDialog();
-                Show();
+                FormController.ChangeForm(this, new PersonalPage());
             }
             else
             {
@@ -46,9 +44,7 @@ namespace SolverGUI
 
             if(ClientInstance.RegisterSolver(email, name, password))
             {
-                Hide();
-                new PersonalPage().ShowDialog();
-                Show();
+                FormController.ChangeForm(this, new PersonalPage());
             }
             else
             {
