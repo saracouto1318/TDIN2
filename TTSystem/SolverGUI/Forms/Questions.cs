@@ -5,13 +5,16 @@ using System.Drawing;
 using System.Windows.Forms;
 using SolverGUI;
 using TTService;
+using System.Collections.Generic;
 
 namespace GUI.Forms
 {
     public partial class Questions : MaterialForm
     {
         public Client ClientInstance;
-        private TableLayoutPanel Panel = new TableLayoutPanel();
+        public TableLayoutPanel Panel = new TableLayoutPanel();
+        private bool IsShowingOpen = false;
+        private IQuestionStatusPanel StatusPanelController;
 
         public Questions()
         {
@@ -24,13 +27,12 @@ namespace GUI.Forms
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
-            GetUserInfo();
-        }
+            LoadUserInfo();
 
-        public void GetUserInfo()
-        {
-            this.name.Text = ClientInstance.Solver.Name;
-            this.email.Text = ClientInstance.Solver.Email;
+            StatusPanelController = QuestionStatusPanelFactory.GetStatusPanelController(IsShowingOpen);
+            CreateTable(IsShowingOpen);
+
+            this.VisibleChanged += OnVisibleChange;
         }
 
         private bool CheckExist(bool value)
@@ -38,116 +40,47 @@ namespace GUI.Forms
             return ClientInstance.SolverProxy.MyQuestions(ClientInstance.Solver.ID, value).Length > 0;
         }
 
-        private void CreateTable(bool value)
+        #region Panel
+        public void QuestionClickAction(SecondaryQuestion secondaryQuestion)
         {
-            SecondaryQuestion[] questions;
-            questions = ClientInstance.SolverProxy.MyQuestions(ClientInstance.Solver.ID, value);
+            Hide();
+            new QuestionPage(secondaryQuestion).ShowDialog();
+            Show();
+        }
+
+        public void CreateTable(bool isOpen)
+        {
+            List<SecondaryQuestion> secondaryQuestions;
+            if (isOpen)
+                secondaryQuestions = ClientInstance.TroubleTickets.OpenSecondaryQuestion;
+            else
+                secondaryQuestions = ClientInstance.TroubleTickets.ClosedSecondaryQuestion;
+
+            if (secondaryQuestions.Count <= 0)
+                return;
+
+            LoadTable(secondaryQuestions);
+        }
+
+        public void LoadTable(List<SecondaryQuestion> secondaryQuestions)
+        {
+            IPanelRow panelRow = new TitleQuestionPanelRowImpl();
 
             Panel.Visible = true;
-            float rows = 100 / (questions.Length + 1);
-            Panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, rows));
+            float value = 100 / (secondaryQuestions.Count + 1);
 
             CreatePanel();
-            Panel.Controls.Add(new Label()
+            Panel.SuspendLayout();
+
+            panelRow.AddPanelRow(Panel, value, null, () => { });
+
+            panelRow = new QuestionPanelRowImpl();
+            foreach (SecondaryQuestion q in secondaryQuestions)
             {
-                Text = "Question ID",
-                TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.Black,
-                Font = new Font("Microsoft Sans Serif", 11, FontStyle.Bold)
-            }, 0, 0);
-            Panel.Controls.Add(new Label()
-            {
-                Text = "Ticket ID",
-                TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.Black,
-                Font = new Font("Microsoft Sans Serif", 11, FontStyle.Bold)
-            }, 1, 0);
-            Panel.Controls.Add(new Label()
-            {
-                Text = "Department",
-                TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.Black,
-                Font = new Font("Microsoft Sans Serif", 11, FontStyle.Bold)
-            }, 2, 0);
-            Panel.Controls.Add(new Label()
-            {
-                Text = "Date",
-                TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.Black,
-                Font = new Font("Microsoft Sans Serif", 11, FontStyle.Bold)
-            }, 3, 0);
-
-            int index = 0;
-            foreach (SecondaryQuestion q in questions)
-            {
-
-                Panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, rows));
-                Label labelTmp = new Label()
-                {
-                    Text = q.ID.ToString(),
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
-                };
-
-                labelTmp.Click += (object sender, EventArgs e) =>
-                {
-                    Hide();
-                    new QuestionPage(q.ID).ShowDialog();
-                    Show();
-                };
-
-                Panel.Controls.Add(labelTmp, 0, index + 1);
-
-                labelTmp = new Label()
-                {
-                    Text = q.TicketID.ToString(),
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
-                };
-
-                labelTmp.Click += (object sender, EventArgs e) =>
-                {
-                    Hide();
-                    new QuestionPage(q.ID).ShowDialog();
-                    Show();
-                };
-
-                Panel.Controls.Add(labelTmp, 1, index + 1);
-
-                labelTmp = new Label()
-                {
-                    Text = ClientInstance.Proxy.GetDepartment(q.Department),
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
-                };
-
-                labelTmp.Click += (object sender, EventArgs e) =>
-                {
-                    Hide();
-                    new QuestionPage(q.ID).ShowDialog();
-                    Show();
-                };
-
-                Panel.Controls.Add(labelTmp, 2, index + 1);
-
-                labelTmp = new Label()
-                {
-                    Text = q.Date.ToString(),
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Font = new Font("Microsoft Sans Serif", 10, FontStyle.Bold)
-                };
-
-                labelTmp.Click += (object sender, EventArgs e) =>
-                {
-                    Hide();
-                    new QuestionPage(q.ID).ShowDialog();
-                    Show();
-                };
-
-                Panel.Controls.Add(labelTmp, 3, index + 1);
-
-                index++;
+                panelRow.AddPanelRow(Panel, value, q, () => { QuestionClickAction(q); });
             }
+
+            Panel.ResumeLayout();
         }
 
         private void CreatePanel()
@@ -173,6 +106,32 @@ namespace GUI.Forms
 
             Controls.Add(Panel);
         }
+        #endregion
+
+        #region Form        
+        private void UpdatePanelStatus(bool isOpen)
+        {
+            IsShowingOpen = isOpen;
+            StatusPanelController = QuestionStatusPanelFactory.GetStatusPanelController(IsShowingOpen);
+        }
+
+        private void OnVisibleChange(object sender, EventArgs e)
+        {
+            if (!Visible)
+            {
+                UnsubscribeEvents();
+            }
+            else
+            {
+                SubscribeEvents();
+            }
+        }
+
+        private void LoadUserInfo()
+        {
+            this.name.Text = ClientInstance.Solver.Name;
+            this.email.Text = ClientInstance.Solver.Email;
+        }
 
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
@@ -186,22 +145,9 @@ namespace GUI.Forms
         private void OpenBtn_Click(object sender, EventArgs e)
         {
             label2.Visible = false;
-            if (!CheckExist(false))
-            {
-                label1.Visible = true;
-                Panel.Visible = false;
-            }
-            else
-            {
-                label1.Visible = false;
-                Panel.Visible = true;
-                CreateTable(false);
-            }
-        }
 
-        private void CloseBtn_Click(object sender, EventArgs e)
-        {
-            label1.Visible = false;
+            UpdatePanelStatus(true);
+
             if (!CheckExist(true))
             {
                 label2.Visible = true;
@@ -212,6 +158,25 @@ namespace GUI.Forms
                 label2.Visible = false;
                 Panel.Visible = true;
                 CreateTable(true);
+            }
+        }
+
+        private void CloseBtn_Click(object sender, EventArgs e)
+        {
+            label1.Visible = false;
+
+            UpdatePanelStatus(false);
+
+            if (!CheckExist(false))
+            {
+                label1.Visible = true;
+                Panel.Visible = false;
+            }
+            else
+            {
+                label1.Visible = false;
+                Panel.Visible = true;
+                CreateTable(false);
             }
         }
 
@@ -232,5 +197,26 @@ namespace GUI.Forms
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
+        #endregion
+
+        #region Events
+        private void SubscribeEvents()
+        {
+            ClientInstance.TroubleTickets.OnAnsweredSecondaryQuestion += OnAnsweredQuestion;
+        }
+
+        private void UnsubscribeEvents()
+        {
+            ClientInstance.TroubleTickets.OnAnsweredSecondaryQuestion -= OnAnsweredQuestion;
+        }
+
+        private void OnAnsweredQuestion(Ticket ticket, SecondaryQuestion secondaryQuestion)
+        {
+            if(StatusPanelController != null)
+            {
+                StatusPanelController.AnsweredQuestion(this, secondaryQuestion, ticket);
+            }
+        }
+        #endregion
     }
 }

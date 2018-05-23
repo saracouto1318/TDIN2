@@ -160,9 +160,9 @@ namespace TTService
             return UserDao.AddQuestion(ticket, solver, redirectMessage, id);
         }
 
-        public List<SecondaryQuestion> MyQuestions(int idSolver, bool type)
+        public List<SecondaryQuestion> MyQuestions(int idSolver, bool isUnanswered)
         {
-            return UserDao.SelectSolverQuestions(idSolver, type);
+            return UserDao.SelectSolverQuestions(idSolver, isUnanswered);
         }
         #endregion
 

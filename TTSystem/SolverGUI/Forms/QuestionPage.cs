@@ -17,29 +17,26 @@ namespace GUI.Forms
     public partial class QuestionPage : MaterialForm
     {
         public Client ClientInstance;
-        public int IDQuestion;
         public SecondaryQuestion SecQuestion;
 
-        public QuestionPage(int idQuestion)
+        public QuestionPage(SecondaryQuestion secondaryQuestion)
         {
             ClientInstance = Client.Instance;
 
             InitializeComponent();
             
-            this.SecQuestion = new SecondaryQuestion();
-            this.IDQuestion = idQuestion;
+            this.SecQuestion = secondaryQuestion;
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
             
-            GetQuestionInfo();
+            LoadQuestionInfo();
         }
 
-        public void GetQuestionInfo()
+        public void LoadQuestionInfo()
         {
-            this.SecQuestion = ClientInstance.Proxy.GetQuestion(IDQuestion);
             status.Text = (SecQuestion.Response == null) ? "Open" : "Closed";
             ticketID.Text = "Ticket #" + SecQuestion.TicketID.ToString();
             date.Text = SecQuestion.Date.ToString();
@@ -81,4 +78,5 @@ namespace GUI.Forms
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
     }
+
 }

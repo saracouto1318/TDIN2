@@ -48,7 +48,7 @@ namespace TTService
         bool RedirectTicket(int ticket, int solver, string redirectMessage, string department);
 
         [OperationContract]
-        List<SecondaryQuestion> MyQuestions(int idSolver, bool type);
+        List<SecondaryQuestion> MyQuestions(int idSolver, bool isUnanswered);
         #endregion
     }
     public interface ITTUpdateCallback

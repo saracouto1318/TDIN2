@@ -67,6 +67,7 @@
     <Compile Include="Forms\MainPage.Designer.cs">
       <DependentUpon>MainPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="PanelRow.cs" />
     <Compile Include="Forms\PersonalPage.cs">
       <SubType>Form</SubType>
     </Compile>
