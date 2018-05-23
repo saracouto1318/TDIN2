@@ -146,7 +146,7 @@ namespace SolverGUI
 
             labelTmp = new Label()
             {
-                Text = "Date",
+                Text = "Department",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.Black,
                 Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
@@ -156,6 +156,19 @@ namespace SolverGUI
                 action();
             };
             panel.Controls.Add(labelTmp, 2, 0);
+
+            labelTmp = new Label()
+            {
+                Text = "Date",
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.Black,
+                Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold)
+            };
+            labelTmp.Click += (object sender, EventArgs e) =>
+            {
+                action();
+            };
+            panel.Controls.Add(labelTmp, 3, 0);
         }
     }
 

@@ -83,7 +83,7 @@ namespace GUI.Forms
                 status.Text = (SecQuestion.Response == null) ? "Open" : "Closed";
                 response.Text = SecQuestion.Response.ToString();
                 response.Visible = true;
-                label1.Visible = false;
+                label1.Visible = true;
             }
         }
 
