@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +10,17 @@ namespace TTService.Database
 {
     public class UserDao
     {
+        #region Password
+        private static string HashPassword(string password)
+        {
+            byte[] data = Encoding.ASCII.GetBytes(password);
+            SHA1CryptoServiceProvider sha1 = new SHA1CryptoServiceProvider();
+            byte[] sha1data = sha1.ComputeHash(data);
+            ASCIIEncoding asc = new ASCIIEncoding();
+            return asc.GetString(sha1data);
+        }
+        #endregion
+
         #region SessionTable
         public static bool AddSession(int idUser)
         {
@@ -17,8 +29,10 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "INSERT INTO Session(userID, session) VALUES (" + idUser + ",'" + userSession + "')";
+                string sql = "INSERT INTO Session(userID, session) VALUES (@idUser, @userSession)";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("idUser", idUser));
+                cmd.Parameters.Add(new SqlParameter("userSession", userSession));
                 int rowCount = cmd.ExecuteNonQuery();
 
                 return rowCount >= 1;
@@ -39,8 +53,9 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "DELETE FROM Session WHERE userID=" + idUser;
+                string sql = "DELETE FROM Session WHERE userID=@idUser";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("idUser", idUser));
                 cmd.ExecuteNonQuery();
             }
             catch (SqlException)
@@ -60,8 +75,9 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "SELECT userID FROM Session WHERE session = '" + session + "'";
+                string sql = "SELECT userID FROM Session WHERE session = @session";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("session", session));
                 reader = cmd.ExecuteReader();
                 if (reader.Read())
                     ID = reader.GetInt32(0);
@@ -84,15 +100,16 @@ namespace TTService.Database
         #region UserTable
         public static bool CheckUser(string email, string password)
         {
-            //using (SqlConnection c = new SqlConnection(ConfigurationManager.ConnectionStrings["TTdatabase"].ConnectionString))
-            //{
+            string hashPassword = HashPassword(password);
             SqlConnection c = AccessDao.Instance.Conn;
             SqlDataReader reader = null;
             try
             {
                 c.Open();
-                string sql = "SELECT * FROM Users WHERE email='" + email + "' AND password='" + password + "'";
+                string sql = "SELECT * FROM Users WHERE email=@email AND password=@hashPassword";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("email", email));
+                cmd.Parameters.Add(new SqlParameter("hashPassword", hashPassword));
                 reader = cmd.ExecuteReader();
 
                 bool exists = reader.Read();
@@ -109,16 +126,19 @@ namespace TTService.Database
                     c.Close();
             }
             return false;
-            //}
         }
         public static bool AddUser(string name, string email, string password)
         {
+            string hashPassword = HashPassword(password);
             SqlConnection c = AccessDao.Instance.Conn;
             try
             {
                 c.Open();
-                string sql = "INSERT INTO Users (name, email, password) VALUES ('" + name + "', '" + email + "', '" + password + "')";
+                string sql = "INSERT INTO Users (name, email, password) VALUES (@name, @email, @password)";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("name", name));
+                cmd.Parameters.Add(new SqlParameter("email", email));
+                cmd.Parameters.Add(new SqlParameter("password", hashPassword));
                 int rowCount = cmd.ExecuteNonQuery();
                 return rowCount >= 1;
             }
@@ -141,8 +161,9 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "SELECT * FROM Users WHERE idUser =" + id;
+                string sql = "SELECT * FROM Users WHERE idUser=@id";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("id", id));
                 reader = cmd.ExecuteReader();
 
                 if (reader.Read())
@@ -150,7 +171,6 @@ namespace TTService.Database
                     userInfo.Name = reader.GetString(1);
                     userInfo.ID = reader.GetInt32(0);
                     userInfo.Email = reader.GetString(2);
-                    userInfo.Password = reader.GetString(3);
                 }
             }
             catch (SqlException)
@@ -176,8 +196,9 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "SELECT * FROM Users WHERE email = '" + email + "'";
+                string sql = "SELECT * FROM Users WHERE email=@email";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("email", email));
                 reader = cmd.ExecuteReader();
 
                 if (reader.Read())
@@ -185,7 +206,6 @@ namespace TTService.Database
                     userInfo.Name = reader.GetString(1);
                     userInfo.ID = reader.GetInt32(0);
                     userInfo.Email = reader.GetString(2);
-                    userInfo.Password = reader.GetString(3);
                 }
             }
             catch (SqlException)
@@ -203,16 +223,17 @@ namespace TTService.Database
         }
         public static bool UpdateUser(string name, string email, string password, int idUser)
         {
+            string hashPassword = HashPassword(password);
             SqlConnection c = AccessDao.Instance.Conn;
             try
             {
                 c.Open();
-                string sql = "UPDATE Users SET " +
-                    "name ='" + name +  "', " +
-                    "password = '" + password + "', " +
-                    "email = '" + email + "' " +
-                    "WHERE idUser = " + idUser;
+                string sql = "UPDATE Users SET name=@name, password=@hashPassword, email=@email WHERE idUser=@idUser";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("name", name));
+                cmd.Parameters.Add(new SqlParameter("hashPassword", hashPassword));
+                cmd.Parameters.Add(new SqlParameter("email", email));
+                cmd.Parameters.Add(new SqlParameter("idUser", idUser));
                 int rowCount = cmd.ExecuteNonQuery();
                 return rowCount >= 1;
             }
@@ -235,8 +256,9 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "INSERT INTO Solver(idSolver) VALUES (" + ID + ")";
+                string sql = "INSERT INTO Solver(idSolver) VALUES (@ID)";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("ID", ID));
                 int rowCount = cmd.ExecuteNonQuery();
                 return rowCount >= 1;
             }
@@ -252,6 +274,7 @@ namespace TTService.Database
         }
         public static int ValidateSolver(string email, string password)
         {
+            string hashPassword = HashPassword(password);
             int ID = 0;
             SqlConnection c = AccessDao.Instance.Conn;
             SqlDataReader reader = null;
@@ -262,9 +285,11 @@ namespace TTService.Database
                     "WHERE idSolver IN " +
                     "(SELECT idUser " +
                     "FROM Users " +
-                    "WHERE email = '" + email + "' " +
-                    "AND password = '" + password + "')";
+                    "WHERE email = @email " +
+                    "AND password = @hashPassword)";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("email", email));
+                cmd.Parameters.Add(new SqlParameter("hashPassword", hashPassword));
                 reader = cmd.ExecuteReader();
                 if(reader.Read())
                     return reader.GetInt32(0);
@@ -290,8 +315,12 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "INSERT INTO Ticket(idSender, idSolver, title, description, dateTime, status) VALUES (" + idUser + ", null, '" + title + "', '" + description + "', GetDate(), 'unassigned')";
+                string sql = "INSERT INTO Ticket(idSender, idSolver, title, description, dateTime, status) " +
+                    "VALUES (@idUser, null, @title, @description, GetDate(), 'unassigned')";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("idUser", idUser));
+                cmd.Parameters.Add(new SqlParameter("title", title));
+                cmd.Parameters.Add(new SqlParameter("description", description));
                 int rowCount = cmd.ExecuteNonQuery();
                 return rowCount >= 1;
             }
@@ -346,8 +375,9 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "SELECT * FROM Ticket WHERE idSender = " + user.ID;
+                string sql = "SELECT * FROM Ticket WHERE idSender = @userID";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("userID", user.ID));
                 reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -379,10 +409,11 @@ namespace TTService.Database
                 c.Open();
                 string sql = "SELECT * " +
                     "FROM Ticket " +
-                    "WHERE idSender = " + user + " " +
+                    "WHERE idSender = @user " +
                     "ORDER BY idTicket DESC " +
                     "OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY;";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("user", user));
                 reader = cmd.ExecuteReader();
 
                 if (reader.Read())
@@ -411,7 +442,7 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "SELECT * FROM Ticket WHERE idSender = " + user.ID + "AND status = ";
+                string sql = "SELECT * FROM Ticket WHERE idSender = @userID AND status = ";
 
                 if (status == TicketStatus.UNASSIGNED)
                     sql += "'unassigned'";
@@ -424,6 +455,7 @@ namespace TTService.Database
 
                 SqlCommand cmd = new SqlCommand(sql, c);
                 reader = cmd.ExecuteReader();
+                cmd.Parameters.Add(new SqlParameter("userID", user.ID));
 
                 while (reader.Read())
                 {
@@ -452,8 +484,9 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "SELECT * FROM Ticket WHERE idTicket = " + id;
+                string sql = "SELECT * FROM Ticket WHERE idTicket = @id";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("id", id));
                 reader = cmd.ExecuteReader();
 
                 if (reader.Read())
@@ -515,8 +548,9 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "SELECT * FROM Ticket WHERE idSolver = " + solver.ID;
+                string sql = "SELECT * FROM Ticket WHERE idSolver = @solverID";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("solverID", solver.ID));
                 reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -548,7 +582,7 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "SELECT * FROM Ticket WHERE idSolver =" + solver.ID + " AND status = ";
+                string sql = "SELECT * FROM Ticket WHERE idSolver = @solverID  AND status = ";
 
                 if (status == TicketStatus.ASSIGNED)
                     sql += "'assigned'";
@@ -558,6 +592,7 @@ namespace TTService.Database
                     sql += "'wait'";
 
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("solverID", solver.ID));
                 reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -587,8 +622,10 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "UPDATE Ticket SET status='assigned', idSolver=" + idSolver + " WHERE idTicket=" + idTicket;
+                string sql = "UPDATE Ticket SET status='assigned', idSolver=@idSolver WHERE idTicket=@idTicket";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("idSolver", idSolver));
+                cmd.Parameters.Add(new SqlParameter("idTicket", idTicket));
                 int rowCount = cmd.ExecuteNonQuery();
                 return rowCount >= 1;
             }
@@ -608,8 +645,9 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "UPDATE Ticket SET status='closed' WHERE idTicket=" + ticket;
+                string sql = "UPDATE Ticket SET status='closed' WHERE idTicket=@ticket";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("ticket", ticket));
                 int rowCount = cmd.ExecuteNonQuery();
                 return rowCount >= 1;
             }
@@ -630,8 +668,12 @@ namespace TTService.Database
             {
                 c.Open();
                 string sql = "INSERT INTO Ticket(idSender, idReceiver, idTicket, content, dateTime) " +
-                    "VALUES (" + solver + "," + senderTicket + "," + ticket + ",'" + email + "', GetDate()";
+                    "VALUES (@solver, @senderTicket, @ticket, @email, GetDate()";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("solver", solver));
+                cmd.Parameters.Add(new SqlParameter("senderTicket", senderTicket));
+                cmd.Parameters.Add(new SqlParameter("ticket", ticket));
+                cmd.Parameters.Add(new SqlParameter("email", email));
                 int rowCount = cmd.ExecuteNonQuery();
                 return rowCount >= 1;
             }
@@ -655,8 +697,9 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "SELECT * FROM Department WHERE name='" + name + "'";
+                string sql = "SELECT * FROM Department WHERE name=@name";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("name", name));
                 reader = cmd.ExecuteReader();
                 return reader.Read();
             }
@@ -678,8 +721,9 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "INSERT INTO Department(name) VALUES ('" + name + "')";
+                string sql = "INSERT INTO Department(name) VALUES (@name)";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("name", name));
                 int rowCount = cmd.ExecuteNonQuery();
                 return rowCount >= 1;
             }
@@ -732,8 +776,9 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "SELECT idDepartment FROM Department WHERE name='" + departmentName + "'";
+                string sql = "SELECT idDepartment FROM Department WHERE name=@departmentName";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("departmentName", departmentName));
                 reader = cmd.ExecuteReader();
 
                 if (reader.Read())
@@ -760,8 +805,9 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "SELECT name FROM Department WHERE idDepartment=" + id;
+                string sql = "SELECT name FROM Department WHERE idDepartment=@id";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("id", id));
                 reader = cmd.ExecuteReader();
 
                 if (reader.Read())
@@ -790,8 +836,14 @@ namespace TTService.Database
                 c.Open();
                 string sql = "" +
                     "INSERT INTO SecondaryQuestions(idTicket, idSender, idDepartment, question, response, dateTime) " +
-                    "VALUES (" + ticket + ", " + solver + ", " + id + ", '" + redirectMessage + "', null, GetDate()); UPDATE Ticket SET status='wait' WHERE idTicket=" + ticket;
+                    "VALUES (@ticket,@solver,@id,@redirectMessage, null, GetDate()); " +
+                    "UPDATE Ticket SET status='wait' WHERE idTicket=@idticket";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("ticket", ticket));
+                cmd.Parameters.Add(new SqlParameter("solver", solver));
+                cmd.Parameters.Add(new SqlParameter("id", id));
+                cmd.Parameters.Add(new SqlParameter("redirectMessage", redirectMessage));
+                cmd.Parameters.Add(new SqlParameter("idticket", ticket));
                 int rowCount = cmd.ExecuteNonQuery();
                 return rowCount >= 1;
             }
@@ -813,8 +865,9 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "SELECT * FROM SecondaryQuestions WHERE idDepartment =" + idDepartment + " AND response IS NULL";
+                string sql = "SELECT * FROM SecondaryQuestions WHERE idDepartment = @idDepartment AND response IS NULL";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("idDepartment", idDepartment));
                 reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -853,8 +906,9 @@ namespace TTService.Database
             try
             {
                 c.Open();
-                string sql = "SELECT * FROM SecondaryQuestions WHERE idQuestion=" + id;
+                string sql = "SELECT * FROM SecondaryQuestions WHERE idQuestion=@id";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("id", id));
                 reader = cmd.ExecuteReader();
 
                 if (reader.Read())
@@ -892,10 +946,11 @@ namespace TTService.Database
                 string sql = 
                     "SELECT * " +
                     "FROM SecondaryQuestions " +
-                    "WHERE idSender=" + user + " " +
+                    "WHERE idSender=@user " +
                     "ORDER BY idQuestion DESC " +
                     "OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY;";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("user", user));
                 reader = cmd.ExecuteReader();
 
                 if (reader.Read())
@@ -929,10 +984,14 @@ namespace TTService.Database
             {
                 c.Open();
                 string sql = "UPDATE SecondaryQuestions " +
-                    "SET idDepartment = " + question.Department + ", " +
-                    "response = '" + question.Response + "' " +
-                    "WHERE idQuestion = " + question.ID + "; UPDATE Ticket SET status='assigned' WHERE idTicket=" + question.TicketID;
+                    "SET idDepartment = @questionDepartment, " +
+                    "response = @questionResponse " +
+                    "WHERE idQuestion = @questionID; UPDATE Ticket SET status='assigned' WHERE idTicket=@questionTicketID";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("questionDepartment", question.Department));
+                cmd.Parameters.Add(new SqlParameter("questionResponse", question.Response));
+                cmd.Parameters.Add(new SqlParameter("questionID", question.ID));
+                cmd.Parameters.Add(new SqlParameter("questionTicketID", question.TicketID));
                 int rowCount = cmd.ExecuteNonQuery();
                 return rowCount >= 1;
             }
@@ -956,10 +1015,11 @@ namespace TTService.Database
                 c.Open();
                 string sql = "";
                 if (isUnanswered)
-                    sql += "SELECT * FROM SecondaryQuestions WHERE idSender = " + idSolver + "AND response IS NULL";
+                    sql += "SELECT * FROM SecondaryQuestions WHERE idSender = @idSolver AND response IS NULL";
                 else
-                    sql += "SELECT * FROM SecondaryQuestions WHERE idSender = " + idSolver + "AND response IS NOT NULL";
+                    sql += "SELECT * FROM SecondaryQuestions WHERE idSender = @idSolver AND response IS NOT NULL";
                 SqlCommand cmd = new SqlCommand(sql, c);
+                cmd.Parameters.Add(new SqlParameter("idSolver", idSolver));
                 reader = cmd.ExecuteReader();
 
                 while (reader.Read())

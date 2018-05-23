@@ -50,12 +50,15 @@ namespace TTService
                 User user = UserDao.SelectUserByEmail(email);
                 return UserDao.AddSolver(user.ID);
             }
-
             return false;
         }
         public bool LoginSolver(string email, string password)
         {
             int ID = UserDao.ValidateSolver(email, password);
+            if (Subscribers.ContainsKey(ID))
+            {
+                return false;
+            }
             return UserDao.AddSession(ID);
         }
         public User GetSolver(int id)

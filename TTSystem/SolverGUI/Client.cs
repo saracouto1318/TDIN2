@@ -76,7 +76,7 @@ namespace SolverGUI
             if (SolverProxy.RegisterSolver(name, email, password))
             {
                 SolverProxy.LoginSolver(email, password);
-                User user = Proxy.GetUserByEmail(email);
+                Solver = Proxy.GetUserByEmail(email);
                 InitializeSolverSession();
                 return true;
             }
