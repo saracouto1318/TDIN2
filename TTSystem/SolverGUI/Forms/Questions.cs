@@ -13,7 +13,7 @@ namespace GUI.Forms
     {
         public Client ClientInstance;
         public TableLayoutPanel Panel = new TableLayoutPanel();
-        private bool IsShowingOpen = false;
+        private bool IsShowingOpen = true;
         private IQuestionStatusPanel StatusPanelController;
 
         public Questions()
@@ -33,11 +33,6 @@ namespace GUI.Forms
             CreateTable(IsShowingOpen);
 
             this.VisibleChanged += OnVisibleChange;
-        }
-
-        private bool CheckExist(bool value)
-        {
-            return ClientInstance.SolverProxy.MyQuestions(ClientInstance.Solver.ID, value).Length > 0;
         }
 
         #region Panel
@@ -152,7 +147,7 @@ namespace GUI.Forms
 
             UpdatePanelStatus(true);
 
-            if (!CheckExist(true))
+            if (ClientInstance.TroubleTickets.OpenSecondaryQuestion.Count <= 0)
             {
                 label2.Visible = true;
                 Panel.Visible = false;
@@ -171,7 +166,7 @@ namespace GUI.Forms
 
             UpdatePanelStatus(false);
 
-            if (!CheckExist(false))
+            if (ClientInstance.TroubleTickets.ClosedSecondaryQuestion.Count <= 0)
             {
                 label1.Visible = true;
                 Panel.Visible = false;

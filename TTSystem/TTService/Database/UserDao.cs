@@ -1005,7 +1005,7 @@ namespace TTService.Database
             }
             return false;
         }
-        public static List<SecondaryQuestion> SelectSolverQuestions(int idSolver, bool isUnanswered)
+        public static List<SecondaryQuestion> SelectSolverQuestions(int idSolver, bool isOpen)
         {
             List<SecondaryQuestion> questions = new List<SecondaryQuestion>();
             SqlConnection c = AccessDao.Instance.Conn;
@@ -1014,7 +1014,7 @@ namespace TTService.Database
             {
                 c.Open();
                 string sql = "";
-                if (isUnanswered)
+                if (isOpen)
                     sql += "SELECT * FROM SecondaryQuestions WHERE idSender = @idSolver AND response IS NULL";
                 else
                     sql += "SELECT * FROM SecondaryQuestions WHERE idSender = @idSolver AND response IS NOT NULL";

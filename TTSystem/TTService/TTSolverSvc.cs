@@ -169,9 +169,9 @@ namespace TTService
             return null;
         }
 
-        public List<SecondaryQuestion> MyQuestions(int idSolver, bool isUnanswered)
+        public List<SecondaryQuestion> MyQuestions(int idSolver, bool isOpen)
         {
-            return UserDao.SelectSolverQuestions(idSolver, isUnanswered);
+            return UserDao.SelectSolverQuestions(idSolver, isOpen);
         }
         #endregion
 
